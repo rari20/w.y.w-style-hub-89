@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
 const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories', 'footwear'] as const;
+const occasionFilters = ['evening', 'workwear', 'casual'] as const;
 const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
@@ -31,15 +32,18 @@ export default function Shop() {
   const filtered = useMemo(() => {
     let result = [...products];
 
-    // Named filters
+    // Named filters — check both category and occasion/categories arrays
     if (filterParam === 'new') result = result.filter(p => p.isNew);
     if (filterParam === 'trending') result = result.filter(p => p.isTrending);
-    if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear'));
-    if (filterParam === 'casual') result = result.filter(p => p.occasion?.includes('casual'));
-    if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening'));
-    if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear');
+    if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear') || p.categories?.includes('workwear'));
+    if (filterParam === 'casual') result = result.filter(p => p.occasion?.includes('casual') || p.categories?.includes('casual'));
+    if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening') || p.categories?.includes('evening'));
+    if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear' || p.categories?.includes('outerwear'));
 
-    if (category !== 'all') result = result.filter(p => p.category === category);
+    // Category filter — check both category string and categories array
+    if (category !== 'all') {
+      result = result.filter(p => p.category === category || p.categories?.includes(category));
+    }
     if (brand !== 'All Brands') result = result.filter(p => p.brand === brand);
 
     const range = priceRanges[priceRange];
@@ -66,9 +70,9 @@ export default function Shop() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
+      <div className="wyw-container py-8 pb-24">
         <div className="mb-8">
-          <h1 className="text-5xl md:text-6xl font-display mb-2">{getTitle()}</h1>
+          <h1 className="text-5xl md:text-6xl font-display mb-2 text-foreground">{getTitle()}</h1>
           <p className="text-muted-foreground">{filtered.length} products</p>
         </div>
 
@@ -78,7 +82,7 @@ export default function Shop() {
             placeholder="Search products..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 bg-muted border-0 px-4 py-3 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 bg-muted border-0 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <Button variant="outline" onClick={() => setShowFilters(!showFilters)}>
             {showFilters ? <X className="h-4 w-4 mr-2" /> : null}
@@ -87,7 +91,7 @@ export default function Shop() {
         </div>
 
         {showFilters && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted rounded-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted">
             <div>
               <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Category</label>
               <div className="flex flex-wrap gap-2">
@@ -95,7 +99,7 @@ export default function Shop() {
                   <button
                     key={c}
                     onClick={() => setCategory(c)}
-                    className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
+                    className={`px-3 py-1.5 text-xs uppercase tracking-wide transition-colors ${
                       category === c ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
@@ -111,7 +115,7 @@ export default function Shop() {
                   <button
                     key={b}
                     onClick={() => setBrand(b)}
-                    className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
+                    className={`px-3 py-1.5 text-xs uppercase tracking-wide transition-colors ${
                       brand === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
@@ -127,7 +131,7 @@ export default function Shop() {
                   <button
                     key={r.label}
                     onClick={() => setPriceRange(i)}
-                    className={`px-3 py-1.5 text-xs tracking-wide rounded-sm transition-colors ${
+                    className={`px-3 py-1.5 text-xs tracking-wide transition-colors ${
                       priceRange === i ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
