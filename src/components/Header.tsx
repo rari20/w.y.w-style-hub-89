@@ -1,9 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Search, User, Menu, X, Zap, Moon, Sun, Heart } from 'lucide-react';
+import { Search, User, Menu, X, Moon, Sun, Heart, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
-import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -15,7 +14,6 @@ const navLinks = [
         { label: 'New In', to: '/shop?filter=new' },
         { label: 'Trending Now', to: '/shop?filter=trending' },
         { label: 'Best Sellers', to: '/shop' },
-        { label: 'Sale', to: '/shop' },
         { label: 'Gift Cards', to: '/gift-cards' },
       ],
       Category: [
@@ -51,10 +49,29 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const megaTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const lastScrollY = useRef(0);
   const location = useLocation();
 
   const isLanding = location.pathname === '/';
+
+  // Hide nav on scroll down, reveal on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleMegaEnter = (label: string) => {
     clearTimeout(megaTimeout.current);
@@ -66,14 +83,24 @@ export default function Header() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 backdrop-blur-sm border-b border-border ${
-      isLanding ? 'bg-transparent border-transparent absolute w-full' : 'bg-background/95'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      } ${
+        isLanding && !isScrolled
+          ? 'bg-transparent border-transparent'
+          : 'backdrop-blur-xl bg-background/85 border-b border-border'
+      }`}
+    >
       <div className="wyw-container flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to="/" className={`flex items-center gap-1 font-display text-3xl tracking-wider ${isLanding ? 'text-white' : ''}`}>
-          <Zap className="h-6 w-6 text-primary" strokeWidth={2.5} />
-          <span>W.Y.W</span>
+        <Link
+          to="/"
+          className={`font-display text-[1.6rem] tracking-[0.04em] ${
+            isLanding && !isScrolled ? 'text-white' : 'text-foreground'
+          }`}
+        >
+          W.Y.W
         </Link>
 
         {/* Desktop Nav */}
@@ -87,8 +114,8 @@ export default function Header() {
             >
               <Link
                 to={link.to}
-                className={`text-sm font-medium tracking-wide uppercase transition-colors ${
-                  isLanding ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'
+                className={`nav-label transition-colors editorial-link ${
+                  isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {link.label}
@@ -101,24 +128,24 @@ export default function Header() {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-0 pt-4"
                     onMouseEnter={() => handleMegaEnter(link.label)}
                     onMouseLeave={handleMegaLeave}
                   >
-                    <div className="bg-card border border-border shadow-lg rounded-sm p-8 min-w-[600px] grid grid-cols-4 gap-8">
+                    <div className="bg-card border border-border p-10 min-w-[640px] grid grid-cols-4 gap-10">
                       {Object.entries(link.mega).map(([colTitle, items]) => (
                         <div key={colTitle}>
-                          <p className="text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">
+                          <p className="text-[0.625rem] uppercase tracking-[0.2em] text-muted-foreground mb-4 font-body font-medium">
                             {colTitle}
                           </p>
-                          <ul className="space-y-2">
+                          <ul className="space-y-2.5">
                             {(items as { label: string; to: string }[]).map(item => (
                               <li key={item.label}>
                                 <Link
                                   to={item.to}
                                   onClick={() => setMegaOpen(null)}
-                                  className="text-[0.85rem] text-foreground hover:text-primary transition-colors"
+                                  className="text-[0.85rem] font-body font-light text-foreground hover:text-primary transition-colors"
                                 >
                                   {item.label}
                                 </Link>
@@ -136,75 +163,83 @@ export default function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Link to="/shop" className="hidden md:flex">
-            <Button variant="ghost" size="icon" className={isLanding ? 'text-white hover:bg-white/10' : ''}>
-              <Search className="h-5 w-5" />
-            </Button>
+            <button className={`p-2.5 transition-colors ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}>
+              <Search className="h-[18px] w-[18px]" strokeWidth={1.5} />
+            </button>
           </Link>
           <Link to="/account" className="hidden md:flex">
-            <Button variant="ghost" size="icon" className={isLanding ? 'text-white hover:bg-white/10' : ''}>
-              <Heart className="h-5 w-5" />
-            </Button>
+            <button className={`p-2.5 transition-colors ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}>
+              <Heart className="h-[18px] w-[18px]" strokeWidth={1.5} />
+            </button>
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
             onClick={toggleTheme}
-            className={`hidden md:flex ${isLanding ? 'text-white hover:bg-white/10' : ''}`}
+            className={`hidden md:flex p-2.5 transition-colors ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <motion.div
               key={theme}
               initial={{ rotate: -180, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
             >
-              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              {theme === 'light' ? <Moon className="h-[18px] w-[18px]" strokeWidth={1.5} /> : <Sun className="h-[18px] w-[18px]" strokeWidth={1.5} />}
             </motion.div>
-          </Button>
+          </button>
           <Link to="/account">
-            <Button variant="ghost" size="icon" className={isLanding ? 'text-white hover:bg-white/10' : ''}>
-              <User className="h-5 w-5" />
-            </Button>
+            <button className={`p-2.5 transition-colors ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}>
+              <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
+            </button>
           </Link>
           <Link to="/cart" className="relative">
-            <Button variant="ghost" size="icon" className={isLanding ? 'text-white hover:bg-white/10' : ''}>
-              <ShoppingBag className="h-5 w-5" />
+            <button className={`p-2.5 transition-colors ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}>
+              <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.5} />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 bg-primary text-primary-foreground text-[9px] font-medium w-4 h-4 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
-            </Button>
+            </button>
           </Link>
-          <Button variant="ghost" size="icon" className={`md:hidden ${isLanding ? 'text-white hover:bg-white/10' : ''}`} onClick={() => setMobileOpen(!mobileOpen)}>
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <button
+            className={`md:hidden p-2.5 ${isLanding && !isScrolled ? 'text-white/80 hover:text-white' : 'text-muted-foreground hover:text-foreground'}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav — full-screen overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden fixed inset-0 top-16 bg-background z-50 px-6 py-8 space-y-6 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 top-16 bg-background z-50 px-8 py-12 space-y-8 overflow-y-auto"
           >
-            {navLinks.map(link => (
-              <Link
+            {navLinks.map((link, i) => (
+              <motion.div
                 key={link.to}
-                to={link.to}
-                onClick={() => setMobileOpen(false)}
-                className="block text-3xl font-display tracking-wider uppercase text-foreground"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06, duration: 0.4 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className="block font-display text-[2.5rem] leading-none tracking-tight text-foreground"
+                >
+                  {link.label}
+                </Link>
+              </motion.div>
             ))}
-            <div className="pt-6 border-t border-border">
-              <button onClick={() => { toggleTheme(); }} className="flex items-center gap-3 text-sm text-muted-foreground">
-                {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            <div className="pt-8 border-t border-border">
+              <button onClick={() => { toggleTheme(); }} className="flex items-center gap-3 nav-label text-muted-foreground">
+                {theme === 'light' ? <Moon className="h-4 w-4" strokeWidth={1.5} /> : <Sun className="h-4 w-4" strokeWidth={1.5} />}
                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
               </button>
             </div>
