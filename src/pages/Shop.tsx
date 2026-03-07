@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
@@ -6,7 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
-const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories', 'footwear'] as const;
+const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories'] as const;
 const occasionFilters = ['evening', 'workwear', 'casual'] as const;
 const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
@@ -16,6 +17,8 @@ const priceRanges = [
   { label: '£250 – £500', min: 250, max: 500 },
   { label: '£500+', min: 500, max: Infinity },
 ];
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Shop() {
   const [searchParams] = useSearchParams();
@@ -32,7 +35,6 @@ export default function Shop() {
   const filtered = useMemo(() => {
     let result = [...products];
 
-    // Named filters — check both category and occasion/categories arrays
     if (filterParam === 'new') result = result.filter(p => p.isNew);
     if (filterParam === 'trending') result = result.filter(p => p.isTrending);
     if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear') || p.categories?.includes('workwear'));
@@ -40,7 +42,6 @@ export default function Shop() {
     if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening') || p.categories?.includes('evening'));
     if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear' || p.categories?.includes('outerwear'));
 
-    // Category filter — check both category string and categories array
     if (category !== 'all') {
       result = result.filter(p => p.category === category || p.categories?.includes(category));
     }
@@ -71,12 +72,22 @@ export default function Shop() {
   return (
     <Layout>
       <div className="wyw-container py-8 pb-24">
-        <div className="mb-8">
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease }}
+        >
           <h1 className="text-5xl md:text-6xl font-display mb-2 text-foreground">{getTitle()}</h1>
           <p className="text-muted-foreground">{filtered.length} products</p>
-        </div>
+        </motion.div>
 
-        <div className="flex gap-4 mb-6">
+        <motion.div
+          className="flex gap-4 mb-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease }}
+        >
           <input
             type="text"
             placeholder="Search products..."
@@ -88,10 +99,16 @@ export default function Shop() {
             {showFilters ? <X className="h-4 w-4 mr-2" /> : null}
             Filters
           </Button>
-        </div>
+        </motion.div>
 
         {showFilters && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.4, ease }}
+          >
             <div>
               <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Category</label>
               <div className="flex flex-wrap gap-2">
@@ -140,19 +157,24 @@ export default function Shop() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {filtered.map(product => (
-            <ProductCard key={product.id} product={product} />
+          {filtered.map((product, i) => (
+            <ProductCard key={product.id} product={product} index={i} />
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-20">
+          <motion.div
+            className="text-center py-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <p className="text-muted-foreground text-lg">No products found.</p>
-          </div>
+          </motion.div>
         )}
       </div>
     </Layout>
