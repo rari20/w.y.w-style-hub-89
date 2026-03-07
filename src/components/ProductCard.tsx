@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/products';
-import { Heart } from 'lucide-react';
+import { Heart, Flame } from 'lucide-react';
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
@@ -20,8 +20,13 @@ export default function ProductCard({ product }: { product: Product }) {
             <Heart className="h-4 w-4" />
           </button>
           {product.isNew && (
-            <span className="absolute top-3 left-3 bg-accent text-accent-foreground text-[10px] font-bold uppercase tracking-widest px-2 py-1">
+            <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest px-2 py-1">
               New
+            </span>
+          )}
+          {product.isTrending && !product.isNew && (
+            <span className="absolute top-3 left-3 bg-foreground text-background text-[10px] font-bold uppercase tracking-widest px-2 py-1 flex items-center gap-1">
+              <Flame className="h-3 w-3" /> Trending
             </span>
           )}
           {!product.inStock && (
@@ -35,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <h3 className="text-sm font-medium font-body leading-tight">{product.name}</h3>
           <div className="mt-2 flex items-center justify-between">
             <span className="text-sm font-semibold">£{product.price.toFixed(2)}</span>
-            <span className="text-[10px] text-muted-foreground">+{product.loyaltyPoints} pts</span>
+            <span className="text-[10px] text-muted-foreground">⚡ {product.loyaltyPoints} pts</span>
           </div>
         </div>
       </div>

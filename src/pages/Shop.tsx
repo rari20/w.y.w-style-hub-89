@@ -6,34 +6,45 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
-const categories = ['all', 'tops', 'bottoms', 'outerwear', 'accessories', 'footwear'] as const;
+const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories', 'footwear'] as const;
 const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
-  { label: 'Under £50', min: 0, max: 50 },
-  { label: '£50 – £150', min: 50, max: 150 },
-  { label: '£150 – £300', min: 150, max: 300 },
-  { label: '£300+', min: 300, max: Infinity },
+  { label: 'Under £100', min: 0, max: 100 },
+  { label: '£100 – £250', min: 100, max: 250 },
+  { label: '£250 – £500', min: 250, max: 500 },
+  { label: '£500+', min: 500, max: Infinity },
 ];
 
 export default function Shop() {
   const [searchParams] = useSearchParams();
   const filterParam = searchParams.get('filter');
+  const categoryParam = searchParams.get('category');
+  const brandParam = searchParams.get('brand');
 
-  const [category, setCategory] = useState<string>('all');
-  const [brand, setBrand] = useState('All Brands');
+  const [category, setCategory] = useState<string>(categoryParam || 'all');
+  const [brand, setBrand] = useState(brandParam || 'All Brands');
   const [priceRange, setPriceRange] = useState(0);
   const [search, setSearch] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
   const filtered = useMemo(() => {
     let result = [...products];
+
+    // Named filters
     if (filterParam === 'new') result = result.filter(p => p.isNew);
     if (filterParam === 'trending') result = result.filter(p => p.isTrending);
+    if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear'));
+    if (filterParam === 'casual') result = result.filter(p => p.occasion?.includes('casual'));
+    if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening'));
+    if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear');
+
     if (category !== 'all') result = result.filter(p => p.category === category);
     if (brand !== 'All Brands') result = result.filter(p => p.brand === brand);
+
     const range = priceRanges[priceRange];
     result = result.filter(p => p.price >= range.min && p.price < range.max);
+
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
@@ -41,25 +52,33 @@ export default function Shop() {
     return result;
   }, [category, brand, priceRange, search, filterParam]);
 
+  const getTitle = () => {
+    if (filterParam === 'new') return 'NEW IN';
+    if (filterParam === 'trending') return 'TRENDING';
+    if (filterParam === 'workwear') return 'OFFICE READY';
+    if (filterParam === 'casual') return 'WEEKEND EDIT';
+    if (filterParam === 'evening') return 'EVENING OUT';
+    if (filterParam === 'outerwear') return 'LAYERING SEASON';
+    if (categoryParam) return categoryParam.toUpperCase();
+    if (brandParam) return brandParam.toUpperCase();
+    return 'SHOP ALL';
+  };
+
   return (
     <Layout>
       <div className="wyw-container py-8">
-        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-5xl md:text-6xl font-display mb-2">
-            {filterParam === 'new' ? 'NEW IN' : filterParam === 'trending' ? 'TRENDING' : 'SHOP ALL'}
-          </h1>
+          <h1 className="text-5xl md:text-6xl font-display mb-2">{getTitle()}</h1>
           <p className="text-muted-foreground">{filtered.length} products</p>
         </div>
 
-        {/* Search & Filter Toggle */}
         <div className="flex gap-4 mb-6">
           <input
             type="text"
             placeholder="Search products..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 bg-muted border-0 px-4 py-3 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-accent"
+            className="flex-1 bg-muted border-0 px-4 py-3 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <Button variant="outline" onClick={() => setShowFilters(!showFilters)}>
             {showFilters ? <X className="h-4 w-4 mr-2" /> : null}
@@ -67,7 +86,6 @@ export default function Shop() {
           </Button>
         </div>
 
-        {/* Filters */}
         {showFilters && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted rounded-sm">
             <div>
@@ -121,8 +139,7 @@ export default function Shop() {
           </div>
         )}
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {filtered.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
