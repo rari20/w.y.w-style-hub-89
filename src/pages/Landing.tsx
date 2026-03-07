@@ -1,85 +1,74 @@
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Pause, Play, ChevronDown } from 'lucide-react';
+import { useState, useRef } from 'react';
 import Header from '@/components/Header';
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80&fit=crop&crop=center';
-const HERO_IMAGE_2 = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&q=80&fit=crop&crop=center';
-
-const brandCards = [
-  {
-    name: 'Lumenwear',
-    desc: 'Effortless femininity',
-    image: 'https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=600&q=80&fit=crop&crop=center',
-  },
-  {
-    name: 'Voltex Studio',
-    desc: 'Technical precision',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=600&q=80&fit=crop&crop=center',
-  },
-  {
-    name: 'ArcThread',
-    desc: 'Organic & considered',
-    image: 'https://images.unsplash.com/photo-1548624313-0396c75e4b1a?w=600&q=80&fit=crop&crop=center',
-  },
-  {
-    name: 'KiloKouture',
-    desc: 'Weight & substance',
-    image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&q=80&fit=crop&crop=center',
-  },
-];
-
-const ease = [0.16, 1, 0.3, 1] as const;
+const VIDEO_SRC = "https://videos.pexels.com/video-files/8539488/8539488-uhd_2560_1440_25fps.mp4";
+const VIDEO_FALLBACK = "https://videos.pexels.com/video-files/7679465/7679465-uhd_2560_1440_25fps.mp4";
 
 export default function Landing() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
+  const [isPaused, setIsPaused] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.4, 0.9]);
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPaused) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+    setIsPaused(!isPaused);
+  };
 
   return (
     <div className="relative w-full bg-foreground">
-      {/* Hero Section — Full viewport with parallax */}
-      <div ref={heroRef} className="relative h-screen w-full overflow-hidden">
-        {/* Image Background with parallax zoom */}
-        <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
-          <img
-            src={HERO_IMAGE}
-            alt="W.Y.W Fashion"
-            className="absolute inset-0 w-full h-full object-cover"
+      {/* Hero Section — Full viewport */}
+      <div className="relative h-screen w-full overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0">
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             style={{ filter: 'saturate(0.85) contrast(1.05)' }}
-          />
-        </motion.div>
+            onCanPlay={() => setVideoLoaded(true)}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+            <source src={VIDEO_FALLBACK} type="video/mp4" />
+          </video>
 
-        {/* Animated overlay */}
-        <motion.div
-          className="absolute inset-0 z-[1]"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.75) 100%)',
-            opacity: overlayOpacity,
-          }}
-        />
+          {/* Fallback animated gradient while video loads */}
+          {!videoLoaded && (
+            <motion.div
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(135deg, #1a1a18 0%, #2d2d2a 25%, #1a1a18 50%, #3a3530 75%, #1a1a18 100%)',
+                backgroundSize: '400% 400%',
+              }}
+              animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+            />
+          )}
+        </div>
+
+        {/* Overlay */}
         <div className="hero-overlay" />
 
         {/* Header */}
         <Header />
 
         {/* Content */}
-        <motion.div
-          className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4"
-          style={{ opacity: heroOpacity }}
-        >
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
           <motion.p
             className="text-white/50 font-body text-[0.625rem] tracking-[0.3em] uppercase mb-8"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             Multi-Brand Fashion Destination
           </motion.p>
@@ -90,17 +79,17 @@ export default function Landing() {
           >
             <motion.span
               className="block"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3, ease }}
+              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
               Power Your
             </motion.span>
             <motion.span
               className="block italic"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5, ease }}
+              transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             >
               Style
             </motion.span>
@@ -110,7 +99,7 @@ export default function Landing() {
             className="text-white/60 max-w-[50ch] mx-auto font-body text-[0.8125rem] font-light mb-12 leading-relaxed"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.65, ease }}
+            transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
             Curated collections from the world's most exciting contemporary brands, with expert styling consultations in-store and online.
           </motion.p>
@@ -119,7 +108,7 @@ export default function Landing() {
             className="flex items-center gap-4 flex-wrap justify-center"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.8, ease }}
+            transition={{ duration: 0.9, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <Link
               to="/home"
@@ -134,115 +123,68 @@ export default function Landing() {
               Book Consultation
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.9 }}
+          transition={{ delay: 1.2, duration: 0.9 }}
         >
           <span className="text-white/40 font-body text-[0.55rem] tracking-[0.25em] uppercase">Scroll</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           >
             <ChevronDown className="h-4 w-4 text-white/40" strokeWidth={1.5} />
           </motion.div>
         </motion.div>
+
+        {/* Pause/Play */}
+        <button
+          onClick={togglePlay}
+          className="absolute bottom-10 right-10 z-20 w-9 h-9 rounded-full border border-white/30 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:border-white/60 transition-all duration-300"
+        >
+          {isPaused ? <Play className="h-3 w-3" strokeWidth={1.5} /> : <Pause className="h-3 w-3" strokeWidth={1.5} />}
+        </button>
       </div>
 
-      {/* Below-fold — Brands section */}
+      {/* Below-fold content so page is scrollable */}
       <section className="relative z-10 bg-background">
         <div className="wyw-container py-24 text-center">
-          <motion.p
-            className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-muted-foreground mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease }}
-          >
-            Curated Excellence
-          </motion.p>
-          <motion.h2
-            className="font-display text-[2.5rem] md:text-[3.5rem] italic text-foreground mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1, ease }}
-          >
-            Four Brands. One Vision.
-          </motion.h2>
-          <motion.p
-            className="text-muted-foreground font-body font-light max-w-[55ch] mx-auto leading-[1.85] mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2, ease }}
-          >
+          <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-muted-foreground mb-4">Curated Excellence</p>
+          <h2 className="font-display text-[2.5rem] md:text-[3.5rem] italic text-foreground mb-6">Four Brands. One Vision.</h2>
+          <p className="text-muted-foreground font-body font-light max-w-[55ch] mx-auto leading-[1.85] mb-12">
             Each W.Y.W partner brand brings a distinct aesthetic to our curation. From effortless femininity to urban precision, organic warmth to deliberate weight.
-          </motion.p>
-
-          {/* Brand cards with images */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {brandCards.map((brand, i) => (
-              <motion.div
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
+            {[
+              { name: 'Lumenwear', desc: 'Effortless femininity' },
+              { name: 'Voltex Studio', desc: 'Technical precision' },
+              { name: 'ArcThread', desc: 'Organic & considered' },
+              { name: 'KiloKouture', desc: 'Weight & substance' },
+            ].map(brand => (
+              <Link
                 key={brand.name}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1 + i * 0.1, ease }}
+                to={`/shop?brand=${encodeURIComponent(brand.name)}`}
+                className="bg-background py-16 text-center group hover:bg-muted transition-colors duration-500"
               >
-                <Link
-                  to={`/shop?brand=${encodeURIComponent(brand.name)}`}
-                  className="relative aspect-[3/4] overflow-hidden group block"
-                >
-                  <img
-                    src={brand.image}
-                    alt={brand.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-foreground/30 group-hover:bg-foreground/45 transition-colors duration-500" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                    <h3 className="font-display text-[1.25rem] md:text-[1.5rem] italic mb-1">{brand.name}</h3>
-                    <p className="font-body text-[0.65rem] text-white/70 tracking-wide">{brand.desc}</p>
-                  </div>
-                </Link>
-              </motion.div>
+                <h3 className="font-display text-[1.5rem] italic group-hover:text-primary transition-colors duration-500 text-foreground">{brand.name}</h3>
+                <p className="font-body text-[0.7rem] text-muted-foreground mt-2 tracking-wide">{brand.desc}</p>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Editorial image + CTA */}
-        <motion.div
-          className="wyw-container pb-24"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease }}
-        >
-          <div className="relative aspect-[21/9] overflow-hidden group">
-            <img
-              src={HERO_IMAGE_2}
-              alt="W.Y.W Editorial"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.03]"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-foreground/30" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-              <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase mb-4 text-white/70">New Season</p>
-              <h2 className="font-display text-[2rem] md:text-[3rem] italic mb-6">Enter the World of W.Y.W</h2>
-              <Link
-                to="/home"
-                className="inline-block bg-white text-foreground font-body text-[0.7rem] uppercase tracking-[0.18em] px-12 py-4 hover:bg-white/90 transition-colors duration-[400ms]"
-              >
-                Explore
-              </Link>
-            </div>
-          </div>
-        </motion.div>
+        <div className="wyw-container pb-24 text-center">
+          <Link
+            to="/home"
+            className="inline-block bg-foreground text-background font-body text-[0.7rem] uppercase tracking-[0.18em] px-12 py-4 hover:bg-primary transition-colors duration-[400ms]"
+          >
+            Enter W.Y.W
+          </Link>
+        </div>
       </section>
     </div>
   );

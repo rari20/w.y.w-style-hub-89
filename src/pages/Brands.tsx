@@ -4,53 +4,34 @@ import { Link, useParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 
-const brandCardData = [
-  {
-    id: 'lumenwear',
-    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80&fit=crop&crop=center',
-  },
-  {
-    id: 'voltex-studio',
-    image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200&q=80&fit=crop&crop=center',
-  },
-  {
-    id: 'arcthread',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&fit=crop&crop=center',
-  },
-  {
-    id: 'kilokouture',
-    image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1200&q=80&fit=crop&crop=center',
-  },
+const brandImages = [
+  'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=800&fit=crop',
+  'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=800&fit=crop',
+  'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=800&fit=crop',
+  'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop',
 ];
 
 export function BrandsPage() {
   return (
     <Layout>
-      <div className="wyw-container py-8 pb-24">
-        <h1 className="text-4xl md:text-5xl font-display mb-4 italic text-foreground">Our Brands</h1>
+      <div className="wyw-container py-8">
+        <h1 className="text-4xl md:text-5xl font-display mb-4 italic">Our Brands</h1>
         <p className="text-muted-foreground max-w-lg mb-12 font-body font-light leading-relaxed">
           W.Y.W curates the most exciting names in contemporary fashion. Each brand brings a unique perspective to the W.Y.W universe.
         </p>
 
         {/* Brand Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-1 mb-16">
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
           {brands.map((brand, i) => (
             <Link key={brand.id} to={`/brands/${brand.id}`}
-              className="relative aspect-[4/3] overflow-hidden group">
-              <img
-                src={brandCardData[i]?.image}
-                alt={brand.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80&fit=crop';
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:from-black/80 transition-all duration-500" />
+              className="relative aspect-[4/5] overflow-hidden group">
+              <img src={brandImages[i]} alt={brand.name}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
               <div className="absolute bottom-8 left-8 right-8 text-white">
-                <h2 className="font-display text-2xl md:text-3xl tracking-wider mb-2">{brand.name}</h2>
+                <h2 className="font-display text-3xl md:text-4xl tracking-wider mb-2">{brand.name}</h2>
                 <p className="text-[0.85rem] text-white/70 mb-4 font-body font-light">{brand.description}</p>
-                <span className="inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-[0.15em] font-body border-b border-white/40 pb-0.5 hover:border-white transition-colors">
+                <span className="inline-flex items-center gap-1.5 text-[0.7rem] uppercase tracking-[0.15em] font-body bg-white text-black px-5 py-2.5">
                   Shop {brand.name} <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
                 </span>
               </div>
@@ -59,7 +40,7 @@ export function BrandsPage() {
         </div>
 
         {/* Partner Programme */}
-        <div className="bg-muted p-8 md:p-12">
+        <div className="border border-border p-8 md:p-12">
           <h2 className="font-display text-2xl mb-4 italic text-foreground">Partner Programme</h2>
           <p className="text-muted-foreground max-w-xl mb-4 leading-relaxed font-body font-light">
             W.Y.W is always looking to partner with designers who share our commitment to quality and contemporary relevance.
@@ -93,7 +74,7 @@ export function BrandDetail() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8 pb-24">
+      <div className="wyw-container py-8">
         <Link to="/brands" className="inline-flex items-center gap-2 text-[0.85rem] text-muted-foreground hover:text-foreground mb-6 font-body">
           <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> All Brands
         </Link>

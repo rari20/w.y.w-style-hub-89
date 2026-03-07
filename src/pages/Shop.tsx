@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
@@ -7,8 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
-const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories'] as const;
-const occasionFilters = ['evening', 'workwear', 'casual'] as const;
+const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories', 'footwear'] as const;
 const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
@@ -17,8 +15,6 @@ const priceRanges = [
   { label: '£250 – £500', min: 250, max: 500 },
   { label: '£500+', min: 500, max: Infinity },
 ];
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Shop() {
   const [searchParams] = useSearchParams();
@@ -35,16 +31,15 @@ export default function Shop() {
   const filtered = useMemo(() => {
     let result = [...products];
 
+    // Named filters
     if (filterParam === 'new') result = result.filter(p => p.isNew);
     if (filterParam === 'trending') result = result.filter(p => p.isTrending);
-    if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear') || p.categories?.includes('workwear'));
-    if (filterParam === 'casual') result = result.filter(p => p.occasion?.includes('casual') || p.categories?.includes('casual'));
-    if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening') || p.categories?.includes('evening'));
-    if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear' || p.categories?.includes('outerwear'));
+    if (filterParam === 'workwear') result = result.filter(p => p.occasion?.includes('workwear'));
+    if (filterParam === 'casual') result = result.filter(p => p.occasion?.includes('casual'));
+    if (filterParam === 'evening') result = result.filter(p => p.occasion?.includes('evening'));
+    if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear');
 
-    if (category !== 'all') {
-      result = result.filter(p => p.category === category || p.categories?.includes(category));
-    }
+    if (category !== 'all') result = result.filter(p => p.category === category);
     if (brand !== 'All Brands') result = result.filter(p => p.brand === brand);
 
     const range = priceRanges[priceRange];
@@ -71,44 +66,28 @@ export default function Shop() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8 pb-24">
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
-        >
-          <h1 className="text-5xl md:text-6xl font-display mb-2 text-foreground">{getTitle()}</h1>
+      <div className="wyw-container py-8">
+        <div className="mb-8">
+          <h1 className="text-5xl md:text-6xl font-display mb-2">{getTitle()}</h1>
           <p className="text-muted-foreground">{filtered.length} products</p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="flex gap-4 mb-6"
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease }}
-        >
+        <div className="flex gap-4 mb-6">
           <input
             type="text"
             placeholder="Search products..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 bg-muted border-0 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 bg-muted border-0 px-4 py-3 text-sm rounded-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <Button variant="outline" onClick={() => setShowFilters(!showFilters)}>
             {showFilters ? <X className="h-4 w-4 mr-2" /> : null}
             Filters
           </Button>
-        </motion.div>
+        </div>
 
         {showFilters && (
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 p-6 bg-muted rounded-sm">
             <div>
               <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Category</label>
               <div className="flex flex-wrap gap-2">
@@ -116,7 +95,7 @@ export default function Shop() {
                   <button
                     key={c}
                     onClick={() => setCategory(c)}
-                    className={`px-3 py-1.5 text-xs uppercase tracking-wide transition-colors ${
+                    className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
                       category === c ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
@@ -132,7 +111,7 @@ export default function Shop() {
                   <button
                     key={b}
                     onClick={() => setBrand(b)}
-                    className={`px-3 py-1.5 text-xs uppercase tracking-wide transition-colors ${
+                    className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
                       brand === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
@@ -148,7 +127,7 @@ export default function Shop() {
                   <button
                     key={r.label}
                     onClick={() => setPriceRange(i)}
-                    className={`px-3 py-1.5 text-xs tracking-wide transition-colors ${
+                    className={`px-3 py-1.5 text-xs tracking-wide rounded-sm transition-colors ${
                       priceRange === i ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
@@ -157,24 +136,19 @@ export default function Shop() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {filtered.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
+          {filtered.map(product => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <motion.div
-            className="text-center py-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="text-center py-20">
             <p className="text-muted-foreground text-lg">No products found.</p>
-          </motion.div>
+          </div>
         )}
       </div>
     </Layout>
