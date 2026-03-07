@@ -45,13 +45,12 @@ export default function Footer() {
     <footer className="bg-secondary text-secondary-foreground">
       <div className="wyw-container py-16">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-1 font-display text-3xl tracking-wider text-secondary-foreground">
-              <Zap className="h-6 w-6 text-accent" strokeWidth={2.5} />
+              <Zap className="h-6 w-6 text-primary" strokeWidth={2.5} />
               <span>W.Y.W</span>
             </Link>
-            <p className="mt-3 text-sm text-secondary-foreground/60 font-body">
+            <p className="mt-3 text-sm text-muted-foreground font-body">
               Power your style.
             </p>
           </div>
@@ -64,7 +63,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       to={link.to}
-                      className="text-sm text-secondary-foreground/60 hover:text-accent transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -75,14 +74,14 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 pt-8 border-t border-secondary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-secondary-foreground/40">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted-foreground">
             © 2026 Watt You Want? All rights reserved.
           </p>
           <div className="flex gap-6">
-            <span className="text-xs text-secondary-foreground/40">Instagram</span>
-            <span className="text-xs text-secondary-foreground/40">TikTok</span>
-            <span className="text-xs text-secondary-foreground/40">Twitter</span>
+            <span className="text-xs text-muted-foreground">Instagram</span>
+            <span className="text-xs text-muted-foreground">TikTok</span>
+            <span className="text-xs text-muted-foreground">Twitter</span>
           </div>
         </div>
       </div>
