@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Product } from '@/data/products';
-import { Heart } from 'lucide-react';
+import { Heart, Zap } from 'lucide-react';
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
@@ -40,7 +40,10 @@ export default function ProductCard({ product }: { product: Product }) {
           <h3 className="font-display text-[0.9375rem] font-normal leading-tight">{product.name}</h3>
           <div className="mt-1.5 flex items-center justify-between">
             <span className="font-body text-[0.8125rem] font-light">£{product.price.toFixed(2)}</span>
-            <span className="font-body text-[0.625rem] text-muted-foreground">⚡ {product.loyaltyPoints} pts</span>
+            <span className="inline-flex items-center gap-1 font-body text-[0.625rem] text-muted-foreground">
+              <Zap className="h-3 w-3 text-accent" strokeWidth={1.5} />
+              {product.loyaltyPoints} pts
+            </span>
           </div>
         </div>
       </div>

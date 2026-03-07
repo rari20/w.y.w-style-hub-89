@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Mail, Phone, HelpCircle, Zap } from 'lucide-react';
+import { MessageCircle, Mail, Phone, HelpCircle, Users } from 'lucide-react';
 
 const faqs = [
   { q: 'How do I track my order?', a: 'Log into your account and visit the Orders section. You\'ll find real-time tracking for all your purchases.' },
@@ -14,58 +14,52 @@ export default function CustomerService() {
   return (
     <Layout>
       <div className="wyw-container py-8">
-        <h1 className="text-5xl md:text-6xl font-display mb-4">CUSTOMER SERVICE</h1>
-        <p className="text-muted-foreground max-w-lg mb-12">
-          We're here to help. W.Y.W uses <strong>human agents only</strong> — no AI chatbots. We believe real conversations lead to real solutions.
+        <h1 className="text-4xl md:text-5xl font-display mb-4 italic">Customer Service</h1>
+        <p className="text-muted-foreground max-w-lg mb-12 font-body font-light leading-relaxed">
+          We're here to help. W.Y.W uses <strong className="font-medium text-foreground">human agents only</strong> — no AI chatbots. We believe real conversations lead to real solutions.
         </p>
 
         {/* Contact Methods */}
         <div className="grid md:grid-cols-3 gap-6 mb-16">
-          <div className="wyw-card p-6 text-center">
-            <MessageCircle className="h-8 w-8 text-accent mx-auto mb-3" />
-            <h3 className="font-display text-xl mb-2">LIVE CHAT</h3>
-            <p className="text-xs text-muted-foreground mb-3">Mon-Fri: 9am-8pm, Sat: 10am-6pm</p>
-            <Button variant="hero" size="sm">Start Chat</Button>
-          </div>
-          <div className="wyw-card p-6 text-center">
-            <Mail className="h-8 w-8 text-accent mx-auto mb-3" />
-            <h3 className="font-display text-xl mb-2">EMAIL</h3>
-            <p className="text-xs text-muted-foreground mb-3">help@wyw.com · Reply within 24hrs</p>
-            <Button variant="outline" size="sm">Send Email</Button>
-          </div>
-          <div className="wyw-card p-6 text-center">
-            <Phone className="h-8 w-8 text-accent mx-auto mb-3" />
-            <h3 className="font-display text-xl mb-2">WHATSAPP</h3>
-            <p className="text-xs text-muted-foreground mb-3">Quick questions? Message us.</p>
-            <Button variant="outline" size="sm">Open WhatsApp</Button>
-          </div>
+          {[
+            { icon: MessageCircle, title: 'Live Chat', desc: 'Mon-Fri: 9am-8pm, Sat: 10am-6pm', variant: 'default' as const },
+            { icon: Mail, title: 'Email', desc: 'help@wyw.com · Reply within 24hrs', variant: 'outline' as const },
+            { icon: Phone, title: 'WhatsApp', desc: 'Quick questions? Message us.', variant: 'outline' as const },
+          ].map(method => (
+            <div key={method.title} className="wyw-card border border-border p-6 text-center">
+              <method.icon className="h-6 w-6 text-accent mx-auto mb-3" strokeWidth={1.5} />
+              <h3 className="font-display text-xl mb-2 text-foreground">{method.title}</h3>
+              <p className="text-[0.75rem] text-muted-foreground mb-3 font-body">{method.desc}</p>
+              <Button variant={method.variant} size="sm">{method.title === 'Live Chat' ? 'Start Chat' : method.title === 'Email' ? 'Send Email' : 'Open WhatsApp'}</Button>
+            </div>
+          ))}
         </div>
 
         {/* FAQ */}
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-display mb-6">
-            <HelpCircle className="inline h-6 w-6 text-accent mr-2" />
-            FREQUENTLY ASKED QUESTIONS
+          <h2 className="text-2xl font-display mb-6 italic flex items-center gap-2 text-foreground">
+            <HelpCircle className="h-5 w-5 text-accent" strokeWidth={1.5} />
+            Frequently Asked Questions
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {faqs.map(faq => (
-              <details key={faq.q} className="border border-border rounded-sm group">
-                <summary className="p-4 cursor-pointer text-sm font-medium flex items-center justify-between">
+              <details key={faq.q} className="border border-border group">
+                <summary className="p-4 cursor-pointer text-[0.85rem] font-body font-medium flex items-center justify-between text-foreground">
                   {faq.q}
                   <span className="text-accent group-open:rotate-45 transition-transform text-lg">+</span>
                 </summary>
-                <p className="px-4 pb-4 text-sm text-muted-foreground">{faq.a}</p>
+                <p className="px-4 pb-4 text-[0.85rem] text-muted-foreground font-body font-light">{faq.a}</p>
               </details>
             ))}
           </div>
         </div>
 
         {/* Human Support Note */}
-        <div className="mt-16 bg-muted p-6 rounded-sm flex items-start gap-4">
-          <Zap className="h-6 w-6 text-accent shrink-0 mt-1" />
+        <div className="mt-16 bg-muted p-6 flex items-start gap-4">
+          <Users className="h-5 w-5 text-accent shrink-0 mt-1" strokeWidth={1.5} />
           <div>
-            <h3 className="font-display text-xl mb-1">REAL PEOPLE. REAL HELP.</h3>
-            <p className="text-sm text-muted-foreground">
+            <h3 className="font-display text-lg mb-1 text-foreground italic">Real People. Real Help.</h3>
+            <p className="text-[0.85rem] text-muted-foreground font-body font-light leading-relaxed">
               Research shows customers in fashion and retail report significantly higher satisfaction and trust when supported by human agents. 
               That's why every W.Y.W interaction is handled by a trained team member who understands style and service.
             </p>
