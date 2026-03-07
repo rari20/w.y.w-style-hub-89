@@ -185,8 +185,8 @@ export default function Home() {
           <div className="md:col-span-2">
             <div className="aspect-[3/4] bg-muted flex items-center justify-center border border-border">
               <div className="text-center p-8">
-                <p className="font-display text-[2.5rem] italic leading-[1.1] mb-2">Personal</p>
-                <p className="font-display text-[2.5rem] italic leading-[1.1]">Styling</p>
+                <p className="font-display text-[2.5rem] italic leading-[1.1] mb-2 text-foreground">Personal</p>
+                <p className="font-display text-[2.5rem] italic leading-[1.1] text-foreground">Styling</p>
                 <p className="font-body text-[0.7rem] text-muted-foreground mt-4 tracking-wide">By humans, for humans</p>
               </div>
             </div>
