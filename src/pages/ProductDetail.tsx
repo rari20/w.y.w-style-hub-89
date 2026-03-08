@@ -29,6 +29,11 @@ export default function ProductDetail() {
     );
   }
 
+  // Determine displayed image based on selected color
+  const displayImage = selectedColor && product.colorImages?.[selectedColor]
+    ? product.colorImages[selectedColor]
+    : product.image;
+
   const handleAddToCart = () => {
     if (!selectedSize) {
       toast.error('Please select a size');
@@ -54,7 +59,12 @@ export default function ProductDetail() {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
           {/* Image */}
           <div className="aspect-[3/4] bg-muted rounded-sm overflow-hidden">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <img
+              src={displayImage}
+              alt={`${product.name}${selectedColor ? ` in ${selectedColor}` : ''}`}
+              className="w-full h-full object-cover transition-opacity duration-500"
+              key={displayImage}
+            />
           </div>
 
           {/* Details */}
