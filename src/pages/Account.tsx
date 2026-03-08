@@ -526,9 +526,9 @@ export default function Account() {
                 <div className="border-2 border-border p-6 md:p-8 flex items-center justify-between flex-wrap gap-4 mb-8">
                   <div>
                     <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body mb-1">Your Referral Code</p>
-                    <p className="font-display text-2xl md:text-3xl text-foreground">WYW-JD2024</p>
+                    <p className="font-display text-2xl md:text-3xl text-foreground">{referralCode}</p>
                   </div>
-                  <Button variant="outline" size="sm" onClick={copyCode} className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={() => copyCode(referralCode)} className="flex items-center gap-2">
                     {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copied' : 'Copy Code'}
                   </Button>
