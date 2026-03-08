@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 import { Link } from 'react-router-dom';
 import {
-  Users, Activity, AlertTriangle, Star, Send, Tag, UserPlus, Bell, ShoppingBag, RotateCcw, Zap, Check,
+  Users, Activity, AlertTriangle, Star, Send, Tag, UserPlus, Bell, RotateCcw, Zap, Check,
 } from 'lucide-react';
 import { adminNotifications, type AdminNotification } from '@/data/adminData';
 import { useState } from 'react';
