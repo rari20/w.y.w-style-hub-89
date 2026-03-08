@@ -160,14 +160,13 @@ function GlobeMesh({ stores }: { stores: StorePin[] }) {
         const outerPos = latLngToVector3(store.lat, store.lng, 2.3);
         const isHovered = hovered === store.name;
         
-        // Create pin line
+        const lineMat = new THREE.LineBasicMaterial({ color: '#c9a96e', transparent: true, opacity: 0.7 });
         const lineGeo = new THREE.BufferGeometry().setFromPoints([pos, outerPos]);
+        const lineObj = new THREE.Line(lineGeo, lineMat);
 
         return (
           <group key={store.name}>
-            <line geometry={lineGeo}>
-              <lineBasicMaterial color="#c9a96e" transparent opacity={0.7} />
-            </line>
+            <primitive object={lineObj} />
             {/* Pin head */}
             <mesh
               position={outerPos}
