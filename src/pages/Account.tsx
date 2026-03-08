@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, BarChart2 } from 'lucide-react';
+import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, BarChart2, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -12,6 +12,37 @@ import { products } from '@/data/products';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
+const TEST_ADMIN = 'test.customer@wyw-demo.com';
+
+const testOrders = [
+  { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
+    { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
+  ]},
+  { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
+  ]},
+  { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
+    { name: 'Arc Pleat Skirt', brand: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
+    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
+  ]},
+];
+
+const wishlistItems = [
+  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
+  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
+  { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
+  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
+];
+
+const tiers = [
+  { name: 'Spark', range: '0–499 pts', color: 'border-muted', benefits: ['Early access to sales', 'Birthday discount 10%'] },
+  { name: 'Volt', range: '500–1,499 pts', color: 'border-amber-400 dark:border-amber-500', benefits: ['All Spark benefits', 'Free standard delivery', '15% birthday discount'] },
+  { name: 'Surge', range: '1,500–3,999 pts', color: 'border-blue-400 dark:border-blue-500', benefits: ['All Volt benefits', 'Free express delivery', 'Priority customer service', '20% birthday discount'] },
+  { name: 'Watt', range: '4,000+ pts', color: 'border-yellow-500 dark:border-yellow-400', benefits: ['All Surge benefits', 'Personal stylist', 'Exclusive brand previews', '25% birthday discount'] },
+];
+
 export default function Account() {
   const { user, profile, loading, signOut } = useAuth();
   const { addItem } = useCart();
@@ -19,7 +50,10 @@ export default function Account() {
   const [copied, setCopied] = useState(false);
   const [promoEmails, setPromoEmails] = useState(true);
   const [stylingEmails, setStylingEmails] = useState(true);
-  const [rewardsMilestones, setRewardsMilestones] = useState(true);
+  const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [returnOrder, setReturnOrder] = useState('');
+  const [returnReason, setReturnReason] = useState('');
+  const [showReturnForm, setShowReturnForm] = useState(false);
 
   // Auth form state
   const [email, setEmail] = useState('');
@@ -41,12 +75,8 @@ export default function Account() {
     setAuthLoading(true);
     setAuthError('');
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setAuthError(error.message);
-      toast.error(error.message);
-    } else {
-      toast.success('Welcome back!');
-    }
+    if (error) { setAuthError(error.message); toast.error(error.message); }
+    else { toast.success('Welcome back!'); }
     setAuthLoading(false);
   };
 
@@ -55,39 +85,23 @@ export default function Account() {
     setAuthLoading(true);
     setAuthError('');
     const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { first_name: firstName, last_name: lastName },
-      },
+      email, password,
+      options: { emailRedirectTo: window.location.origin, data: { first_name: firstName, last_name: lastName } },
     });
-    if (error) {
-      setAuthError(error.message);
-      toast.error(error.message);
-    } else {
-      toast.success('Check your email to confirm your account!');
-    }
+    if (error) { setAuthError(error.message); toast.error(error.message); }
+    else { toast.success('Account created successfully!'); }
     setAuthLoading(false);
   };
 
   const handleOAuth = async (provider: 'google' | 'apple') => {
     setAuthLoading(true);
     setAuthError('');
-    const result = await lovable.auth.signInWithOAuth(provider, {
-      redirect_uri: window.location.origin + '/account',
-    });
-    if (result.error) {
-      setAuthError(result.error.message);
-      toast.error(result.error.message);
-    }
+    const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin + '/account' });
+    if (result.error) { setAuthError(result.error.message); toast.error(result.error.message); }
     setAuthLoading(false);
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    toast('Signed out');
-  };
+  const handleSignOut = async () => { await signOut(); toast('Signed out'); };
 
   if (loading) {
     return (
@@ -104,15 +118,12 @@ export default function Account() {
       <Layout>
         <div className="wyw-container pt-24 pb-16 max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-display mb-10 md:mb-12 text-center italic text-foreground">My Account</h1>
-
           {authError && (
             <div className="mb-6 border border-destructive/30 bg-destructive/5 p-3 text-center">
               <p className="text-sm text-destructive font-body">{authError}</p>
             </div>
           )}
-
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
-            {/* Sign In */}
             <div>
               <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 text-foreground">Sign In</h2>
               <form onSubmit={handleSignIn} className="space-y-5">
@@ -130,22 +141,14 @@ export default function Account() {
                   {authLoading ? 'Signing in…' : 'Sign In'}
                 </Button>
               </form>
-
-              {/* Social Login */}
               <div className="mt-6 space-y-3">
                 <p className="text-center text-[0.7rem] text-muted-foreground font-body uppercase tracking-[0.15em]">Or continue with</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <Button variant="outline" onClick={() => handleOAuth('google')} disabled={authLoading} className="w-full text-[0.75rem]">
-                    Google
-                  </Button>
-                  <Button variant="outline" onClick={() => handleOAuth('apple')} disabled={authLoading} className="w-full text-[0.75rem]">
-                    Apple
-                  </Button>
+                  <Button variant="outline" onClick={() => handleOAuth('google')} disabled={authLoading} className="w-full text-[0.75rem]">Google</Button>
+                  <Button variant="outline" onClick={() => handleOAuth('apple')} disabled={authLoading} className="w-full text-[0.75rem]">Apple</Button>
                 </div>
               </div>
             </div>
-
-            {/* Create Account */}
             <div>
               <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 text-foreground">Create Account</h2>
               <form onSubmit={handleSignUp} className="space-y-5">
@@ -175,9 +178,7 @@ export default function Account() {
                   {authLoading ? 'Creating…' : 'Create Account'}
                 </Button>
               </form>
-              <p className="text-[0.75rem] text-muted-foreground mt-4 text-center font-body">
-                Or scan a QR code in-store to register instantly
-              </p>
+              <p className="text-[0.75rem] text-muted-foreground mt-4 text-center font-body">Or scan a QR code in-store to register instantly</p>
             </div>
           </div>
         </div>
@@ -188,6 +189,8 @@ export default function Account() {
   const displayName = profile?.first_name
     ? `${profile.first_name} ${profile.last_name || ''}`.trim()
     : user.email?.split('@')[0] || 'User';
+
+  const isTestAdmin = user.email === TEST_ADMIN;
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'overview', label: 'Overview', icon: User },
@@ -212,22 +215,17 @@ export default function Account() {
           <div className="lg:border-r border-border lg:pr-0 lg:sticky lg:top-[68px] lg:self-start">
             <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-0 -mx-4 px-4 lg:mx-0 lg:px-0">
               {tabs.map(t => (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
+                <button key={t.id} onClick={() => setTab(t.id)}
                   className={`flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 ${
                     tab === t.id ? 'bg-foreground text-background' : 'hover:bg-muted text-foreground'
-                  } lg:w-full`}
-                >
+                  } lg:w-full`}>
                   <t.icon className="h-4 w-4" strokeWidth={1.5} />
                   {t.label}
                 </button>
               ))}
-              {user.email === 'test.customer@wyw-demo.com' && (
-                <Link
-                  to="/admin/dataset"
-                  className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 hover:bg-muted text-foreground lg:w-full"
-                >
+              {isTestAdmin && (
+                <Link to="/admin/dataset"
+                  className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 hover:bg-muted text-foreground lg:w-full">
                   <BarChart2 className="h-4 w-4" strokeWidth={1.5} />
                   Churn Dataset
                 </Link>
@@ -241,58 +239,63 @@ export default function Account() {
 
           {/* Content */}
           <div className="lg:pl-8 pt-6 lg:pt-0">
+
+            {/* ═══════ TAB 1: OVERVIEW ═══════ */}
             {tab === 'overview' && (
               <div className="space-y-6">
+                {/* Section A: Loyalty Tier Widget */}
                 <div className="bg-secondary text-secondary-foreground p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display flex items-center gap-2 text-foreground text-xl md:text-2xl">
-                        <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
+                      <h3 className="font-display flex items-center gap-2 text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>
+                        <Zap className="h-5 w-5 text-amber-500" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-foreground text-xl md:text-2xl">847</p>
+                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
                     <div className="bg-primary h-1" style={{ width: '56%' }} />
                   </div>
-                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">653 points to Surge tier</p>
+                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">653 points to Surge</p>
                 </div>
 
+                {/* Section B: Four-metric activity */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[
+                    { label: 'Last Purchase', value: '14 days ago' },
+                    { label: 'Orders This Year', value: '3' },
+                    { label: 'Return Rate', value: '0%' },
+                    { label: 'Consultations Booked', value: '1' },
+                  ].map(stat => (
+                    <div key={stat.label} className="border border-border p-3 md:p-4">
+                      <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
+                      <p className="font-display text-lg md:text-xl mt-1 text-foreground">{stat.value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Section C: Recent Orders */}
                 <div>
                   <h3 className="font-display text-xl mb-4 italic text-foreground">Recent Orders</h3>
-                  <div className="border border-border p-4">
-                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-                      <p className="text-[0.85rem] font-body font-medium text-foreground">Order #WYW-2026-0042</p>
-                      <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Delivered</span>
-                    </div>
-                    <p className="text-[0.75rem] text-muted-foreground font-body">28 Feb 2026 · 2 items · £214.00</p>
-                  </div>
-                </div>
-
-                {/* Your Activity — churn model data */}
-                <div>
-                  <h3 className="font-display text-xl mb-4 italic text-foreground">Your Activity</h3>
-                  <p className="text-[0.7rem] text-muted-foreground font-body mb-3">These metrics help us personalise your experience.</p>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[
-                      { label: 'Last Purchase', value: '12 days ago', key: 'DaysSinceLastPurchase' },
-                      { label: 'Orders This Year', value: '3', key: 'NumberOfOrders' },
-                      { label: 'Return Rate', value: '0%', key: 'ReturnRate' },
-                      { label: 'Consultations Booked', value: '1', key: 'ConsultationBooked' },
-                    ].map(stat => (
-                      <div key={stat.label} className="border border-border p-3 md:p-4">
-                        <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
-                        <p className="font-display text-lg md:text-xl mt-1 text-foreground">{stat.value}</p>
+                  <div className="space-y-3">
+                    {testOrders.slice(0, 2).map(o => (
+                      <div key={o.id} className="border border-border p-4">
+                        <div className="flex items-center justify-between mb-1 flex-wrap gap-2">
+                          <p className="text-[0.85rem] font-body font-medium text-foreground">{o.id}</p>
+                          <span className={`text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] ${o.statusColor}`}>{o.status}</span>
+                        </div>
+                        <p className="text-[0.75rem] text-muted-foreground font-body">{o.date} · {o.items} item{o.items > 1 ? 's' : ''} · {o.total}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                {/* Section D: Quick-access cards */}
+                <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {[
                     { icon: Gift, label: 'Active Coupons', value: '2' },
                     { icon: MapPin, label: 'Saved Addresses', value: '1' },
@@ -309,191 +312,216 @@ export default function Account() {
               </div>
             )}
 
+            {/* ═══════ TAB 2: ORDERS ═══════ */}
             {tab === 'orders' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Order History</h2>
-                <div className="overflow-x-auto -mx-4 px-4 lg:mx-0 lg:px-0">
-                  <table className="w-full text-[0.85rem] font-body min-w-[500px]">
-                    <thead>
-                      <tr className="border-b border-border text-left">
-                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Date</th>
-                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Order</th>
-                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Items</th>
-                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Total</th>
-                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Status</th>
-                        <th className="py-3"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        { date: '28 Feb 2026', order: '#WYW-2026-0042', items: 2, total: '£214.00', status: 'Delivered' },
-                        { date: '15 Feb 2026', order: '#WYW-2026-0038', items: 1, total: '£495.00', status: 'Delivered' },
-                        { date: '02 Jan 2026', order: '#WYW-2026-0012', items: 3, total: '£680.00', status: 'Delivered' },
-                      ].map(o => (
-                        <tr key={o.order} className="border-b border-border">
-                          <td className="py-3 text-foreground">{o.date}</td>
-                          <td className="py-3 font-medium text-foreground">{o.order}</td>
-                          <td className="py-3 text-foreground">{o.items}</td>
-                          <td className="py-3 text-foreground">{o.total}</td>
-                          <td className="py-3"><span className="text-[0.625rem] bg-primary/10 text-primary px-2 py-1">{o.status}</span></td>
-                          <td className="py-3"><Button variant="ghost" size="sm">Track</Button></td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="space-y-3">
+                  {testOrders.map(o => (
+                    <div key={o.id} className="border border-border">
+                      <button className="w-full p-4 text-left flex items-center justify-between" onClick={() => setExpandedOrder(expandedOrder === o.id ? null : o.id)}>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <p className="text-[0.85rem] font-body font-medium text-foreground">{o.id}</p>
+                            <span className={`text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] ${o.statusColor}`}>{o.status}</span>
+                          </div>
+                          <p className="text-[0.75rem] text-muted-foreground font-body mt-1">{o.date} · {o.items} item{o.items > 1 ? 's' : ''} · {o.total}</p>
+                        </div>
+                        {expandedOrder === o.id ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                      </button>
+                      {expandedOrder === o.id && (
+                        <div className="border-t border-border px-4 pb-4">
+                          {o.products.map((p, i) => (
+                            <div key={i} className="flex justify-between items-center py-2 border-b border-border last:border-0">
+                              <div>
+                                <p className="text-[0.8rem] font-body text-foreground">{p.name}</p>
+                                <p className="text-[0.7rem] text-muted-foreground font-body">{p.brand} · {p.size} · {p.color} · Qty {p.qty}</p>
+                              </div>
+                              <p className="text-[0.8rem] font-body text-foreground">£{p.price.toFixed(2)}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
 
+            {/* ═══════ TAB 3: RETURNS ═══════ */}
             {tab === 'returns' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic text-foreground">Return Tracking</h2>
-                <div className="border border-border p-4 md:p-6">
-                  <p className="text-[0.85rem] font-body font-medium mb-4 text-foreground">Return #RET-2026-0015</p>
-                  <div className="flex items-center gap-1 md:gap-2 mb-6">
-                    {['Initiated', 'Received', 'Inspected', 'Refunded'].map((step, i) => (
-                      <div key={step} className="flex items-center gap-1 md:gap-2 flex-1">
-                        <div className={`w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-[9px] md:text-[10px] font-bold shrink-0 ${
-                          i < 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                        }`}>
-                          {i < 2 ? <Check className="h-3 w-3" /> : i + 1}
-                        </div>
-                        <span className="text-[0.65rem] md:text-[0.75rem] hidden sm:inline text-foreground">{step}</span>
-                        {i < 3 && <div className={`flex-1 h-0.5 ${i < 1 ? 'bg-primary' : 'bg-muted'}`} />}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[0.75rem] text-muted-foreground font-body">Item received at warehouse. Currently under inspection.</p>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Returns</h2>
+                <div className="border border-border p-6 md:p-8 text-center mb-6">
+                  <Package className="h-10 w-10 mx-auto text-muted-foreground mb-3" strokeWidth={1} />
+                  <p className="font-body text-[0.9rem] text-foreground mb-1">No active returns</p>
+                  <p className="text-[0.75rem] text-muted-foreground font-body">You don't have any returns in progress.</p>
                 </div>
+
+                <h3 className="font-display text-lg mb-3 italic text-foreground">Return History</h3>
+                <p className="text-[0.8rem] text-muted-foreground font-body mb-6">No previous returns on record.</p>
+
+                {!showReturnForm ? (
+                  <Button variant="outline" onClick={() => setShowReturnForm(true)}>Start a Return</Button>
+                ) : (
+                  <div className="border border-border p-5 space-y-4">
+                    <h3 className="font-body text-sm font-medium text-foreground">Start a Return</h3>
+                    <div>
+                      <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Order Number</label>
+                      <input type="text" value={returnOrder} onChange={e => setReturnOrder(e.target.value)} placeholder="WYW-2026-XXXX"
+                        className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" />
+                    </div>
+                    <div>
+                      <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Reason</label>
+                      <select value={returnReason} onChange={e => setReturnReason(e.target.value)}
+                        className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground">
+                        <option value="">Select a reason</option>
+                        <option value="wrong-size">Wrong size</option>
+                        <option value="changed-mind">Changed mind</option>
+                        <option value="faulty">Faulty item</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div className="flex gap-3">
+                      <Button variant="default" size="sm" onClick={() => { toast.success('Return request submitted'); setShowReturnForm(false); setReturnOrder(''); setReturnReason(''); }}>Submit</Button>
+                      <Button variant="ghost" size="sm" onClick={() => setShowReturnForm(false)}>Cancel</Button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
+            {/* ═══════ TAB 4: WISHLIST ═══════ */}
             {tab === 'wishlist' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Wishlist</h2>
-                <div className="space-y-4">
-                {/* Mock wishlist items with churn nudge */}
-                  {[
-                    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 32, priceChanged: false, productId: 'lw1' },
-                    { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 8, priceChanged: false, productId: 'at2' },
-                  ].map(item => {
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {wishlistItems.map(item => {
                     const product = products.find(p => p.id === item.productId);
+                    const showNudge = item.savedDays >= 30;
                     return (
-                      <div key={item.name} className="border border-border p-4 flex items-center justify-between gap-4 flex-wrap">
-                        <div>
+                      <div key={item.productId} className="border border-border overflow-hidden">
+                        {product && <img src={product.image} alt={item.name} className="w-full h-48 object-cover" />}
+                        <div className="p-4">
                           <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.brand}</p>
                           <p className="font-body text-[0.9rem] font-medium text-foreground">{item.name}</p>
-                          <p className="font-body text-[0.85rem] text-foreground">£{item.price.toFixed(2)}</p>
-                          {item.savedDays >= 30 && (
-                            <div className="mt-2 flex items-center gap-2">
-                              <span className="text-[0.7rem] bg-accent/10 text-accent px-2 py-0.5 font-body">
+                          <p className="font-body text-[0.85rem] text-foreground mt-1">£{item.price.toFixed(2)}</p>
+                          {showNudge && (
+                            <div className="mt-2">
+                              <span className="text-[0.7rem] bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300 px-2 py-0.5 font-body">
                                 Saved {item.savedDays} days ago · Price unchanged
                               </span>
                             </div>
                           )}
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          {item.savedDays >= 30 && product && (
+                          <div className="mt-3 flex gap-2">
                             <Button variant="default" size="sm" className="text-[0.75rem]" onClick={() => {
-                              addItem(product, product.sizes[1] || product.sizes[0], product.colors[0]);
-                              toast.success(`${item.name} moved to basket`);
+                              if (product) {
+                                addItem(product, product.sizes[1] || product.sizes[0], product.colors[0]);
+                                toast.success(`${item.name} moved to basket`);
+                              }
                             }}>Move to Basket</Button>
-                          )}
-                          <Button variant="ghost" size="sm" className="text-[0.75rem] text-destructive">Remove</Button>
+                          </div>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                <p className="text-[0.7rem] text-muted-foreground font-body mt-4">
-                  Items saved for 30+ days are flagged — we don't want you to miss out.
-                </p>
               </div>
             )}
 
+            {/* ═══════ TAB 5: REWARDS ═══════ */}
             {tab === 'rewards' && (
               <div className="space-y-6">
-                <h2 className="font-display text-2xl mb-4 italic text-foreground">Rewards Wallet</h2>
-                <div className="bg-secondary p-4 md:p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display text-xl md:text-2xl flex items-center gap-2 text-foreground">
-                        <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
-                      </h3>
+                <h2 className="font-display text-2xl mb-2 italic text-foreground">W.Y.W Rewards</h2>
+                <p className="text-[0.8rem] text-muted-foreground font-body">1 point earned per £1 spent.</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {tiers.map(tier => (
+                    <div key={tier.name} className={`border-2 p-5 ${tier.name === 'Volt' ? tier.color : 'border-border'}`}>
+                      <h3 className="font-display text-lg text-foreground mb-1">{tier.name}</h3>
+                      <p className="text-[0.7rem] text-muted-foreground font-body mb-3">{tier.range}</p>
+                      <ul className="space-y-1">
+                        {tier.benefits.map(b => (
+                          <li key={b} className="text-[0.8rem] text-foreground font-body flex items-start gap-2">
+                            <Check className="h-3 w-3 text-primary mt-1 shrink-0" strokeWidth={2} />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                      {tier.name === 'Volt' && (
+                        <p className="text-[0.7rem] text-amber-600 dark:text-amber-400 font-body mt-3 font-medium">Your current tier</p>
+                      )}
                     </div>
-                    <div className="text-right">
-                      <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points</p>
-                      <p className="font-display text-xl md:text-2xl text-foreground">847</p>
-                    </div>
-                  </div>
-                  <div className="w-full bg-muted h-1 mb-2">
-                    <div className="bg-primary h-1" style={{ width: '56%' }} />
-                  </div>
-                  <p className="text-[0.75rem] text-muted-foreground font-body">653 points to Surge tier</p>
+                  ))}
                 </div>
-                <div>
-                  <h3 className="font-display text-lg mb-3 italic text-foreground">Points History</h3>
-                  <div className="space-y-2">
-                    {[
-                      { desc: 'Purchase #WYW-2026-0042', pts: '+214', date: '28 Feb' },
-                      { desc: 'Welcome bonus', pts: '+100', date: '01 Jan' },
-                      { desc: 'Referral reward', pts: '+50', date: '15 Dec' },
-                    ].map(h => (
-                      <div key={h.desc} className="flex justify-between items-center py-2 border-b border-border text-[0.85rem] font-body">
-                        <div>
-                          <p className="text-foreground">{h.desc}</p>
-                          <p className="text-[0.75rem] text-muted-foreground">{h.date}</p>
-                        </div>
-                        <span className="text-primary font-medium">{h.pts}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <p className="text-[0.7rem] text-muted-foreground font-body">Points expire after 24 months of inactivity.</p>
               </div>
             )}
 
+            {/* ═══════ TAB 6: CONSULTATIONS ═══════ */}
             {tab === 'consultations' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Consultations</h2>
                 <div className="space-y-4">
-                  <div className="border border-border p-4 md:p-6">
-                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-                      <p className="text-[0.85rem] font-body font-medium text-foreground">Virtual Styling Session</p>
-                      <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Upcoming</span>
+                  <div>
+                    <h3 className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-3">Past</h3>
+                    <div className="border border-border p-4 md:p-6">
+                      <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+                        <p className="text-[0.85rem] font-body font-medium text-foreground">In-Store Styling Session</p>
+                        <span className="text-[0.6rem] bg-muted text-muted-foreground px-2 py-0.5 font-body uppercase tracking-[0.1em]">Completed</span>
+                      </div>
+                      <p className="text-[0.75rem] text-muted-foreground font-body">Edinburgh — 14 George Street · 15 Jan 2026</p>
                     </div>
-                    <p className="text-[0.75rem] text-muted-foreground font-body">15 Mar 2026 · 14:00 · Virtual</p>
                   </div>
-                  <div className="border border-border p-4 md:p-6">
-                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-                      <p className="text-[0.85rem] font-body font-medium text-foreground">In-Store Wardrobe Review</p>
-                      <span className="text-[0.625rem] bg-muted text-muted-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Completed</span>
-                    </div>
-                    <p className="text-[0.75rem] text-muted-foreground font-body">10 Jan 2026 · 11:00 · Edinburgh</p>
-                  </div>
+                </div>
+                <div className="mt-6">
+                  <Button variant="outline" asChild>
+                    <Link to="/consultation">Book New Consultation</Link>
+                  </Button>
                 </div>
               </div>
             )}
 
+            {/* ═══════ TAB 7: REFERRAL ═══════ */}
             {tab === 'referral' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Refer a Friend</h2>
                 <p className="text-muted-foreground font-body font-light mb-6 text-sm">
-                  Share your unique referral code. When your friend makes their first purchase, you both get a discount.
+                  Share your code and earn 100 points for every friend who makes their first purchase.
                 </p>
-                <div className="bg-secondary p-4 md:p-6 flex items-center justify-between flex-wrap gap-4">
+                <div className="border-2 border-border p-6 md:p-8 flex items-center justify-between flex-wrap gap-4 mb-8">
                   <div>
-                    <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body mb-1">Your Code</p>
-                    <p className="font-display text-xl md:text-2xl text-foreground">WYW-JD2024</p>
+                    <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body mb-1">Your Referral Code</p>
+                    <p className="font-display text-2xl md:text-3xl text-foreground">WYW-JD2024</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={copyCode} className="flex items-center gap-2">
                     {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copied' : 'Copy Code'}
                   </Button>
                 </div>
+
+                <h3 className="font-body text-sm font-medium mb-3 text-foreground">Referral History</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-[0.85rem] font-body min-w-[400px]">
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Friend's Email</th>
+                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Date Joined</th>
+                        <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Points Earned</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-border">
+                        <td className="py-3 text-foreground">friend@example.com</td>
+                        <td className="py-3 text-foreground">20 Jan 2026</td>
+                        <td className="py-3 text-primary font-medium">100 pts</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
+            {/* ═══════ TAB 8: SETTINGS ═══════ */}
             {tab === 'settings' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Settings</h2>
@@ -501,36 +529,77 @@ export default function Account() {
                   <div>
                     <p className="text-[0.75rem] text-muted-foreground font-body mb-2">Signed in as <span className="text-foreground">{user.email}</span></p>
                   </div>
+
+                  {/* Email Notification Toggles */}
                   <div>
-                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Email Preferences</h3>
-                    <div className="space-y-3">
-                      <label className="flex items-center gap-3">
-                        <input type="checkbox" checked disabled className="accent-primary" />
-                        <span className="text-[0.85rem] font-body text-foreground">Order updates</span>
-                        <span className="text-[0.625rem] text-muted-foreground font-body">(required)</span>
-                      </label>
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" checked={promoEmails} onChange={e => { setPromoEmails(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
-                        <span className="text-[0.85rem] font-body text-foreground">Promotions & new arrivals</span>
-                      </label>
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" checked={stylingEmails} onChange={e => { setStylingEmails(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
-                        <span className="text-[0.85rem] font-body text-foreground">Styling tips & consultation reminders</span>
-                      </label>
+                    <h3 className="font-body text-sm font-medium mb-4 text-foreground">Email Notifications</h3>
+                    <div className="space-y-4">
+                      {/* Order Updates — locked on */}
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
+                        <div className="flex-1">
+                          <p className="text-[0.85rem] font-body font-medium text-foreground">Order Updates</p>
+                          <p className="text-[0.7rem] text-muted-foreground font-body">Confirmations, dispatch notifications and delivery updates</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Lock className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />
+                          <div className="w-11 h-6 bg-primary rounded-full relative cursor-not-allowed opacity-70">
+                            <div className="absolute right-0.5 top-0.5 w-5 h-5 bg-background rounded-full shadow" />
+                          </div>
+                        </div>
+                      </div>
+                      {/* Promotions — toggleable */}
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
+                        <div className="flex-1">
+                          <p className="text-[0.85rem] font-body font-medium text-foreground">Promotions & New Arrivals</p>
+                          <p className="text-[0.7rem] text-muted-foreground font-body">Sales, new collections and exclusive offers</p>
+                        </div>
+                        <button
+                          onClick={() => { setPromoEmails(!promoEmails); toast.success('Preference saved'); }}
+                          className={`w-11 h-6 rounded-full relative transition-colors ${promoEmails ? 'bg-primary' : 'bg-muted'}`}
+                        >
+                          <div className={`absolute top-0.5 w-5 h-5 bg-background rounded-full shadow transition-transform ${promoEmails ? 'right-0.5' : 'left-0.5'}`} />
+                        </button>
+                      </div>
+                      {/* Styling Tips — toggleable */}
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border">
+                        <div className="flex-1">
+                          <p className="text-[0.85rem] font-body font-medium text-foreground">Styling Tips & Consultation Reminders</p>
+                          <p className="text-[0.7rem] text-muted-foreground font-body">Personalised style advice and booking reminders</p>
+                        </div>
+                        <button
+                          onClick={() => { setStylingEmails(!stylingEmails); toast.success('Preference saved'); }}
+                          className={`w-11 h-6 rounded-full relative transition-colors ${stylingEmails ? 'bg-primary' : 'bg-muted'}`}
+                        >
+                          <div className={`absolute top-0.5 w-5 h-5 bg-background rounded-full shadow transition-transform ${stylingEmails ? 'right-0.5' : 'left-0.5'}`} />
+                        </button>
+                      </div>
                     </div>
-                    <p className="text-[0.65rem] text-muted-foreground font-body mt-2">
-                      Your email preferences help us tailor communications. Opting out of promotional emails is recorded as a signal in our engagement model.
-                    </p>
                   </div>
+
+                  {/* Saved Addresses */}
                   <div>
-                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Other Notifications</h3>
-                    <div className="space-y-3">
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" checked={rewardsMilestones} onChange={e => { setRewardsMilestones(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
-                        <span className="text-[0.85rem] font-body text-foreground">Rewards milestones</span>
-                      </label>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Saved Addresses</h3>
+                    <div className="border border-border p-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-[0.85rem] font-body text-foreground">14 George Street, Edinburgh, EH2 2PF</p>
+                      </div>
+                      <Button variant="ghost" size="sm" className="text-[0.75rem]">Edit</Button>
                     </div>
                   </div>
+
+                  {/* Payment Methods */}
+                  <div>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Payment Methods</h3>
+                    <div className="border border-border p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <CreditCard className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
+                        <p className="text-[0.85rem] font-body text-foreground">Visa ending in 4242</p>
+                      </div>
+                      <Button variant="ghost" size="sm" className="text-[0.75rem] text-destructive">Remove</Button>
+                    </div>
+                  </div>
+
+                  {/* Delete Account */}
                   <div className="border-t border-border pt-6">
                     <Button variant="destructive" size="sm">Delete Account</Button>
                   </div>
