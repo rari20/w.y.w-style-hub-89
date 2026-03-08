@@ -7,7 +7,7 @@ interface MusicContextType {
 
 const MusicContext = createContext<MusicContextType>({ isPlaying: false, toggleMusic: () => {} });
 
-const AUDIO_URL = 'https://cdn.pixabay.com/audio/2024/11/26/audio_fe0e4498d3.mp3';
+const AUDIO_URL = 'https://cdn.pixabay.com/audio/2022/02/23/audio_ea70ad08e0.mp3';
 const TARGET_VOLUME = 0.18;
 
 export function MusicProvider({ children }: { children: ReactNode }) {

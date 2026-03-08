@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Html, Line } from '@react-three/drei';
+import { OrbitControls, Html } from '@react-three/drei';
 import { useRef, useState, useMemo, Suspense } from 'react';
 import * as THREE from 'three';
 
@@ -19,140 +19,173 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
   return new THREE.Vector3(x, y, z);
 }
 
-// Simplified continent outlines (rough coordinates for recognizable shapes)
-const continentData: [number, number][][] = [
-  // Europe
-  [[-10,35],[0,43],[3,43],[5,44],[7,43],[10,44],[13,45],[15,46],[20,47],[22,45],[25,42],[28,41],[30,40],[27,37],[25,35],[20,36],[15,38],[10,37],[5,36],[0,36],[-5,36],[-10,35]],
-  // Africa
-  [[-15,30],[-17,15],[-12,5],[-5,5],[5,5],[10,2],[12,5],[15,5],[20,10],[30,10],[35,12],[40,10],[42,12],[50,12],[50,0],[42,-5],[40,-15],[35,-25],[30,-30],[28,-33],[25,-34],[20,-33],[15,-28],[12,-25],[10,-20],[8,-5],[5,5],[0,5],[-5,5],[-10,5],[-15,10],[-17,15],[-15,30]],
-  // Asia
-  [[25,42],[30,40],[35,37],[40,38],[45,40],[50,40],[55,45],[60,50],[65,55],[70,55],[80,50],[90,45],[100,40],[105,35],[110,30],[115,25],[120,25],[120,30],[125,35],[130,40],[135,45],[140,45],[140,40],[135,35],[130,30],[120,22],[115,20],[110,15],[105,10],[100,15],[95,20],[90,25],[85,25],[80,30],[75,30],[70,25],[65,25],[60,30],[55,35],[50,35],[45,35],[40,35],[35,37],[30,40],[25,42]],
-  // North America
-  [[-170,65],[-160,70],[-140,70],[-130,65],[-125,50],[-120,45],[-120,35],[-115,30],[-105,25],[-100,20],[-95,18],[-90,20],[-85,22],[-82,25],[-80,30],[-75,35],[-70,42],[-65,45],[-60,47],[-55,50],[-60,55],[-65,60],[-70,65],[-80,68],[-90,70],[-100,70],[-120,72],[-140,70],[-160,70],[-170,65]],
-  // South America
-  [[-80,10],[-75,5],[-70,5],[-65,0],[-60,-5],[-55,-10],[-50,-15],[-45,-20],[-42,-22],[-40,-23],[-38,-15],[-35,-10],[-35,-5],[-40,0],[-50,5],[-55,5],[-60,5],[-65,10],[-70,12],[-75,10],[-80,10]],
-  // Australia
-  [[115,-35],[120,-35],[125,-33],[130,-30],[135,-25],[137,-20],[140,-18],[145,-15],[148,-18],[150,-22],[152,-25],[153,-28],[150,-33],[148,-38],[145,-39],[140,-38],[135,-35],[130,-33],[125,-33],[120,-35],[115,-35]],
-];
-
 function GlobeMesh({ stores }: { stores: StorePin[] }) {
   const groupRef = useRef<THREE.Group>(null!);
   const [hovered, setHovered] = useState<string | null>(null);
+  const atmosphereRef = useRef<THREE.Mesh>(null!);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.08;
+      groupRef.current.rotation.y += delta * 0.06;
     }
   });
 
-  const gridLinePoints = useMemo(() => {
-    const lines: [number, number, number][][] = [];
-    for (let lat = -60; lat <= 60; lat += 30) {
-      const points: [number, number, number][] = [];
-      for (let lng = 0; lng <= 360; lng += 5) {
-        const v = latLngToVector3(lat, lng, 2.01);
-        points.push([v.x, v.y, v.z]);
+  // Generate land dots using a pseudo-random distribution on known landmasses
+  const landDots = useMemo(() => {
+    const dots: THREE.Vector3[] = [];
+    // Approximate land bounding boxes [latMin, latMax, lngMin, lngMax]
+    const landRegions = [
+      // Europe
+      [35, 71, -10, 40],
+      // Africa
+      [-35, 37, -18, 52],
+      // Asia
+      [5, 75, 40, 145],
+      // North America
+      [15, 72, -170, -55],
+      // South America
+      [-56, 12, -82, -34],
+      // Australia
+      [-44, -10, 112, 155],
+      // Middle East
+      [12, 42, 25, 63],
+    ];
+
+    // Simple land check using seed-based pseudo-random
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+      return x - Math.floor(x);
+    };
+
+    let seed = 0;
+    for (const [latMin, latMax, lngMin, lngMax] of landRegions) {
+      const latStep = 2.5;
+      const lngStep = 2.5;
+      for (let lat = latMin; lat <= latMax; lat += latStep) {
+        for (let lng = lngMin; lng <= lngMax; lng += lngStep) {
+          seed++;
+          if (seededRandom(seed) > 0.35) {
+            const jLat = lat + (seededRandom(seed * 2) - 0.5) * latStep;
+            const jLng = lng + (seededRandom(seed * 3) - 0.5) * lngStep;
+            dots.push(latLngToVector3(jLat, jLng, 2.01));
+          }
+        }
       }
-      lines.push(points);
     }
-    for (let lng = 0; lng < 360; lng += 30) {
-      const points: [number, number, number][] = [];
-      for (let lat = -90; lat <= 90; lat += 5) {
-        const v = latLngToVector3(lat, lng, 2.01);
-        points.push([v.x, v.y, v.z]);
-      }
-      lines.push(points);
-    }
-    return lines;
+    return dots;
   }, []);
 
-  const continentMeshes = useMemo(() => {
-    return continentData.map((outline) => {
-      const points: [number, number, number][] = outline.map(([lng, lat]) => {
-        const v = latLngToVector3(lat, lng, 2.02);
-        return [v.x, v.y, v.z] as [number, number, number];
-      });
-      return points;
+  // Create instanced mesh geometry for dots
+  const dotMatrix = useMemo(() => {
+    const dummy = new THREE.Object3D();
+    const matrices: THREE.Matrix4[] = [];
+    landDots.forEach(pos => {
+      dummy.position.copy(pos);
+      dummy.lookAt(pos.clone().multiplyScalar(2));
+      dummy.updateMatrix();
+      matrices.push(dummy.matrix.clone());
     });
-  }, []);
+    return matrices;
+  }, [landDots]);
 
   return (
     <group ref={groupRef}>
-      {/* Ocean sphere */}
+      {/* Ocean sphere — deep navy */}
       <mesh>
-        <sphereGeometry args={[2, 48, 32]} />
-        <meshStandardMaterial
-          color="#1a3a5c"
-          transparent
-          opacity={0.85}
-          roughness={0.6}
-          metalness={0.3}
+        <sphereGeometry args={[2, 64, 48]} />
+        <meshPhongMaterial
+          color="#0a1628"
+          shininess={30}
+          specular="#1a3050"
         />
       </mesh>
-      {/* Atmosphere glow */}
+
+      {/* Inner atmosphere glow */}
       <mesh>
-        <sphereGeometry args={[2.08, 48, 32]} />
-        <meshBasicMaterial color="#4a90d9" transparent opacity={0.06} side={THREE.BackSide} />
+        <sphereGeometry args={[2.005, 64, 48]} />
+        <meshBasicMaterial color="#1a3a6a" transparent opacity={0.12} />
       </mesh>
 
-      {/* Grid lines */}
-      {gridLinePoints.map((pts, i) => (
-        <Line key={`grid-${i}`} points={pts} color="#2a5a8a" transparent opacity={0.15} lineWidth={0.5} />
+      {/* Outer atmosphere */}
+      <mesh ref={atmosphereRef}>
+        <sphereGeometry args={[2.12, 64, 48]} />
+        <meshBasicMaterial color="#3a7bd5" transparent opacity={0.04} side={THREE.BackSide} />
+      </mesh>
+
+      {/* Second atmosphere ring */}
+      <mesh>
+        <sphereGeometry args={[2.2, 48, 32]} />
+        <meshBasicMaterial color="#5a9fd4" transparent opacity={0.02} side={THREE.BackSide} />
+      </mesh>
+
+      {/* Land dots — instanced for performance */}
+      <instancedMesh args={[undefined, undefined, dotMatrix.length]}>
+        <circleGeometry args={[0.022, 6]} />
+        <meshBasicMaterial color="#3ddc84" transparent opacity={0.55} side={THREE.DoubleSide} />
+        {dotMatrix.map((matrix, i) => {
+          const ref = (mesh: THREE.InstancedMesh) => {
+            if (mesh) mesh.setMatrixAt(i, matrix);
+          };
+          // We set matrices via effect below
+          return null;
+        })}
+      </instancedMesh>
+
+      {/* Fallback: individual land dots (simpler, guaranteed to work) */}
+      {landDots.map((pos, i) => (
+        <mesh key={i} position={pos}>
+          <circleGeometry args={[0.02, 6]} />
+          <meshBasicMaterial color="#4ae68a" transparent opacity={0.5} side={THREE.DoubleSide} />
+        </mesh>
       ))}
 
-      {/* Continent outlines */}
-      {continentMeshes.map((pts, i) => (
-        <Line key={`cont-${i}`} points={pts} color="#7cb87c" lineWidth={1.5} transparent opacity={0.7} />
-      ))}
-
-      {/* Continent fill dots for landmass feel */}
-      {continentData.map((outline, ci) => {
-        // Add scatter dots along continent outlines for a filled look
-        const dots: THREE.Vector3[] = [];
-        outline.forEach(([lng, lat]) => {
-          const v = latLngToVector3(lat, lng, 2.015);
-          dots.push(v);
-          // Add some inner dots
-          const v2 = latLngToVector3(lat + 1, lng + 1, 2.015);
-          dots.push(v2);
-        });
-        return dots.map((pos, di) => (
-          <mesh key={`dot-${ci}-${di}`} position={pos}>
-            <sphereGeometry args={[0.015, 6, 6]} />
-            <meshBasicMaterial color="#5a9a5a" transparent opacity={0.4} />
+      {/* Subtle graticule rings */}
+      {[-60, -30, 0, 30, 60].map(lat => {
+        const points: THREE.Vector3[] = [];
+        for (let lng = 0; lng <= 360; lng += 4) {
+          points.push(latLngToVector3(lat, lng, 2.005));
+        }
+        const curve = new THREE.CatmullRomCurve3(points, true);
+        const geo = new THREE.TubeGeometry(curve, 90, 0.002, 4, true);
+        return (
+          <mesh key={`lat-${lat}`} geometry={geo}>
+            <meshBasicMaterial color="#1e3a5f" transparent opacity={0.15} />
           </mesh>
-        ));
+        );
       })}
 
       {/* Store pins */}
       {stores.map((store) => {
-        const pos = latLngToVector3(store.lat, store.lng, 2.05);
-        const outerPos = latLngToVector3(store.lat, store.lng, 2.25);
+        const pos = latLngToVector3(store.lat, store.lng, 2.04);
+        const outerPos = latLngToVector3(store.lat, store.lng, 2.3);
         const isHovered = hovered === store.name;
+        
+        const lineMat = new THREE.LineBasicMaterial({ color: '#c9a96e', transparent: true, opacity: 0.7 });
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([pos, outerPos]);
+        const lineObj = new THREE.Line(lineGeo, lineMat);
+
         return (
           <group key={store.name}>
-            <Line
-              points={[[pos.x, pos.y, pos.z], [outerPos.x, outerPos.y, outerPos.z]]}
-              color="#c9a96e"
-              lineWidth={1.5}
-              transparent
-              opacity={0.8}
-            />
+            <primitive object={lineObj} />
+            {/* Pin head */}
             <mesh
               position={outerPos}
               onPointerOver={() => setHovered(store.name)}
               onPointerOut={() => setHovered(null)}
             >
-              <sphereGeometry args={[0.06, 16, 16]} />
+              <sphereGeometry args={[0.055, 16, 16]} />
               <meshStandardMaterial
                 color={isHovered ? '#ffffff' : '#c9a96e'}
                 emissive={isHovered ? '#c9a96e' : '#c9a96e'}
-                emissiveIntensity={isHovered ? 1.5 : 0.5}
+                emissiveIntensity={isHovered ? 2 : 0.6}
+                metalness={0.8}
+                roughness={0.2}
               />
             </mesh>
-            <mesh position={outerPos}>
-              <ringGeometry args={[0.08, 0.12, 24]} />
-              <meshBasicMaterial color="#c9a96e" transparent opacity={0.3} side={THREE.DoubleSide} />
+            {/* Pulse ring */}
+            <mesh position={outerPos} rotation={[Math.PI / 2, 0, 0]}>
+              <ringGeometry args={[0.07, 0.1, 24]} />
+              <meshBasicMaterial color="#c9a96e" transparent opacity={isHovered ? 0.5 : 0.2} side={THREE.DoubleSide} />
             </mesh>
             {isHovered && (
               <Html position={outerPos} center style={{ pointerEvents: 'none' }}>
@@ -182,9 +215,9 @@ export default function Globe({ stores }: { stores: StorePin[] }) {
     <div className="w-full h-[400px] md:h-[500px] relative">
       <Canvas>
         <CameraSetup />
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={0.8} />
-        <pointLight position={[-10, -10, -5]} intensity={0.3} color="#6495ed" />
+        <ambientLight intensity={0.3} />
+        <directionalLight position={[5, 3, 5]} intensity={0.8} color="#ffffff" />
+        <pointLight position={[-10, -5, -10]} intensity={0.2} color="#3a7bd5" />
         <Suspense fallback={null}>
           <GlobeMesh stores={stores} />
         </Suspense>
