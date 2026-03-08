@@ -69,12 +69,12 @@ export const riskColors: Record<string, string> = {
 };
 
 export const socialPlatforms = [
-  { name: 'Instagram', handle: '@wyw.fashion', followers: '12,400', link: 'https://instagram.com/wyw.fashion', color: 'bg-gradient-to-br from-pink-500 to-purple-600', iconBg: true },
-  { name: 'TikTok', handle: '@wywthelabel', followers: '8,200', link: 'https://tiktok.com/@wywthelabel', color: 'bg-foreground text-background' },
-  { name: 'Pinterest', handle: '@wywfashion', followers: '3,100', link: 'https://pinterest.com/wywfashion', color: 'bg-red-600 text-white' },
-  { name: 'Facebook', handle: 'W.Y.W Fashion', followers: '5,600', link: 'https://facebook.com/wywfashion', color: 'bg-blue-600 text-white' },
-  { name: 'X / Twitter', handle: '@wywfashion', followers: '2,900', link: 'https://x.com/wywfashion', color: 'bg-foreground text-background' },
-  { name: 'WhatsApp Business', handle: '+44 7700 000001', followers: '', link: 'https://wa.me/447700000001', color: 'bg-green-600 text-white' },
+  { name: 'Instagram', abbr: 'IG', handle: '@wyw.fashion', followers: '12,400', link: 'https://instagram.com/wyw.fashion', color: 'bg-gradient-to-br from-pink-500 to-purple-600 text-white' },
+  { name: 'TikTok', abbr: 'TK', handle: '@wywthelabel', followers: '8,200', link: 'https://tiktok.com/@wywthelabel', color: 'bg-foreground text-background' },
+  { name: 'Pinterest', abbr: 'PT', handle: '@wywfashion', followers: '3,100', link: 'https://pinterest.com/wywfashion', color: 'bg-red-600 text-white' },
+  { name: 'Facebook', abbr: 'FB', handle: 'W.Y.W Fashion', followers: '5,600', link: 'https://facebook.com/wywfashion', color: 'bg-blue-600 text-white' },
+  { name: 'X / Twitter', abbr: 'X', handle: '@wywfashion', followers: '2,900', link: 'https://x.com/wywfashion', color: 'bg-foreground text-background' },
+  { name: 'WhatsApp Business', abbr: 'WA', handle: '+44 7700 000001', followers: '', link: 'https://wa.me/447700000001', color: 'bg-[hsl(142,70%,45%)] text-white' },
 ];
 
 export const socialPostTemplates = [
