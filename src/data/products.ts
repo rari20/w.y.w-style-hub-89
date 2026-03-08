@@ -39,6 +39,8 @@ export type Product = {
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
   sizes: string[];
   colors: string[];
+  colorImages?: Record<string, string>;
+  material?: string;
   image: string;
   loyaltyPoints: number;
   inStock: boolean;
