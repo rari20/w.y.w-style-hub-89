@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, User, Menu, X, Moon, Sun, ShoppingBag } from 'lucide-react';
+import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
+import { useMusic } from '@/context/MusicContext';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Header() {
   const { totalItems } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { isPlaying, toggleMusic } = useMusic();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -91,6 +93,13 @@ export default function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
+          <button
+            onClick={toggleMusic}
+            className={`hidden md:flex p-2 transition-opacity hover:opacity-55 ${linkColor}`}
+            aria-label={isPlaying ? 'Mute music' : 'Play music'}
+          >
+            {isPlaying ? <Volume2 className="h-[18px] w-[18px]" strokeWidth={1.5} /> : <VolumeX className="h-[18px] w-[18px]" strokeWidth={1.5} />}
+          </button>
           <Link to="/shop" className="hidden md:flex">
             <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`}>
               <Search className="h-[18px] w-[18px]" strokeWidth={1.5} />
