@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Jost:wght@200;300;400;500;600&family=Pinyon+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -47,9 +47,8 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 27 73% 41%;
 
-    --font-display: 'Bodoni Moda', serif;
-    --font-body: 'Jost', sans-serif;
-    --font-script: 'Pinyon Script', cursive;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Jost', system-ui, sans-serif;
 
     --shadow-card: none;
     --shadow-elevated: none;
@@ -147,6 +146,15 @@
   h1 span::before, h1 span::after {
     display: none !important;
     content: none !important;
+  }
+
+  /* Global display font cap */
+  .font-display, [class*="font-display"] {
+    font-size: clamp(1rem, 3vw, 3.5rem);
+    line-height: 1.15;
+    text-shadow: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Focus states */

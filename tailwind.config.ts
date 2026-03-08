@@ -14,9 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Bodoni Moda", "serif"],
-        body: ["Jost", "sans-serif"],
-        script: ["Pinyon Script", "cursive"],
+        display: ["Playfair Display", "Georgia", "serif"],
+        body: ["Jost", "system-ui", "sans-serif"],
       },
       fontSize: {
         'xs': '0.625rem',
