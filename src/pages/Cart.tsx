@@ -4,14 +4,28 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Minus, Plus, X, Zap, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Cart() {
   const { items, updateQuantity, removeItem, totalPrice, totalPoints } = useCart();
+  const { user } = useAuth();
   const [coupon, setCoupon] = useState('');
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponDiscount, setCouponDiscount] = useState(0);
   const [usePoints, setUsePoints] = useState(false);
 
-  const vat = totalPrice * 0.2;
-  const deliveryFee = totalPrice >= 100 ? 0 : 3.99;
+  const subtotal = totalPrice;
+  const deliveryFee = subtotal >= 100 ? 0 : 3.95;
+  const vat = subtotal * 0.2;
+  const pointsValue = usePoints ? 8.47 : 0;
+  const total = subtotal + deliveryFee + vat - couponDiscount - pointsValue;
+
+  const applyCoupon = () => {
+    if (coupon.toUpperCase() === 'WYW10') {
+      setCouponDiscount(subtotal * 0.1);
+      setCouponApplied(true);
+    }
+  };
 
   if (items.length === 0) {
     return (
@@ -21,7 +35,7 @@ export default function Cart() {
           <h1 className="text-3xl md:text-4xl font-display mb-4 italic text-foreground">Your Basket is Empty</h1>
           <p className="text-muted-foreground mb-8 font-body font-light">Discover our latest collections and find something you love.</p>
           <Button variant="default" size="lg" asChild>
-            <Link to="/shop">Start Shopping</Link>
+            <Link to="/shop">Continue Shopping</Link>
           </Button>
         </div>
       </Layout>
@@ -37,14 +51,14 @@ export default function Cart() {
           {/* Items */}
           <div className="lg:col-span-2 space-y-4">
             {items.map(item => (
-              <div key={item.product.id} className="flex gap-4 p-4 border border-border">
+              <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 p-4 border border-border">
                 <img src={item.product.image} alt={item.product.name} className="w-24 h-32 object-cover" />
                 <div className="flex-1">
                   <div className="flex justify-between">
                     <div>
                       <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.brand}</p>
                       <h3 className="font-body font-medium text-[0.9375rem] text-foreground">{item.product.name}</h3>
-                      <p className="text-[0.75rem] text-muted-foreground mt-1 font-body">{item.selectedSize} · {item.selectedColor}</p>
+                      <p className="text-[0.75rem] text-muted-foreground mt-1 font-body">Size: {item.selectedSize}</p>
                     </div>
                     <button onClick={() => removeItem(item.product.id)} className="text-muted-foreground hover:text-foreground transition-colors">
                       <X className="h-4 w-4" strokeWidth={1.5} />
@@ -60,49 +74,55 @@ export default function Cart() {
                         <Plus className="h-3 w-3" />
                       </button>
                     </div>
-                    <div className="text-right">
-                      <p className="font-body font-medium text-[0.9375rem] text-foreground">£{(item.product.price * item.quantity).toFixed(2)}</p>
-                      <p className="text-[0.625rem] text-muted-foreground flex items-center gap-1 justify-end font-body">
-                        <Zap className="h-3 w-3 text-accent" strokeWidth={1.5} /> +{item.product.loyaltyPoints * item.quantity} pts
-                      </p>
-                    </div>
+                    <p className="font-body font-medium text-[0.9375rem] text-foreground">£{(item.product.price * item.quantity).toFixed(2)}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Summary */}
-          <div className="bg-muted p-6 h-fit">
+          {/* Summary - sticky on desktop */}
+          <div className="lg:sticky lg:top-[80px] lg:self-start bg-muted p-6 h-fit">
             <h2 className="font-display text-xl mb-6 italic text-foreground">Order Summary</h2>
 
             <div className="space-y-3 text-[0.85rem] font-body mb-6">
-              <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span className="text-foreground">£{totalPrice.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span className="text-foreground">{deliveryFee === 0 ? 'Free' : `£${deliveryFee.toFixed(2)}`}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span className="text-foreground">£{subtotal.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span className="text-foreground">{deliveryFee === 0 ? 'FREE' : `£${deliveryFee.toFixed(2)}`}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">VAT (20%)</span><span className="text-foreground">£{vat.toFixed(2)}</span></div>
+              {couponApplied && <div className="flex justify-between text-primary"><span>Discount</span><span>−£{couponDiscount.toFixed(2)}</span></div>}
+              {usePoints && <div className="flex justify-between text-primary"><span>Points Redemption</span><span>−£{pointsValue.toFixed(2)}</span></div>}
             </div>
 
+            {/* Coupon */}
             <div className="mb-4">
               <div className="flex gap-2">
-                <input type="text" placeholder="Coupon / Gift Card" value={coupon} onChange={e => setCoupon(e.target.value)}
+                <input type="text" placeholder="Coupon code" value={coupon} onChange={e => setCoupon(e.target.value)}
                   className="flex-1 bg-background px-3 py-2 text-[0.85rem] font-body border-0 focus:outline-none focus:ring-2 focus:ring-accent text-foreground" />
-                <Button variant="outline" size="sm">Apply</Button>
+                <Button variant="outline" size="sm" onClick={applyCoupon}>Apply</Button>
               </div>
             </div>
 
-            <label className="flex items-center gap-3 mb-6 cursor-pointer">
-              <input type="checkbox" checked={usePoints} onChange={e => setUsePoints(e.target.checked)} className="accent-accent" />
-              <span className="text-[0.85rem] font-body text-foreground">Redeem loyalty points</span>
-            </label>
+            {/* Loyalty points */}
+            {user && (
+              <label className="flex items-center gap-3 mb-4 cursor-pointer">
+                <input type="checkbox" checked={usePoints} onChange={e => setUsePoints(e.target.checked)} className="accent-accent" />
+                <span className="text-[0.85rem] font-body text-foreground">Redeem loyalty points</span>
+              </label>
+            )}
+            {usePoints && (
+              <p className="text-[0.75rem] text-muted-foreground font-body mb-4">(847 points available = £8.47 off)</p>
+            )}
+
+            <p className="text-[0.75rem] text-primary font-body mb-4 flex items-center gap-1">
+              <Zap className="h-3 w-3 text-accent" strokeWidth={1.5} />
+              You will earn {Math.floor(subtotal)} points on this order
+            </p>
 
             <div className="border-t border-border pt-4 mb-6">
               <div className="flex justify-between text-[1rem] font-body font-medium">
                 <span className="text-foreground">Total</span>
-                <span className="text-foreground">£{(totalPrice + deliveryFee + vat).toFixed(2)}</span>
+                <span className="text-foreground">£{total.toFixed(2)}</span>
               </div>
-              <p className="text-[0.625rem] text-muted-foreground mt-1 flex items-center gap-1 font-body">
-                <Zap className="h-3 w-3 text-accent" strokeWidth={1.5} /> You'll earn {totalPoints} points
-              </p>
             </div>
 
             <Button variant="default" size="lg" className="w-full" asChild>
