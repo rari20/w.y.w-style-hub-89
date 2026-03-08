@@ -112,7 +112,7 @@ export default function Landing() {
           >
             <Link
               to="/home"
-              className="bg-white text-foreground font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 hover:bg-white/90 transition-all duration-[400ms]"
+              className="bg-white !text-[#1C1410] font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 hover:bg-transparent hover:!text-white hover:border-white border border-white transition-all duration-[400ms]"
             >
               Shop Now
             </Link>

@@ -20,26 +20,26 @@ export default function Rewards() {
 
         <Reveal>
           <div className="text-center mb-16">
-            <Zap className="h-10 w-10 mx-auto text-accent mb-4" strokeWidth={1.5} />
-            <h1 className="text-5xl md:text-7xl font-display mb-4 text-foreground">W.Y.W Rewards</h1>
-            <p className="text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed font-body font-light">
+            <Zap className="h-8 w-8 mx-auto text-accent mb-4" strokeWidth={1.5} />
+            <h1 className="text-4xl md:text-6xl font-display mb-4 text-foreground">W.Y.W Rewards</h1>
+            <p className="text-muted-foreground text-base max-w-lg mx-auto leading-relaxed font-body font-light">
               Earn 1 point for every £1 spent. Unlock tiers and enjoy exclusive perks.
             </p>
           </div>
         </Reveal>
 
-        {/* Tiers */}
-        <div className="grid md:grid-cols-4 gap-4 mb-16">
+        {/* Tiers — responsive, no overflow */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border mb-16">
           {tiers.map((tier, i) => (
-            <Reveal key={tier.name} delay={i * 80}>
-              <div className={`p-6 ${i === 3 ? 'border-2 border-accent' : 'border border-border'}`}>
-                <tier.icon className="h-6 w-6 text-accent mb-3" strokeWidth={1.5} />
-                <h3 className="font-display text-2xl mt-1 mb-1 text-foreground">{tier.name}</h3>
-                <p className="text-[0.75rem] text-accent mb-4 font-body">{tier.range}</p>
-                <ul className="space-y-2">
+            <Reveal key={tier.name} delay={i * 60}>
+              <div className={`bg-background p-6 h-full flex flex-col ${i === 3 ? 'ring-2 ring-accent ring-inset' : ''}`}>
+                <tier.icon className="h-5 w-5 text-accent mb-3" strokeWidth={1.5} />
+                <h3 className="font-display text-xl mb-1 text-foreground">{tier.name}</h3>
+                <p className="text-[0.7rem] text-muted-foreground mb-4 font-body tracking-wide">{tier.range}</p>
+                <ul className="space-y-2 flex-1">
                   {tier.benefits.map(b => (
-                    <li key={b} className="text-[0.8125rem] text-muted-foreground flex items-start gap-2 font-body font-light">
-                      <Zap className="h-3 w-3 text-accent mt-1 shrink-0" strokeWidth={1.5} />
+                    <li key={b} className="text-[0.8rem] text-muted-foreground flex items-start gap-2 font-body font-light leading-snug">
+                      <Zap className="h-3 w-3 text-accent mt-0.5 shrink-0" strokeWidth={1.5} />
                       {b}
                     </li>
                   ))}
@@ -52,7 +52,7 @@ export default function Rewards() {
         {/* How it works */}
         <Reveal>
           <div className="bg-muted p-8 mb-16">
-            <h2 className="text-3xl font-display mb-6 text-center italic text-foreground">How It Works</h2>
+            <h2 className="text-2xl font-display mb-6 text-center italic text-foreground">How It Works</h2>
             <div className="grid md:grid-cols-3 gap-8 text-center">
               {[
                 { num: '1', title: 'Shop', desc: 'Earn 1 point per £1 spent online or in-store.' },
@@ -60,9 +60,9 @@ export default function Rewards() {
                 { num: '3', title: 'Redeem', desc: 'Use points at checkout for discounts.' },
               ].map(item => (
                 <div key={item.num}>
-                  <div className="w-12 h-12 bg-accent text-accent-foreground flex items-center justify-center mx-auto mb-3 font-display text-xl">{item.num}</div>
-                  <h3 className="font-display text-xl mb-2 text-foreground">{item.title}</h3>
-                  <p className="text-[0.8125rem] text-muted-foreground font-body font-light">{item.desc}</p>
+                  <div className="w-10 h-10 bg-accent text-accent-foreground flex items-center justify-center mx-auto mb-3 font-display text-lg">{item.num}</div>
+                  <h3 className="font-display text-lg mb-2 text-foreground">{item.title}</h3>
+                  <p className="text-[0.8rem] text-muted-foreground font-body font-light">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -72,8 +72,8 @@ export default function Rewards() {
         {/* Referral */}
         <Reveal>
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-display mb-4 italic text-foreground">Refer a Friend</h2>
-            <p className="text-muted-foreground max-w-md mx-auto mb-6 font-body font-light">
+            <h2 className="text-2xl font-display mb-4 italic text-foreground">Refer a Friend</h2>
+            <p className="text-muted-foreground max-w-md mx-auto mb-6 font-body font-light text-[0.9rem]">
               Share your unique referral code. When your friend makes their first purchase, you both get a discount.
             </p>
             <Button variant="default" size="lg" asChild>

@@ -5,6 +5,12 @@ import { stores } from '@/data/products';
 import { MapPin, Phone, Clock, Package, QrCode, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const storeMapUrls: Record<string, string> = {
+  's1': 'https://www.google.com/maps/search/?api=1&query=14+George+Street+Edinburgh+EH2+2PF',
+  's2': 'https://www.google.com/maps/search/?api=1&query=55+Buchanan+Street+Glasgow+G1+3HL',
+  's3': 'https://www.google.com/maps/search/?api=1&query=22+Marylebone+High+Street+London+W1U+4PR',
+};
+
 export default function StoreLocator() {
   return (
     <Layout>
@@ -22,20 +28,31 @@ export default function StoreLocator() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stores.map((store, i) => {
             const cityName = store.name.replace('W.Y.W ', '');
+            const mapsUrl = storeMapUrls[store.id] || '#';
             return (
               <Reveal key={store.id} delay={i * 80}>
-                <div className="border border-border p-8 h-full">
+                <div className="border border-border p-8 h-full flex flex-col">
                   <p className="font-body text-[0.625rem] tracking-[0.18em] uppercase text-muted-foreground mb-1">W.Y.W</p>
                   <h2 className="font-display text-[2rem] italic leading-[1.1] mb-6 text-foreground">{cityName}</h2>
                   <div className="space-y-3 text-[0.85rem] font-body font-light">
-                    <div className="flex items-start gap-3">
+                    <a
+                      href={mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 group hover:text-primary transition-colors"
+                    >
                       <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
-                      <span className="text-foreground">{store.address}</span>
-                    </div>
-                    <div className="flex items-start gap-3">
+                      <span className="text-foreground group-hover:text-primary transition-colors">
+                        {store.address}
+                        <span className="block text-[0.65rem] tracking-[0.08em] uppercase text-accent opacity-0 group-hover:opacity-100 transition-opacity mt-0.5">
+                          Open in Maps
+                        </span>
+                      </span>
+                    </a>
+                    <a href={`tel:${store.phone.replace(/\s/g, '')}`} className="flex items-start gap-3 hover:text-primary transition-colors">
                       <Phone className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
                       <span className="text-foreground">{store.phone}</span>
-                    </div>
+                    </a>
                     <div className="flex items-start gap-3">
                       <Clock className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
                       <span className="text-foreground">{store.hours}</span>
@@ -51,9 +68,14 @@ export default function StoreLocator() {
                       ))}
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="mt-6 w-full">
-                    <ExternalLink className="h-3 w-3 mr-2" strokeWidth={1.5} /> Get Directions
-                  </Button>
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 w-full inline-flex items-center justify-center gap-2 border border-border px-4 py-2.5 font-body text-[0.7rem] uppercase tracking-[0.14em] text-foreground hover:border-foreground transition-colors"
+                  >
+                    <ExternalLink className="h-3 w-3" strokeWidth={1.5} /> Get Directions
+                  </a>
                 </div>
               </Reveal>
             );
