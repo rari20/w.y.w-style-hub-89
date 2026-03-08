@@ -16,6 +16,7 @@ const navLinks = [
 export default function Header() {
   const { totalItems } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { isPlaying, toggleMusic } = useMusic();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
