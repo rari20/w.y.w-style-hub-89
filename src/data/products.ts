@@ -113,6 +113,8 @@ export const products: Product[] = [
   {
     id: 'lw6', name: 'Structured Wool Blazer', brand: 'Lumenwear', price: 495,
     category: 'outerwear', sizes: ['XS','S','M','L','XL'], colors: ['Camel','Black'],
+    colorImages: { 'Camel': productLw6, 'Black': productLw7 },
+    material: 'Italian Wool',
     image: productLw6, loyaltyPoints: 495, inStock: true, isNew: true,
     description: 'Impeccably tailored single-breasted blazer in Italian wool. Peak lapel and structured shoulder.',
     storeAvailability: defaultStores, occasion: ['workwear'],
