@@ -1,5 +1,5 @@
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
+import { OrbitControls, Html, Line } from '@react-three/drei';
 import { useRef, useState, useMemo, Suspense } from 'react';
 import * as THREE from 'three';
 
@@ -20,47 +20,43 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
 }
 
 function GlobeMesh({ stores }: { stores: StorePin[] }) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null!);
   const [hovered, setHovered] = useState<string | null>(null);
 
   useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.08;
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.08;
     }
   });
 
-  const wireframeGeo = useMemo(() => {
-    const geo = new THREE.SphereGeometry(2, 36, 24);
-    return geo;
-  }, []);
-
-  const gridLines = useMemo(() => {
-    const lines: THREE.BufferGeometry[] = [];
+  const gridLinePoints = useMemo(() => {
+    const lines: [number, number, number][][] = [];
     // Latitude lines
     for (let lat = -60; lat <= 60; lat += 30) {
-      const points: THREE.Vector3[] = [];
+      const points: [number, number, number][] = [];
       for (let lng = 0; lng <= 360; lng += 5) {
-        points.push(latLngToVector3(lat, lng, 2.01));
+        const v = latLngToVector3(lat, lng, 2.01);
+        points.push([v.x, v.y, v.z]);
       }
-      const geo = new THREE.BufferGeometry().setFromPoints(points);
-      lines.push(geo);
+      lines.push(points);
     }
     // Longitude lines
     for (let lng = 0; lng < 360; lng += 30) {
-      const points: THREE.Vector3[] = [];
+      const points: [number, number, number][] = [];
       for (let lat = -90; lat <= 90; lat += 5) {
-        points.push(latLngToVector3(lat, lng, 2.01));
+        const v = latLngToVector3(lat, lng, 2.01);
+        points.push([v.x, v.y, v.z]);
       }
-      const geo = new THREE.BufferGeometry().setFromPoints(points);
-      lines.push(geo);
+      lines.push(points);
     }
     return lines;
   }, []);
 
   return (
-    <group ref={meshRef}>
+    <group ref={groupRef}>
       {/* Globe sphere */}
-      <mesh geometry={wireframeGeo}>
+      <mesh>
+        <sphereGeometry args={[2, 36, 24]} />
         <meshStandardMaterial
           color="#1a1a2e"
           transparent
@@ -69,15 +65,14 @@ function GlobeMesh({ stores }: { stores: StorePin[] }) {
           metalness={0.2}
         />
       </mesh>
-      <mesh geometry={wireframeGeo}>
+      <mesh>
+        <sphereGeometry args={[2, 36, 24]} />
         <meshBasicMaterial wireframe color="#334155" transparent opacity={0.15} />
       </mesh>
 
       {/* Grid lines */}
-      {gridLines.map((geo, i) => (
-        <line key={i} geometry={geo}>
-          <lineBasicMaterial color="#475569" transparent opacity={0.2} />
-        </line>
+      {gridLinePoints.map((pts, i) => (
+        <Line key={i} points={pts} color="#475569" transparent opacity={0.2} lineWidth={0.5} />
       ))}
 
       {/* Store pins */}
@@ -88,9 +83,13 @@ function GlobeMesh({ stores }: { stores: StorePin[] }) {
         return (
           <group key={store.name}>
             {/* Pin line */}
-            <line geometry={new THREE.BufferGeometry().setFromPoints([pos, outerPos])}>
-              <lineBasicMaterial color="#c9a96e" transparent opacity={0.8} />
-            </line>
+            <Line
+              points={[[pos.x, pos.y, pos.z], [outerPos.x, outerPos.y, outerPos.z]]}
+              color="#c9a96e"
+              lineWidth={1.5}
+              transparent
+              opacity={0.8}
+            />
             {/* Pin dot */}
             <mesh
               position={outerPos}
@@ -105,7 +104,7 @@ function GlobeMesh({ stores }: { stores: StorePin[] }) {
               />
             </mesh>
             {/* Pulse ring */}
-            <mesh position={outerPos} rotation={[0, 0, 0]}>
+            <mesh position={outerPos}>
               <ringGeometry args={[0.08, 0.12, 24]} />
               <meshBasicMaterial color="#c9a96e" transparent opacity={0.3} side={THREE.DoubleSide} />
             </mesh>
