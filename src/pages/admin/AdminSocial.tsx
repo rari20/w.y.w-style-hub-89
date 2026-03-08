@@ -30,8 +30,8 @@ export default function AdminSocial() {
             <Card key={p.name}>
               <CardContent className="p-5 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg ${p.color} flex items-center justify-center text-white text-xs font-bold font-body shrink-0`}>
-                    {p.name.charAt(0)}
+                  <div className={`w-8 h-8 rounded-full ${p.color} flex items-center justify-center text-[10px] font-bold font-body shrink-0`}>
+                    {p.abbr}
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-body font-medium">{p.name}</p>
