@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import {
   Users, Activity, AlertTriangle, Star, Send, Tag, UserPlus, Bell, ShoppingBag, RotateCcw, Zap, Check,
 } from 'lucide-react';
-import { recentOrders, adminNotifications, type AdminNotification } from '@/data/adminData';
+import { adminNotifications, type AdminNotification } from '@/data/adminData';
 import { useState } from 'react';
 
 const kpis = [
