@@ -25,11 +25,12 @@ export default function Account() {
   if (!isLoggedIn) {
     return (
       <Layout>
-        <div className="wyw-container py-16 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-display mb-12 text-center italic text-foreground">My Account</h1>
-          <div className="grid md:grid-cols-2 gap-16">
+        <div className="wyw-container pt-24 pb-16 max-w-4xl mx-auto">
+          <h1 className="text-3xl md:text-5xl font-display mb-10 md:mb-12 text-center italic text-foreground">My Account</h1>
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16">
+            {/* Sign In */}
             <div>
-              <h2 className="font-display text-2xl mb-6 italic text-foreground">Sign In</h2>
+              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Sign In</h2>
               <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Welcome back!'); }} className="space-y-5">
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
@@ -44,10 +45,12 @@ export default function Account() {
                 <Button variant="default" size="lg" type="submit" className="w-full">Sign In</Button>
               </form>
             </div>
+
+            {/* Create Account */}
             <div>
-              <h2 className="font-display text-2xl mb-6 italic text-foreground">Create Account</h2>
+              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Create Account</h2>
               <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Account created!'); }} className="space-y-5">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">First Name</label>
                     <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required
@@ -94,13 +97,13 @@ export default function Account() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
-        <h1 className="text-4xl md:text-5xl font-display mb-8 italic text-foreground">My Account</h1>
+      <div className="wyw-container pt-24 pb-8">
+        <h1 className="text-3xl md:text-5xl font-display mb-8 italic text-foreground">My Account</h1>
 
         <div className="grid lg:grid-cols-[220px_1fr] gap-0">
           {/* Sidebar */}
           <div className="lg:border-r border-border lg:pr-0 lg:sticky lg:top-[68px] lg:self-start">
-            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-0">
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-0 -mx-4 px-4 lg:mx-0 lg:px-0">
               {tabs.map(t => (
                 <button
                   key={t.id}
@@ -124,17 +127,17 @@ export default function Account() {
           <div className="lg:pl-8 pt-6 lg:pt-0">
             {tab === 'overview' && (
               <div className="space-y-6">
-                <div className="bg-secondary text-secondary-foreground p-6">
+                <div className="bg-secondary text-secondary-foreground p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display flex items-center gap-2 text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', lineHeight: 1.1 }}>
+                      <h3 className="font-display flex items-center gap-2 text-foreground text-xl md:text-2xl">
                         <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', lineHeight: 1.1 }}>847</p>
+                      <p className="font-display text-foreground text-xl md:text-2xl">847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
@@ -146,7 +149,7 @@ export default function Account() {
                 <div>
                   <h3 className="font-display text-xl mb-4 italic text-foreground">Recent Orders</h3>
                   <div className="border border-border p-4">
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                       <p className="text-[0.85rem] font-body font-medium text-foreground">Order #WYW-2026-0042</p>
                       <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Delivered</span>
                     </div>
@@ -154,17 +157,17 @@ export default function Account() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                   {[
                     { icon: Gift, label: 'Active Coupons', value: '2' },
                     { icon: MapPin, label: 'Saved Addresses', value: '1' },
                     { icon: CreditCard, label: 'Payment Methods', value: '1' },
                     { icon: Share2, label: 'Referral Code', value: 'WYW-JD2024' },
                   ].map(item => (
-                    <div key={item.label} className="border border-border p-4 text-center">
+                    <div key={item.label} className="border border-border p-3 md:p-4 text-center">
                       <item.icon className="h-5 w-5 mx-auto text-primary mb-2" strokeWidth={1.5} />
-                      <p className="text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{item.label}</p>
-                      <p className="font-body font-medium text-[0.85rem] mt-1 text-foreground">{item.value}</p>
+                      <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{item.label}</p>
+                      <p className="font-body font-medium text-[0.8rem] md:text-[0.85rem] mt-1 text-foreground break-all">{item.value}</p>
                     </div>
                   ))}
                 </div>
@@ -174,8 +177,8 @@ export default function Account() {
             {tab === 'orders' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Order History</h2>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-[0.85rem] font-body">
+                <div className="overflow-x-auto -mx-4 px-4 lg:mx-0 lg:px-0">
+                  <table className="w-full text-[0.85rem] font-body min-w-[500px]">
                     <thead>
                       <tr className="border-b border-border text-left">
                         <th className="py-3 text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground font-medium">Date</th>
@@ -210,17 +213,17 @@ export default function Account() {
             {tab === 'returns' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Return Tracking</h2>
-                <div className="border border-border p-6">
+                <div className="border border-border p-4 md:p-6">
                   <p className="text-[0.85rem] font-body font-medium mb-4 text-foreground">Return #RET-2026-0015</p>
-                  <div className="flex items-center gap-2 mb-6">
+                  <div className="flex items-center gap-1 md:gap-2 mb-6">
                     {['Initiated', 'Received', 'Inspected', 'Refunded'].map((step, i) => (
-                      <div key={step} className="flex items-center gap-2 flex-1">
-                        <div className={`w-6 h-6 flex items-center justify-center text-[10px] font-bold ${
+                      <div key={step} className="flex items-center gap-1 md:gap-2 flex-1">
+                        <div className={`w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-[9px] md:text-[10px] font-bold shrink-0 ${
                           i < 2 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
                         }`}>
                           {i < 2 ? <Check className="h-3 w-3" /> : i + 1}
                         </div>
-                        <span className="text-[0.75rem] hidden sm:inline text-foreground">{step}</span>
+                        <span className="text-[0.65rem] md:text-[0.75rem] hidden sm:inline text-foreground">{step}</span>
                         {i < 3 && <div className={`flex-1 h-0.5 ${i < 1 ? 'bg-primary' : 'bg-muted'}`} />}
                       </div>
                     ))}
@@ -240,17 +243,17 @@ export default function Account() {
             {tab === 'rewards' && (
               <div className="space-y-6">
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Rewards Wallet</h2>
-                <div className="bg-secondary p-6">
+                <div className="bg-secondary p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display text-2xl flex items-center gap-2 text-foreground">
+                      <h3 className="font-display text-xl md:text-2xl flex items-center gap-2 text-foreground">
                         <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points</p>
-                      <p className="font-display text-2xl text-foreground">847</p>
+                      <p className="font-display text-xl md:text-2xl text-foreground">847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1 mb-2">
@@ -283,15 +286,15 @@ export default function Account() {
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Consultations</h2>
                 <div className="space-y-4">
-                  <div className="border border-border p-6">
-                    <div className="flex items-center justify-between mb-2">
+                  <div className="border border-border p-4 md:p-6">
+                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                       <p className="text-[0.85rem] font-body font-medium text-foreground">Virtual Styling Session</p>
                       <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Upcoming</span>
                     </div>
                     <p className="text-[0.75rem] text-muted-foreground font-body">15 Mar 2026 · 14:00 · Virtual</p>
                   </div>
-                  <div className="border border-border p-6">
-                    <div className="flex items-center justify-between mb-2">
+                  <div className="border border-border p-4 md:p-6">
+                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
                       <p className="text-[0.85rem] font-body font-medium text-foreground">In-Store Wardrobe Review</p>
                       <span className="text-[0.625rem] bg-muted text-muted-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Completed</span>
                     </div>
@@ -303,12 +306,18 @@ export default function Account() {
 
             {tab === 'referral' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic text-foreground">Referral Code</h2>
-                <p className="text-muted-foreground text-[0.85rem] mb-6 font-body font-light">Share your code with friends. When they make their first purchase, you both get 10% off.</p>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-muted px-6 py-3 font-mono text-lg tracking-widest text-foreground">WYW-JD2024</div>
-                  <Button onClick={copyCode} variant="outline" size="sm">
-                    {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Refer a Friend</h2>
+                <p className="text-muted-foreground font-body font-light mb-6 text-sm">
+                  Share your unique referral code. When your friend makes their first purchase, you both get a discount.
+                </p>
+                <div className="bg-secondary p-4 md:p-6 flex items-center justify-between flex-wrap gap-4">
+                  <div>
+                    <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body mb-1">Your Code</p>
+                    <p className="font-display text-xl md:text-2xl text-foreground">WYW-JD2024</p>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={copyCode} className="flex items-center gap-2">
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied' : 'Copy Code'}
                   </Button>
                 </div>
               </div>
@@ -317,20 +326,21 @@ export default function Account() {
             {tab === 'settings' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Settings</h2>
-                <div className="space-y-6 max-w-md">
+                <div className="space-y-6">
                   <div>
-                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email Notifications</label>
-                    <p className="text-[0.85rem] text-foreground font-body">Order updates, promotions, styling tips</p>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Notifications</h3>
+                    <div className="space-y-3">
+                      {['Order updates', 'Promotions & offers', 'Rewards milestones', 'New arrivals'].map(n => (
+                        <label key={n} className="flex items-center gap-3 cursor-pointer">
+                          <input type="checkbox" defaultChecked className="accent-primary" />
+                          <span className="text-[0.85rem] font-body text-foreground">{n}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Saved Addresses</label>
-                    <p className="text-[0.85rem] text-foreground font-body">14 George Street, Edinburgh, EH2 2PF</p>
+                  <div className="border-t border-border pt-6">
+                    <Button variant="destructive" size="sm">Delete Account</Button>
                   </div>
-                  <div>
-                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Payment Methods</label>
-                    <p className="text-[0.85rem] text-foreground font-body">Visa ending in 4242</p>
-                  </div>
-                  <Button variant="destructive" size="sm">Delete Account</Button>
                 </div>
               </div>
             )}
