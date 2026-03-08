@@ -31,43 +31,34 @@ const queryClient = new QueryClient();
 
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.25, ease: "easeInOut" }}
-        className="min-h-screen"
-        onAnimationStart={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-        }}
-      >
-        <Routes location={location}>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/brands" element={<BrandsPage />} />
-          <Route path="/brands/:id" element={<BrandDetail />} />
-          <Route path="/consultation" element={<Consultation />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/stores" element={<StoreLocator />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/returns" element={<Returns />} />
-          <Route path="/customer-service" element={<CustomerService />} />
-          <Route path="/gift-cards" element={<GiftCards />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/cookies" element={<CookiePage />} />
-          <Route path="/accessibility" element={<AccessibilityPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </motion.div>
-    </AnimatePresence>
+    <Routes location={location}>
+      <Route path="/" element={<Landing />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/brands" element={<BrandsPage />} />
+      <Route path="/brands/:id" element={<BrandDetail />} />
+      <Route path="/consultation" element={<Consultation />} />
+      <Route path="/rewards" element={<Rewards />} />
+      <Route path="/stores" element={<StoreLocator />} />
+      <Route path="/account" element={<Account />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/returns" element={<Returns />} />
+      <Route path="/customer-service" element={<CustomerService />} />
+      <Route path="/gift-cards" element={<GiftCards />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/cookies" element={<CookiePage />} />
+      <Route path="/accessibility" element={<AccessibilityPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
