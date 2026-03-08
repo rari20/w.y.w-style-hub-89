@@ -2,24 +2,29 @@ import Layout from '@/components/Layout';
 import { brands, products } from '@/data/products';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
+import Breadcrumb from '@/components/Breadcrumb';
+import Reveal from '@/components/Reveal';
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 
 const brandImages: Record<string, string> = {
   lumenwear: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80&fit=crop&crop=center',
   'voltex-studio': 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200&q=80&fit=crop&crop=center',
-  arcthread: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&q=80&fit=crop&crop=center',
+  arcthread: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&fit=crop&crop=center',
   kilokouture: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1200&q=80&fit=crop&crop=center',
 };
 
 export function BrandsPage() {
   return (
     <Layout>
-      <div className="wyw-container py-12 pt-24 pb-24">
-        <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-primary mb-3">Curated Partners</p>
+      <div className="wyw-container pt-24 pb-24">
+        <Breadcrumb crumbs={[{ label: 'Home', to: '/home' }, { label: 'Brands' }]} />
+        <Reveal>
+          <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-primary mb-3">Curated Partners</p>
         <h1 className="font-display italic mb-4 leading-[1.05] text-foreground" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}>Our Brands</h1>
         <p className="text-muted-foreground max-w-lg mb-12 font-body font-light leading-relaxed">
           W.Y.W curates the most exciting names in contemporary fashion. Each brand brings a unique perspective to the W.Y.W universe.
         </p>
+        </Reveal>
 
         {/* Brand Cards Grid */}
         <div className="grid md:grid-cols-2 gap-[2px] mb-16">
