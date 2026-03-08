@@ -4,8 +4,10 @@ import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Sh
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
+import { products } from '@/data/products';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
