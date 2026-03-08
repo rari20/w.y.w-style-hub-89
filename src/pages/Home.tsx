@@ -44,7 +44,7 @@ export default function Home() {
             className="relative aspect-[4/5] md:aspect-auto md:h-[80vh] overflow-hidden group"
           >
             <img src={camp.image} alt={camp.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.03]" />
-            <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/30 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
             <div className="absolute bottom-10 left-10 z-10 text-white">
               <p className="font-body text-[0.625rem] uppercase tracking-[0.2em] mb-3 opacity-60">{camp.eyebrow}</p>
               <h2 className="font-display text-[2rem] md:text-[2.5rem] leading-[1.05] italic mb-5" style={{ maxWidth: '16ch' }}>{camp.title}</h2>
@@ -113,7 +113,7 @@ export default function Home() {
                 className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden group"
               >
                 <img src={occ.image} alt={occ.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] group-hover:scale-[1.03]" loading="lazy" />
-                <div className="absolute inset-0 bg-foreground/25 group-hover:bg-foreground/40 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition-colors duration-500" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
                   <h3 className="font-display text-[1.5rem] md:text-[2rem] italic mb-2">{occ.title}</h3>
                   <span className="font-body text-[0.625rem] tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-1">
