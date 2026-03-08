@@ -128,7 +128,7 @@ export default function Account() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display text-2xl flex items-center gap-2 text-foreground">
+                      <h3 className="font-display flex items-center gap-2 text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', lineHeight: 1.1 }}>
                         <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
