@@ -122,6 +122,13 @@ export default function Header() {
               {theme === 'light' ? <Moon className="h-3.5 w-3.5" strokeWidth={1.5} /> : <Sun className="h-3.5 w-3.5" strokeWidth={1.5} />}
             </motion.div>
           </button>
+          {isAdmin && (
+            <Link to="/admin">
+              <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`} title="Admin Portal">
+                <Shield className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </button>
+            </Link>
+          )}
           <Link to="/account">
             <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`}>
               <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
