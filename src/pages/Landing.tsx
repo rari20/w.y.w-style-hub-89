@@ -1,93 +1,52 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Pause, Play, ChevronDown } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
 import Header from '@/components/Header';
 
-const VIDEO_SOURCES = [
-  "https://cdn.coverr.co/videos/coverr-a-model-walks-the-runway-at-a-fashion-show-6618/1080p.mp4",
-  "https://cdn.coverr.co/videos/coverr-fashion-items-on-a-rack-4882/1080p.mp4",
-  "https://cdn.coverr.co/videos/coverr-fashion-clothing-on-rack-7914/1080p.mp4",
-];
-
 export default function Landing() {
-  const [isPaused, setIsPaused] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPaused) {
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-    }
-    setIsPaused(!isPaused);
-  };
-
   return (
     <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
       <div className="relative h-screen w-full overflow-hidden">
-        {/* Video / Fallback Background */}
+        {/* Background — static image, no CORS issues */}
         <div className="absolute inset-0">
-          {!videoFailed && (
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              style={{ filter: 'saturate(0.85) contrast(1.05)' }}
-              onCanPlay={() => setVideoLoaded(true)}
-              onError={() => setVideoFailed(true)}
-            >
-              {VIDEO_SOURCES.map((src, i) => (
-                <source key={i} src={src} type="video/mp4" />
-              ))}
-            </video>
-          )}
-
-          {/* Animated dark gradient fallback — always visible until video loads */}
-          {(!videoLoaded || videoFailed) && (
-            <motion.div
-              className="absolute inset-0"
-              style={{
-                background: 'linear-gradient(125deg, #0a0a08 0%, #1a1612 20%, #0d0d0a 40%, #221e18 60%, #0a0a08 80%, #1a1612 100%)',
-                backgroundSize: '300% 300%',
-              }}
-              animate={{ backgroundPosition: ['0% 50%', '100% 30%', '50% 100%', '0% 50%'] }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-            />
-          )}
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80&fit=crop"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'saturate(0.75) contrast(1.05)', opacity: 0.55 }}
+          />
+          {/* Dark gradient overlay for text legibility */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.35) 100%)',
+            }}
+          />
         </div>
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/40 z-[1]" />
 
         {/* Header */}
         <Header />
 
-        {/* Content — NO pseudo-elements, NO text-shadow, NO watermarks */}
+        {/* Hero content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          {/* Title — simple, clean, no decorative duplicates */}
+          {/* Title — reduced size to prevent ghost/hairline artifacts */}
           <h1
             className="mb-5 flex flex-col items-center text-center"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(3rem, 11vw, 9rem)',
+              fontSize: 'clamp(2.5rem, 8vw, 6.5rem)',
               fontWeight: 400,
               lineHeight: 0.92,
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.015em',
               color: '#FFFFFF',
               textShadow: 'none',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
             }}
           >
             <motion.span
               className="block"
-              style={{ textShadow: 'none' }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -96,7 +55,6 @@ export default function Landing() {
             </motion.span>
             <motion.span
               className="block italic"
-              style={{ textShadow: 'none' }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
@@ -133,7 +91,7 @@ export default function Landing() {
           >
             <Link
               to="/home"
-              className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 border transition-all duration-[400ms] hover:bg-transparent inline-block"
+              className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 border transition-all duration-[400ms] inline-block"
               style={{
                 backgroundColor: '#FFFFFF',
                 color: '#111111',
@@ -154,16 +112,16 @@ export default function Landing() {
               to="/consultation"
               className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 transition-all duration-[400ms] inline-block"
               style={{
-                border: '1px solid rgba(255,255,255,0.4)',
+                border: '1px solid rgba(255,255,255,0.5)',
                 color: '#FFFFFF',
                 backgroundColor: 'transparent',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.borderColor = '#FFFFFF';
-                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
                 e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
@@ -187,21 +145,6 @@ export default function Landing() {
             <ChevronDown className="h-4 w-4" style={{ color: 'rgba(255,255,255,0.4)' }} strokeWidth={1.5} />
           </motion.div>
         </motion.div>
-
-        {/* Pause/Play — only show if video loaded */}
-        {!videoFailed && videoLoaded && (
-          <button
-            onClick={togglePlay}
-            className="absolute bottom-10 right-10 z-20 w-9 h-9 rounded-full border backdrop-blur-sm flex items-center justify-center transition-all duration-300"
-            style={{
-              borderColor: 'rgba(255,255,255,0.3)',
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              color: 'rgba(255,255,255,0.6)',
-            }}
-          >
-            {isPaused ? <Play className="h-3 w-3" strokeWidth={1.5} /> : <Pause className="h-3 w-3" strokeWidth={1.5} />}
-          </button>
-        )}
       </div>
 
       {/* Below-fold content */}

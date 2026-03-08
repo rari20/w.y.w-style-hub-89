@@ -139,7 +139,7 @@ export default function CustomerService() {
           <div className="max-w-2xl">
             <div className="flex flex-col items-start gap-3 mb-2">
               <HelpCircle className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
-              <h2 className="font-display text-2xl italic text-foreground">
+              <h2 className="font-display italic text-foreground" style={{ fontSize: '1.75rem', lineHeight: 1.2 }}>
                 Frequently Asked Questions
               </h2>
             </div>
