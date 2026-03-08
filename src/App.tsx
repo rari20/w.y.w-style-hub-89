@@ -60,6 +60,7 @@ function AnimatedRoutes() {
       <Route path="/cookies" element={<CookiePage />} />
       <Route path="/accessibility" element={<AccessibilityPage />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/admin/dataset" element={<AdminDataset />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
