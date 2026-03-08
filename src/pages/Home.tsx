@@ -203,7 +203,7 @@ export default function Home() {
               Every piece we curate is chosen with intention. We believe in the quiet power of dressing well — not for attention, but for self-assurance.
               Visit us in-store, and you'll understand.
             </p>
-            <p className="font-script text-[1.5rem] text-primary">The W.Y.W Team</p>
+            <p className="font-display text-[1.25rem] italic text-primary">The W.Y.W Team</p>
           </div>
         </div>
       </section>
