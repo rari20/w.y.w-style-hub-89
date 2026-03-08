@@ -140,7 +140,7 @@ export default function Account() {
 
             {/* Create Account */}
             <div>
-              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Create Account</h2>
+              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 text-foreground">Create Account</h2>
               <form onSubmit={handleSignUp} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
