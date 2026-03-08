@@ -134,7 +134,7 @@ export default function Account() {
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-2xl text-foreground">847</p>
+                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', lineHeight: 1.1 }}>847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
