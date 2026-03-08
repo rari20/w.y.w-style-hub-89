@@ -7,7 +7,7 @@ import { BarChart2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-const ADMIN_EMAIL = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
 const dataset = [
   { id: 'C001', days: 14, spend: 847, orders: 4, tier: 'Volt', returnRate: 5, wishlist: 3, consultation: 'Yes', csContacts: 1, email: 'Yes', satisfaction: '5/5', churned: 'No' },

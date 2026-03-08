@@ -12,9 +12,11 @@ import { products } from '@/data/products';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
-const TEST_ADMIN = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
+const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 
-const testOrders = [
+// ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
+const adminOrders = [
   { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
     { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
     { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
@@ -29,12 +31,37 @@ const testOrders = [
   ]},
 ];
 
-const wishlistItems = [
+const adminWishlist = [
   { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
   { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
   { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
   { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
 ];
+
+const adminActivity = { lastPurchase: '14 days ago', ordersThisYear: '3', returnRate: '0%', consultations: '1' };
+const adminLoyalty = { tier: 'Volt', points: 847, toNext: 653, nextTier: 'Surge', progress: 56 };
+const adminReferralCode = 'WYW-JD2024';
+
+// ─── Test customer profile data (Sam Riley — Spark tier, 310 pts, at-risk) ───
+// This mirrors dataset row C013 on the admin dashboard
+const customerOrders = [
+  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
+  ]},
+  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
+  ]},
+];
+
+const customerWishlist = [
+  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
+  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
+  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
+];
+
+const customerActivity = { lastPurchase: '78 days ago', ordersThisYear: '2', returnRate: '28%', consultations: '0' };
+const customerLoyalty = { tier: 'Spark', points: 310, toNext: 190, nextTier: 'Volt', progress: 62 };
+const customerReferralCode = 'WYW-SR2025';
 
 const tiers = [
   { name: 'Spark', range: '0–499 pts', color: 'border-muted', benefits: ['Early access to sales', 'Birthday discount 10%'] },

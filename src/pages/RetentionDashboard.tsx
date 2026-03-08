@@ -6,7 +6,7 @@ import { Navigate, Link } from 'react-router-dom';
 import { BarChart2, ShieldCheck, AlertTriangle, Eye, Mail, MessageCircle, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const ADMIN_EMAIL = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
 const atRiskCustomers = [
   { id: 'WYW011', days: 112, spend: 185, tier: 'Spark', satisfaction: '2/5', risk: 'High', action: 'Re-engagement email sent', status: 'Pending' },
