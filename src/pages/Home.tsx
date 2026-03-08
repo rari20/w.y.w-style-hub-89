@@ -44,7 +44,7 @@ export default function Home() {
             className="relative aspect-[4/5] md:aspect-auto md:h-[80vh] overflow-hidden group"
           >
             <img src={camp.image} alt={camp.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.03]" />
-            <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/30 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500" />
             <div className="absolute bottom-10 left-10 z-10 text-white">
               <p className="font-body text-[0.625rem] uppercase tracking-[0.2em] mb-3 opacity-60">{camp.eyebrow}</p>
               <h2 className="font-display text-[2rem] md:text-[2.5rem] leading-[1.05] italic mb-5" style={{ maxWidth: '16ch' }}>{camp.title}</h2>
