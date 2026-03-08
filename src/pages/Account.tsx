@@ -482,7 +482,7 @@ export default function Account() {
                           </li>
                         ))}
                       </ul>
-                      {tier.name === 'Volt' && (
+                      {tier.name === loyalty.tier && (
                         <p className="text-[0.7rem] text-amber-600 dark:text-amber-400 font-body mt-3 font-medium">Your current tier</p>
                       )}
                     </div>
