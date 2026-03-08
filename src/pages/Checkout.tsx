@@ -612,6 +612,9 @@ export default function Checkout() {
               </p>
             </motion.div>
 
+            {/* NPS Micro-Survey */}
+            <NpsSurvey />
+
             <motion.div className="mt-10 flex justify-center gap-4"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}>
               <Button variant="default" size="lg" asChild><Link to="/shop">Continue Shopping</Link></Button>
