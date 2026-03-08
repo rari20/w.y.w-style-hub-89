@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
-import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown, Star } from 'lucide-react';
+import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown, Star, Check } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
