@@ -1,20 +1,58 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 import Header from '@/components/Header';
 
 export default function Landing() {
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Create audio element with a royalty-free elegant piano ambient track
+    const audio = new Audio(
+      'https://cdn.pixabay.com/audio/2024/11/26/audio_fe0e4498d3.mp3'
+    );
+    audio.loop = true;
+    audio.volume = 0.15;
+    audioRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audio.src = '';
+    };
+  }, []);
+
+  const toggleSound = () => {
+    if (!audioRef.current) return;
+    if (isMuted) {
+      audioRef.current.play().catch(() => {});
+      setIsMuted(false);
+    } else {
+      audioRef.current.pause();
+      setIsMuted(true);
+    }
+  };
+
   return (
     <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
       <div className="relative h-screen w-full overflow-hidden">
-        {/* Background — static image, no CORS issues */}
+        {/* Background with Ken Burns animation */}
         <div className="absolute inset-0">
-          <img
+          <motion.img
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
             alt="Fashion editorial background"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ filter: 'saturate(0.75) contrast(1.05)', opacity: 0.55 }}
+            initial={{ scale: 1.0 }}
+            animate={{ scale: 1.12 }}
+            transition={{
+              duration: 20,
+              ease: 'linear',
+              repeat: Infinity,
+              repeatType: 'reverse',
+            }}
           />
           {/* Dark gradient overlay for text legibility */}
           <div
@@ -27,6 +65,30 @@ export default function Landing() {
 
         {/* Header */}
         <Header />
+
+        {/* Sound toggle button */}
+        <motion.button
+          onClick={toggleSound}
+          className="absolute top-6 right-6 z-20 flex items-center gap-2 font-body text-[0.6rem] tracking-[0.2em] uppercase transition-all duration-300"
+          style={{ color: 'rgba(255,255,255,0.5)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          whileHover={{ color: 'rgba(255,255,255,0.9)' }}
+          aria-label={isMuted ? 'Unmute background music' : 'Mute background music'}
+        >
+          {isMuted ? (
+            <>
+              <VolumeX className="h-4 w-4" strokeWidth={1.5} />
+              <span className="hidden sm:inline">Sound</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="h-4 w-4" strokeWidth={1.5} />
+              <span className="hidden sm:inline">Playing</span>
+            </>
+          )}
+        </motion.button>
 
         {/* Hero content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
