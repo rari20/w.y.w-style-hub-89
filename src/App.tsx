@@ -38,7 +38,6 @@ import AdminDiscounts from "./pages/admin/AdminDiscounts";
 import AdminEmailCampaigns from "./pages/admin/AdminEmailCampaigns";
 import AdminSocial from "./pages/admin/AdminSocial";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
-import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 
 const queryClient = new QueryClient();
 
