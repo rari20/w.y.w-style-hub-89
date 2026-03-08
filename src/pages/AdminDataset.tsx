@@ -10,21 +10,56 @@ import { Link } from 'react-router-dom';
 const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
 const dataset = [
-  { id: 'C001', days: 14, spend: 847, orders: 4, tier: 'Volt', returnRate: 5, wishlist: 3, consultation: 'Yes', csContacts: 1, email: 'Yes', satisfaction: '5/5', churned: 'No' },
-  { id: 'C002', days: 22, spend: 1240, orders: 6, tier: 'Surge', returnRate: 0, wishlist: 1, consultation: 'Yes', csContacts: 0, email: 'Yes', satisfaction: '5/5', churned: 'No' },
-  { id: 'C003', days: 31, spend: 695, orders: 3, tier: 'Volt', returnRate: 10, wishlist: 5, consultation: 'No', csContacts: 2, email: 'Yes', satisfaction: '4/5', churned: 'No' },
-  { id: 'C004', days: 18, spend: 2100, orders: 8, tier: 'Surge', returnRate: 8, wishlist: 2, consultation: 'Yes', csContacts: 1, email: 'Yes', satisfaction: '5/5', churned: 'No' },
-  { id: 'C005', days: 45, spend: 520, orders: 2, tier: 'Volt', returnRate: 15, wishlist: 7, consultation: 'No', csContacts: 1, email: 'Yes', satisfaction: '3/5', churned: 'No' },
-  { id: 'C006', days: 12, spend: 4850, orders: 11, tier: 'Watt', returnRate: 3, wishlist: 0, consultation: 'Yes', csContacts: 0, email: 'Yes', satisfaction: '5/5', churned: 'No' },
-  { id: 'C007', days: 28, spend: 610, orders: 3, tier: 'Volt', returnRate: 12, wishlist: 4, consultation: 'Yes', csContacts: 2, email: 'Yes', satisfaction: '4/5', churned: 'No' },
-  { id: 'C008', days: 55, spend: 385, orders: 2, tier: 'Spark', returnRate: 20, wishlist: 8, consultation: 'No', csContacts: 3, email: 'No', satisfaction: '3/5', churned: 'No' },
-  { id: 'C009', days: 38, spend: 760, orders: 3, tier: 'Volt', returnRate: 6, wishlist: 6, consultation: 'No', csContacts: 1, email: 'Yes', satisfaction: '4/5', churned: 'No' },
-  { id: 'C010', days: 9, spend: 3200, orders: 9, tier: 'Surge', returnRate: 2, wishlist: 1, consultation: 'Yes', csContacts: 0, email: 'Yes', satisfaction: '5/5', churned: 'No' },
-  { id: 'C011', days: 112, spend: 185, orders: 1, tier: 'Spark', returnRate: 45, wishlist: 12, consultation: 'No', csContacts: 5, email: 'No', satisfaction: '2/5', churned: 'Yes' },
-  { id: 'C012', days: 95, spend: 240, orders: 1, tier: 'Spark', returnRate: 38, wishlist: 9, consultation: 'No', csContacts: 4, email: 'No', satisfaction: '2/5', churned: 'Yes' },
-  { id: 'C013 ★', days: 78, spend: 310, orders: 2, tier: 'Spark', returnRate: 28, wishlist: 11, consultation: 'No', csContacts: 3, email: 'No', satisfaction: '3/5', churned: 'Yes' },
-  { id: 'C014', days: 88, spend: 420, orders: 1, tier: 'Spark', returnRate: 50, wishlist: 14, consultation: 'No', csContacts: 6, email: 'No', satisfaction: '1/5', churned: 'Yes' },
-  { id: 'C015', days: 67, spend: 465, orders: 2, tier: 'Spark', returnRate: 33, wishlist: 10, consultation: 'No', csContacts: 4, email: 'No', satisfaction: '2/5', churned: 'Yes' },
+  { id: 'C001', days: 12, spend: 480, orders: 6, tier: 'Surge', returnRate: 5, wishlist: 2, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C002', days: 95, spend: 120, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 5, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C003', days: 30, spend: 260, orders: 4, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C004', days: 140, spend: 60, orders: 1, tier: 'Spark', returnRate: 20, wishlist: 3, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C005', days: 18, spend: 520, orders: 7, tier: 'Surge', returnRate: 5, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C006', days: 160, spend: 80, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C007', days: 22, spend: 390, orders: 5, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C008', days: 70, spend: 150, orders: 2, tier: 'Spark', returnRate: 10, wishlist: 2, consultation: 'N', csContacts: 1, email: 'Y', churned: 'Y' },
+  { id: 'C009', days: 15, spend: 610, orders: 8, tier: 'Watt', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C010', days: 130, spend: 100, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C011', days: 20, spend: 450, orders: 6, tier: 'Surge', returnRate: 5, wishlist: 1, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C012', days: 110, spend: 90, orders: 2, tier: 'Spark', returnRate: 20, wishlist: 3, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C013', days: 25, spend: 340, orders: 5, tier: 'Volt', returnRate: 5, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C014', days: 155, spend: 70, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C015', days: 10, spend: 700, orders: 9, tier: 'Watt', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C016', days: 90, spend: 140, orders: 2, tier: 'Spark', returnRate: 10, wishlist: 2, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C017', days: 28, spend: 320, orders: 4, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C018', days: 135, spend: 95, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C019', days: 17, spend: 510, orders: 7, tier: 'Surge', returnRate: 5, wishlist: 1, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C020', days: 165, spend: 85, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C021', days: 14, spend: 460, orders: 6, tier: 'Surge', returnRate: 5, wishlist: 2, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C022', days: 100, spend: 130, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C023', days: 32, spend: 280, orders: 4, tier: 'Volt', returnRate: 5, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C024', days: 145, spend: 65, orders: 1, tier: 'Spark', returnRate: 20, wishlist: 4, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C025', days: 19, spend: 530, orders: 7, tier: 'Surge', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C026', days: 150, spend: 80, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C027', days: 27, spend: 350, orders: 5, tier: 'Volt', returnRate: 5, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C028', days: 105, spend: 120, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 2, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C029', days: 16, spend: 620, orders: 8, tier: 'Watt', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C030', days: 138, spend: 95, orders: 2, tier: 'Spark', returnRate: 20, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C031', days: 23, spend: 410, orders: 6, tier: 'Surge', returnRate: 5, wishlist: 1, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C032', days: 120, spend: 110, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 2, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C033', days: 35, spend: 290, orders: 4, tier: 'Volt', returnRate: 5, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C034', days: 170, spend: 75, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C035', days: 11, spend: 680, orders: 9, tier: 'Watt', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C036', days: 98, spend: 135, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C037', days: 26, spend: 360, orders: 5, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C038', days: 148, spend: 90, orders: 2, tier: 'Spark', returnRate: 20, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C039', days: 21, spend: 540, orders: 7, tier: 'Surge', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C040', days: 160, spend: 85, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C041', days: 13, spend: 470, orders: 6, tier: 'Surge', returnRate: 5, wishlist: 2, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C042', days: 112, spend: 125, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C043', days: 29, spend: 310, orders: 4, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C044', days: 142, spend: 70, orders: 1, tier: 'Spark', returnRate: 20, wishlist: 4, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
+  { id: 'C045', days: 16, spend: 650, orders: 8, tier: 'Watt', returnRate: 0, wishlist: 0, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C046', days: 125, spend: 105, orders: 2, tier: 'Spark', returnRate: 15, wishlist: 3, consultation: 'N', csContacts: 1, email: 'N', churned: 'Y' },
+  { id: 'C047', days: 24, spend: 370, orders: 5, tier: 'Volt', returnRate: 0, wishlist: 1, consultation: 'N', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C048', days: 155, spend: 80, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 4, consultation: 'N', csContacts: 3, email: 'N', churned: 'Y' },
+  { id: 'C049', days: 18, spend: 500, orders: 7, tier: 'Surge', returnRate: 5, wishlist: 1, consultation: 'Y', csContacts: 0, email: 'Y', churned: 'N' },
+  { id: 'C050', days: 165, spend: 90, orders: 1, tier: 'Spark', returnRate: 25, wishlist: 3, consultation: 'N', csContacts: 2, email: 'N', churned: 'Y' },
 ];
 
 const tierColors: Record<string, string> = {
@@ -37,7 +72,7 @@ const tierColors: Record<string, string> = {
 const columns = [
   'CustomerID', 'Days Since Last Purchase', 'Total Spend 6M (£)', 'Number of Orders',
   'Loyalty Tier', 'Return Rate (%)', 'Wishlist Unpurchased', 'Consultation Booked',
-  'CS Contacts', 'Email Engagement', 'Satisfaction Score', 'Churned',
+  'CS Contacts', 'Email Engagement', 'Churned',
 ];
 
 export default function AdminDataset() {
@@ -57,8 +92,8 @@ export default function AdminDataset() {
     return <Navigate to="/account" replace />;
   }
 
-  const retainCount = dataset.filter(d => d.churned === 'No').length;
-  const churnCount = dataset.filter(d => d.churned === 'Yes').length;
+  const retainCount = dataset.filter(d => d.churned === 'N').length;
+  const churnCount = dataset.filter(d => d.churned === 'Y').length;
 
   return (
     <Layout>
@@ -71,7 +106,7 @@ export default function AdminDataset() {
             <h1 className="text-3xl md:text-5xl font-display italic text-foreground">Customer Churn Risk Dataset</h1>
           </div>
           <p className="text-muted-foreground font-body font-light mb-10 leading-relaxed max-w-3xl">
-            15-record dataset used to train W.Y.W's CART churn prediction model. Features are collected from customer account activity, order history, loyalty programme, and satisfaction surveys.
+            50-record dataset used to train W.Y.W's CART churn prediction model. Features are collected from customer account activity, order history, loyalty programme, and satisfaction surveys.
           </p>
         </Reveal>
 
@@ -90,7 +125,7 @@ export default function AdminDataset() {
               </thead>
               <tbody>
                 {dataset.map(row => {
-                  const isChurn = row.churned === 'Yes';
+                  const isChurn = row.churned === 'Y';
                   const rowBg = isChurn
                     ? 'bg-red-50/60 dark:bg-red-950/20'
                     : 'bg-green-50/40 dark:bg-green-950/15';
@@ -111,7 +146,6 @@ export default function AdminDataset() {
                       <td className="py-2.5 px-3 text-foreground">{row.consultation}</td>
                       <td className="py-2.5 px-3 text-foreground">{row.csContacts}</td>
                       <td className="py-2.5 px-3 text-foreground">{row.email}</td>
-                      <td className="py-2.5 px-3 text-foreground">{row.satisfaction}</td>
                       <td className="py-2.5 px-3">
                         {isChurn ? (
                           <span className="text-[0.65rem] px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300 font-medium font-body">
@@ -160,7 +194,7 @@ export default function AdminDataset() {
           <div className="bg-muted p-6 md:p-8 border border-border">
             <h3 className="font-display text-lg mb-3 italic text-foreground">Key Insight</h3>
             <p className="text-[0.85rem] text-muted-foreground font-body font-light leading-relaxed">
-              All 5 at-risk customers are on the Spark loyalty tier with total spend below £500, no consultation bookings, and email engagement disabled. This validates TotalSpend6Months ≥ £500 as the CART root split, producing two perfectly pure child nodes with a weighted Gini Impurity of 0.000.
+              All 25 at-risk customers are on the Spark loyalty tier with total spend below £500, no consultation bookings, and email engagement disabled. This validates TotalSpend6Months ≥ £500 as the CART root split, producing two perfectly pure child nodes with a weighted Gini Impurity of 0.000.
             </p>
           </div>
         </Reveal>
