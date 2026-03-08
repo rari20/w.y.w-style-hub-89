@@ -6,10 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Eye, Edit, Gift, Search } from 'lucide-react';
+import { Eye, Edit, Gift, Search, ShoppingBag, RotateCcw, Tag, Mail, Calendar, TrendingUp, LogIn, Star } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { customers, tierColors, riskColors, type AdminCustomer } from '@/data/adminData';
+import { customers, tierColors, riskColors, customerTimelines, type AdminCustomer } from '@/data/adminData';
 
 export default function AdminCustomers() {
   const [search, setSearch] = useState('');
@@ -97,7 +97,7 @@ export default function AdminCustomers() {
 
       {/* View Customer Modal */}
       <Dialog open={!!viewCustomer} onOpenChange={() => setViewCustomer(null)}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="font-display">{viewCustomer?.name}</DialogTitle>
             <DialogDescription>{viewCustomer?.id} — {viewCustomer?.email}</DialogDescription>
@@ -125,6 +125,61 @@ export default function AdminCustomers() {
               <div className={`p-3 rounded text-xs font-body font-medium ${viewCustomer.churnRisk === 'High' ? 'bg-red-500/10 text-red-700 dark:text-red-400' : 'bg-green-500/10 text-green-700 dark:text-green-400'}`}>
                 CART Prediction: {viewCustomer.churnRisk === 'High' ? 'CHURN RISK' : 'RETAIN'} — Segment {viewCustomer.segment}
               </div>
+
+              {/* Activity Timeline */}
+              {(() => {
+                const timeline = customerTimelines[viewCustomer.id];
+                const timelineIcons: Record<string, React.ElementType> = {
+                  order: ShoppingBag,
+                  return: RotateCcw,
+                  discount: Tag,
+                  email: Mail,
+                  consultation: Calendar,
+                  tier: TrendingUp,
+                  login: LogIn,
+                  review: Star,
+                };
+                const timelineColors: Record<string, string> = {
+                  order: 'text-blue-500 bg-blue-500/10',
+                  return: 'text-amber-500 bg-amber-500/10',
+                  discount: 'text-green-500 bg-green-500/10',
+                  email: 'text-purple-500 bg-purple-500/10',
+                  consultation: 'text-primary bg-primary/10',
+                  tier: 'text-amber-600 bg-amber-500/10',
+                  login: 'text-muted-foreground bg-muted',
+                  review: 'text-amber-500 bg-amber-500/10',
+                };
+
+                if (!timeline || timeline.length === 0) return null;
+                return (
+                  <div className="border-t border-border pt-3">
+                    <p className="text-xs font-body font-medium mb-3">Activity Timeline</p>
+                    <div className="space-y-0">
+                      {timeline.map((event, i) => {
+                        const Icon = timelineIcons[event.type] || ShoppingBag;
+                        const color = timelineColors[event.type] || 'text-muted-foreground bg-muted';
+                        return (
+                          <div key={event.id} className="flex gap-3 relative">
+                            {/* Vertical line */}
+                            {i < timeline.length - 1 && (
+                              <div className="absolute left-[13px] top-7 bottom-0 w-px bg-border" />
+                            )}
+                            <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 z-10 ${color}`}>
+                              <Icon className="h-3.5 w-3.5" strokeWidth={1.5} />
+                            </div>
+                            <div className="pb-4 min-w-0">
+                              <p className="text-[11px] font-body font-medium leading-tight">{event.title}</p>
+                              <p className="text-[10px] text-muted-foreground">{event.description}</p>
+                              <p className="text-[10px] text-muted-foreground/50 mt-0.5">{event.date}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })()}
+
               {viewCustomer.churnRisk === 'High' && (
                 <Button size="sm" className="w-full" onClick={() => { setViewCustomer(null); setDiscountCustomer(viewCustomer); }}>
                   Send Retention Offer
