@@ -2,6 +2,8 @@ import Layout from '@/components/Layout';
 import { brands, products } from '@/data/products';
 import { Link, useParams } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
+import Breadcrumb from '@/components/Breadcrumb';
+import Reveal from '@/components/Reveal';
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 
 const brandImages: Record<string, string> = {
