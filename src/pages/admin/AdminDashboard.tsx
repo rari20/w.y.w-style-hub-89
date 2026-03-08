@@ -1,12 +1,12 @@
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
 import { Link } from 'react-router-dom';
 import {
   Users, Activity, AlertTriangle, Star, Send, Tag, UserPlus, Bell, ShoppingBag, RotateCcw, Zap, Check,
 } from 'lucide-react';
-import { recentOrders, adminNotifications, type AdminNotification } from '@/data/adminData';
+import { adminNotifications, type AdminNotification } from '@/data/adminData';
 import { useState } from 'react';
 
 const kpis = [
@@ -25,11 +25,6 @@ const tiers = [
   { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
 ];
 
-const statusColors: Record<string, string> = {
-  Processing: 'bg-blue-500/20 text-blue-700 dark:text-blue-400',
-  Shipped: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
-  Delivered: 'bg-green-500/20 text-green-700 dark:text-green-400',
-};
 
 const notifIcons: Record<string, React.ElementType> = {
   order: ShoppingBag,
@@ -154,41 +149,6 @@ export default function AdminDashboard() {
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Left 60% */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Recent Orders */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-body font-medium">Recent Orders</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-xs">Order ID</TableHead>
-                      <TableHead className="text-xs">Customer</TableHead>
-                      <TableHead className="text-xs">Items</TableHead>
-                      <TableHead className="text-xs">Total</TableHead>
-                      <TableHead className="text-xs">Status</TableHead>
-                      <TableHead className="text-xs">Date</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {recentOrders.map(o => (
-                      <TableRow key={o.id}>
-                        <TableCell className="text-xs font-mono">{o.id}</TableCell>
-                        <TableCell className="text-xs">{o.customer}</TableCell>
-                        <TableCell className="text-xs">{o.items}</TableCell>
-                        <TableCell className="text-xs font-medium">{o.total}</TableCell>
-                        <TableCell>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColors[o.status] || ''}`}>{o.status}</span>
-                        </TableCell>
-                        <TableCell className="text-xs text-muted-foreground">{o.date}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-
             {/* Churn Risk Alert */}
             <Card className="border-l-4 border-l-red-500">
               <CardContent className="p-5">
