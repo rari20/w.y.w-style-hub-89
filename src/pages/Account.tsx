@@ -471,7 +471,7 @@ export default function Account() {
                 <p className="text-[0.8rem] text-muted-foreground font-body">1 point earned per £1 spent.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {tiers.map(tier => (
-                    <div key={tier.name} className={`border-2 p-5 ${tier.name === 'Volt' ? tier.color : 'border-border'}`}>
+                    <div key={tier.name} className={`border-2 p-5 ${tier.name === loyalty.tier ? tier.color : 'border-border'}`}>
                       <h3 className="font-display text-lg text-foreground mb-1">{tier.name}</h3>
                       <p className="text-[0.7rem] text-muted-foreground font-body mb-3">{tier.range}</p>
                       <ul className="space-y-1">
