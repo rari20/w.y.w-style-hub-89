@@ -360,6 +360,28 @@ export default function Checkout() {
                 <Lock className="h-3 w-3" strokeWidth={1.5} /> Your payment information is encrypted and secure. W.Y.W never stores your card details.
               </p>
 
+              {/* Apple Pay — Express Checkout */}
+              <div className="mb-8">
+                <p className="font-body text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground mb-3">Express Checkout</p>
+                <button
+                  onClick={() => {
+                    toast.success('Apple Pay is not available in this preview environment.');
+                  }}
+                  className="w-full h-[52px] flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: '#000000', color: '#FFFFFF', border: 'none' }}
+                >
+                  <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor">
+                    <path d="M15.07 4.14c-.94 1.15-2.48 2.04-3.99 1.91-.19-1.53.56-3.16 1.44-4.16C13.46.74 15.11-.04 16.43 0c.16 1.58-.47 3.13-1.36 4.14zM16.41 12.54c.03 3.19 2.8 4.25 2.83 4.27-.02.07-.44 1.51-1.46 2.99-.88 1.28-1.79 2.56-3.23 2.58-1.41.03-1.87-.84-3.48-.84-1.61 0-2.12.81-3.46.87-1.39.05-2.45-1.39-3.34-2.67C2.44 17.12.88 12.58 2.78 9.5c.94-1.53 2.63-2.5 4.46-2.53 1.36-.03 2.65.92 3.48.92.83 0 2.38-1.13 4.01-.97.68.03 2.6.28 3.83 2.08-.1.06-2.29 1.33-2.15 3.54z"/>
+                  </svg>
+                  <span className="font-body text-[0.85rem] font-medium">Pay</span>
+                </button>
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="flex-1 h-px bg-border" />
+                  <span className="font-body text-[0.62rem] uppercase tracking-[0.15em] text-muted-foreground">or pay another way</span>
+                  <div className="flex-1 h-px bg-border" />
+                </div>
+              </div>
+
               {/* Payment Method Tabs */}
               <div className="flex border-b border-border mb-8">
                 {([
