@@ -18,7 +18,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = TARGET_VOLUME;
     audio.preload = 'auto';
-    audio.src = 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Gymnopedie_No._1.ogg';
+    audio.src = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7a/Gymnopedie_No._1.ogg/Gymnopedie_No._1.ogg.mp3';
     audioRef.current = audio;
 
     return () => {
