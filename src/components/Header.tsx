@@ -19,11 +19,13 @@ export default function Header() {
   const { totalItems } = useCart();
   const { theme, toggleTheme } = useTheme();
   const { isPlaying, toggleMusic } = useMusic();
+  const { user } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const location = useLocation();
+  const isAdmin = user?.email === ADMIN_EMAIL;
 
   const isLanding = location.pathname === '/';
 
