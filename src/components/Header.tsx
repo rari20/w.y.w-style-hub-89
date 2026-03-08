@@ -168,7 +168,11 @@ export default function Header() {
                 </Link>
               </motion.div>
             ))}
-            <div className="pt-8 border-t border-border">
+            <div className="pt-8 border-t border-border space-y-4">
+              <button onClick={toggleMusic} className="flex items-center gap-3 nav-label text-muted-foreground">
+                {isPlaying ? <Volume2 className="h-4 w-4" strokeWidth={1.5} /> : <VolumeX className="h-4 w-4" strokeWidth={1.5} />}
+                {isPlaying ? 'Mute Music' : 'Play Music'}
+              </button>
               <button onClick={toggleTheme} className="flex items-center gap-3 nav-label text-muted-foreground">
                 {theme === 'light' ? <Moon className="h-4 w-4" strokeWidth={1.5} /> : <Sun className="h-4 w-4" strokeWidth={1.5} />}
                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
