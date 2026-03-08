@@ -301,10 +301,10 @@ export default function Account() {
                 {/* Section B: Four-metric activity */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[
-                    { label: 'Last Purchase', value: '14 days ago' },
-                    { label: 'Orders This Year', value: '3' },
-                    { label: 'Return Rate', value: '0%' },
-                    { label: 'Consultations Booked', value: '1' },
+                    { label: 'Last Purchase', value: activity.lastPurchase },
+                    { label: 'Orders This Year', value: activity.ordersThisYear },
+                    { label: 'Return Rate', value: activity.returnRate },
+                    { label: 'Consultations Booked', value: activity.consultations },
                   ].map(stat => (
                     <div key={stat.label} className="border border-border p-3 md:p-4">
                       <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
