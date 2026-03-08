@@ -1,5 +1,4 @@
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/button';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown } from 'lucide-react';
@@ -15,6 +14,7 @@ const faqData = [
     items: [
       { q: 'How long does standard delivery take?', a: 'Standard delivery takes 3–5 working days. Express next-day delivery is available if ordered before 2pm. You will receive a dispatch email with tracking information once your order leaves our warehouse.' },
       { q: 'Can I change or cancel my order after placing it?', a: 'Orders can be amended or cancelled within 1 hour of placement. After this window, the order will have entered fulfilment and cannot be changed. Please contact our team immediately via the live chat if you need to make a change.' },
+      { q: 'Do you deliver internationally?', a: 'Currently W.Y.W delivers within the United Kingdom only. International delivery is planned for a future phase of the business.' },
       { q: 'What is Click & Collect?', a: 'Click & Collect lets you order online and collect from your nearest W.Y.W store, either from the Customer Service desk or from a W.Y.W smart locker. Your order is typically ready within 2 hours during store hours.' },
     ],
   },
@@ -23,20 +23,32 @@ const faqData = [
     items: [
       { q: 'How do I return an item?', a: 'You have 28 days from delivery to return an item. Log into your account, go to Orders, select the item, and choose your return method: W.Y.W Locker drop-off, in-store returns desk, or a prepaid postal return label.' },
       { q: 'How long do refunds take?', a: 'Once we receive and inspect your return, refunds are processed within 5–7 working days to your original payment method.' },
+      { q: 'Can I return a sale item?', a: 'Most sale items can be returned unless marked as Final Sale at the time of purchase. Final Sale items are clearly labelled on the product page and at checkout.' },
     ],
   },
   {
     category: 'W.Y.W Rewards',
     items: [
       { q: 'How do I earn loyalty points?', a: 'You earn 1 point for every £1 spent online or in-store, as long as you are logged into your W.Y.W account at the time of purchase. Points are added to your wallet once your order is confirmed.' },
+      { q: 'What are the loyalty tier levels?', a: 'W.Y.W Rewards has four tiers: Spark (0–499 pts), Volt (500–1,499 pts), Surge (1,500–3,999 pts), and Watt (4,000+ pts). Each tier unlocks additional benefits including free delivery, discounted consultations, and early access to new collections.' },
       { q: 'Do my points expire?', a: 'Points are valid for 12 months from the date they are earned. If your account is inactive for 12 consecutive months, your points balance will reset.' },
+      { q: 'How do I redeem my points?', a: 'You can redeem points at checkout online or in-store. Each point is worth £0.01. You can choose how many points to redeem on each order, up to the full order value.' },
     ],
   },
   {
     category: 'Styling Consultations',
     items: [
       { q: 'Is my first consultation really free?', a: 'Yes. Your first styling consultation with W.Y.W is completely complimentary with no obligation to purchase. It includes a 6-month styling warranty.' },
+      { q: 'How long does a consultation last?', a: 'Consultations typically last 45–60 minutes. In-store sessions include trying on garments from our current collections. Virtual consultations are conducted via video call.' },
       { q: 'Are your consultants human or AI?', a: 'All W.Y.W consultations are conducted by our expert human stylists. We do not use AI chatbots or automated tools — we believe great style advice requires a genuine personal connection.' },
+    ],
+  },
+  {
+    category: 'Website & Account',
+    items: [
+      { q: 'How do I create an account?', a: 'You can create an account online at any time, or scan the QR code at any W.Y.W store entrance or till point to register in person without downloading an app.' },
+      { q: 'I forgot my password. What do I do?', a: 'Click \'Forgot password\' on the sign-in page and enter your email address. You will receive a reset link within a few minutes. Check your spam folder if it does not arrive.' },
+      { q: 'How do I use a referral code?', a: 'Your unique referral code is found in your account under the Referral section. Share it with a friend — when they use it at checkout, both of you receive a discount on your next purchase.' },
     ],
   },
 ];
@@ -60,12 +72,17 @@ export default function CustomerService() {
           </p>
         </Reveal>
 
-        {/* Contact Methods — functional links */}
-        <div className="grid md:grid-cols-2 gap-px bg-border border border-border mb-16">
+        {/* Contact Methods — all functional links */}
+        <div className="grid md:grid-cols-2 gap-px bg-border border border-border mb-16 relative z-[1]">
           <Reveal>
             <button
-              onClick={() => { /* Live chat integration placeholder */ }}
-              className="bg-foreground text-background w-full p-6 flex items-center gap-4 text-left hover:bg-primary transition-colors duration-300"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = '/consultation';
+              }}
+              className="bg-foreground text-background w-full p-6 flex items-center gap-4 text-left hover:bg-primary transition-colors duration-300 cursor-pointer"
             >
               <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={1.5} />
               <span className="flex flex-col gap-0.5">
@@ -79,7 +96,8 @@ export default function CustomerService() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300 cursor-pointer"
             >
               <Phone className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
               <span className="flex flex-col gap-0.5">
@@ -91,7 +109,8 @@ export default function CustomerService() {
           <Reveal delay={120}>
             <a
               href={EMAIL_URL}
-              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300 cursor-pointer"
             >
               <Mail className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
               <span className="flex flex-col gap-0.5">
@@ -103,7 +122,8 @@ export default function CustomerService() {
           <Reveal delay={180}>
             <a
               href={PHONE_URL}
-              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-background w-full p-6 flex items-center gap-4 text-left hover:bg-muted transition-colors duration-300 cursor-pointer"
             >
               <Phone className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
               <span className="flex flex-col gap-0.5">
@@ -114,13 +134,15 @@ export default function CustomerService() {
           </Reveal>
         </div>
 
-        {/* FAQ — properly sized */}
+        {/* FAQ */}
         <Reveal>
           <div className="max-w-2xl">
-            <h2 className="text-2xl font-display mb-2 italic flex items-center gap-2 text-foreground">
-              <HelpCircle className="h-5 w-5 text-accent" strokeWidth={1.5} />
-              Frequently Asked Questions
-            </h2>
+            <div className="flex flex-col items-start gap-3 mb-2">
+              <HelpCircle className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
+              <h2 className="font-display text-2xl italic text-foreground">
+                Frequently Asked Questions
+              </h2>
+            </div>
             <p className="text-muted-foreground font-body text-[0.85rem] font-light mb-8">
               Everything you need to know about shopping, returns, rewards, and consultations.
             </p>
@@ -147,7 +169,7 @@ export default function CustomerService() {
                         />
                       </button>
                       <div
-                        className={`overflow-hidden transition-all duration-400 ${isOpen ? 'max-h-[600px] pb-4' : 'max-h-0'}`}
+                        className={`overflow-hidden transition-all duration-[400ms] ${isOpen ? 'max-h-[600px] pb-4' : 'max-h-0'}`}
                       >
                         <p className="font-body text-[0.85rem] text-muted-foreground font-light leading-[1.85]">{item.a}</p>
                       </div>

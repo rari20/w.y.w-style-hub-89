@@ -26,11 +26,10 @@ export default function Account() {
     return (
       <Layout>
         <div className="wyw-container py-16 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-display mb-12 text-center italic">My Account</h1>
+          <h1 className="text-4xl md:text-5xl font-display mb-12 text-center italic text-foreground">My Account</h1>
           <div className="grid md:grid-cols-2 gap-16">
-            {/* Sign In */}
             <div>
-              <h2 className="font-display text-2xl mb-6 italic">Sign In</h2>
+              <h2 className="font-display text-2xl mb-6 italic text-foreground">Sign In</h2>
               <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Welcome back!'); }} className="space-y-5">
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
@@ -45,10 +44,8 @@ export default function Account() {
                 <Button variant="default" size="lg" type="submit" className="w-full">Sign In</Button>
               </form>
             </div>
-
-            {/* Register */}
             <div>
-              <h2 className="font-display text-2xl mb-6 italic">Create Account</h2>
+              <h2 className="font-display text-2xl mb-6 italic text-foreground">Create Account</h2>
               <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Account created!'); }} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -98,45 +95,46 @@ export default function Account() {
   return (
     <Layout>
       <div className="wyw-container py-8">
-        <h1 className="text-4xl md:text-5xl font-display mb-8 italic">My Account</h1>
+        <h1 className="text-4xl md:text-5xl font-display mb-8 italic text-foreground">My Account</h1>
 
-        <div className="grid lg:grid-cols-4 gap-8">
+        <div className="grid lg:grid-cols-[220px_1fr] gap-0">
           {/* Sidebar */}
-          <div className="space-y-1">
-            {tabs.map(t => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors ${
-                  tab === t.id ? 'bg-foreground text-background' : 'hover:bg-muted text-foreground'
-                }`}
-              >
-                <t.icon className="h-4 w-4" strokeWidth={1.5} />
-                {t.label}
+          <div className="lg:border-r border-border lg:pr-0 lg:sticky lg:top-[68px] lg:self-start">
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible gap-0">
+              {tabs.map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 ${
+                    tab === t.id ? 'bg-foreground text-background' : 'hover:bg-muted text-foreground'
+                  } lg:w-full`}
+                >
+                  <t.icon className="h-4 w-4" strokeWidth={1.5} />
+                  {t.label}
+                </button>
+              ))}
+              <button onClick={() => { setIsLoggedIn(false); toast('Signed out'); }}
+                className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted whitespace-nowrap shrink-0 lg:w-full lg:mt-2 lg:border-t border-border lg:pt-4">
+                Sign Out
               </button>
-            ))}
-            <button onClick={() => { setIsLoggedIn(false); toast('Signed out'); }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted">
-              Sign Out
-            </button>
+            </div>
           </div>
 
           {/* Content */}
-          <div className="lg:col-span-3">
+          <div className="lg:pl-8 pt-6 lg:pt-0">
             {tab === 'overview' && (
               <div className="space-y-6">
-                {/* Loyalty Card */}
                 <div className="bg-secondary text-secondary-foreground p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display text-2xl flex items-center gap-2">
+                      <h3 className="font-display text-2xl flex items-center gap-2 text-foreground">
                         <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-2xl">847</p>
+                      <p className="font-display text-2xl text-foreground">847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
@@ -145,19 +143,17 @@ export default function Account() {
                   <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">653 points to Surge tier</p>
                 </div>
 
-                {/* Recent Orders */}
                 <div>
-                  <h3 className="font-display text-xl mb-4 italic">Recent Orders</h3>
-                  <div className="wyw-card border border-border p-4">
+                  <h3 className="font-display text-xl mb-4 italic text-foreground">Recent Orders</h3>
+                  <div className="border border-border p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-[0.85rem] font-body font-medium">Order #WYW-2026-0042</p>
+                      <p className="text-[0.85rem] font-body font-medium text-foreground">Order #WYW-2026-0042</p>
                       <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Delivered</span>
                     </div>
                     <p className="text-[0.75rem] text-muted-foreground font-body">28 Feb 2026 · 2 items · £214.00</p>
                   </div>
                 </div>
 
-                {/* Quick Actions */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { icon: Gift, label: 'Active Coupons', value: '2' },
@@ -165,7 +161,7 @@ export default function Account() {
                     { icon: CreditCard, label: 'Payment Methods', value: '1' },
                     { icon: Share2, label: 'Referral Code', value: 'WYW-JD2024' },
                   ].map(item => (
-                    <div key={item.label} className="wyw-card border border-border p-4 text-center">
+                    <div key={item.label} className="border border-border p-4 text-center">
                       <item.icon className="h-5 w-5 mx-auto text-primary mb-2" strokeWidth={1.5} />
                       <p className="text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{item.label}</p>
                       <p className="font-body font-medium text-[0.85rem] mt-1 text-foreground">{item.value}</p>
@@ -177,7 +173,7 @@ export default function Account() {
 
             {tab === 'orders' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic">Order History</h2>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Order History</h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-[0.85rem] font-body">
                     <thead>
@@ -213,9 +209,9 @@ export default function Account() {
 
             {tab === 'returns' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic">Return Tracking</h2>
-                <div className="wyw-card border border-border p-6">
-                  <p className="text-[0.85rem] font-body font-medium mb-4">Return #RET-2026-0015</p>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Return Tracking</h2>
+                <div className="border border-border p-6">
+                  <p className="text-[0.85rem] font-body font-medium mb-4 text-foreground">Return #RET-2026-0015</p>
                   <div className="flex items-center gap-2 mb-6">
                     {['Initiated', 'Received', 'Inspected', 'Refunded'].map((step, i) => (
                       <div key={step} className="flex items-center gap-2 flex-1">
@@ -236,25 +232,25 @@ export default function Account() {
 
             {tab === 'wishlist' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic">Wishlist</h2>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Wishlist</h2>
                 <p className="text-muted-foreground font-body font-light">Your wishlist is empty. Browse our collections to add items.</p>
               </div>
             )}
 
             {tab === 'rewards' && (
               <div className="space-y-6">
-                <h2 className="font-display text-2xl mb-4 italic">Rewards Wallet</h2>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Rewards Wallet</h2>
                 <div className="bg-secondary p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
-                      <h3 className="font-display text-2xl flex items-center gap-2">
+                      <h3 className="font-display text-2xl flex items-center gap-2 text-foreground">
                         <Zap className="h-5 w-5 text-accent" strokeWidth={1.5} /> Volt
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points</p>
-                      <p className="font-display text-2xl">847</p>
+                      <p className="font-display text-2xl text-foreground">847</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1 mb-2">
@@ -263,7 +259,7 @@ export default function Account() {
                   <p className="text-[0.75rem] text-muted-foreground font-body">653 points to Surge tier</p>
                 </div>
                 <div>
-                  <h3 className="font-display text-lg mb-3 italic">Points History</h3>
+                  <h3 className="font-display text-lg mb-3 italic text-foreground">Points History</h3>
                   <div className="space-y-2">
                     {[
                       { desc: 'Purchase #WYW-2026-0042', pts: '+214', date: '28 Feb' },
@@ -285,16 +281,16 @@ export default function Account() {
 
             {tab === 'consultations' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic">Consultations</h2>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Consultations</h2>
                 <div className="space-y-4">
-                  <div className="wyw-card border border-border p-6">
+                  <div className="border border-border p-6">
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-[0.85rem] font-body font-medium text-foreground">Virtual Styling Session</p>
                       <span className="text-[0.625rem] bg-primary text-primary-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Upcoming</span>
                     </div>
                     <p className="text-[0.75rem] text-muted-foreground font-body">15 Mar 2026 · 14:00 · Virtual</p>
                   </div>
-                  <div className="wyw-card border border-border p-6">
+                  <div className="border border-border p-6">
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-[0.85rem] font-body font-medium text-foreground">In-Store Wardrobe Review</p>
                       <span className="text-[0.625rem] bg-muted text-muted-foreground px-2 py-1 font-body uppercase tracking-[0.1em]">Completed</span>
@@ -307,54 +303,35 @@ export default function Account() {
 
             {tab === 'referral' && (
               <div>
-                <h2 className="font-display text-2xl mb-4 italic">Referral Code</h2>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Referral Code</h2>
                 <p className="text-muted-foreground text-[0.85rem] mb-6 font-body font-light">Share your code with friends. When they make their first purchase, you both get 10% off.</p>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="flex-1 bg-muted px-6 py-4 font-display text-2xl tracking-widest text-center text-foreground">
-                    WYW-JD2024
-                  </div>
-                  <Button variant="default" onClick={copyCode}>
+                  <div className="bg-muted px-6 py-3 font-mono text-lg tracking-widest text-foreground">WYW-JD2024</div>
+                  <Button onClick={copyCode} variant="outline" size="sm">
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
-                </div>
-                <div className="flex gap-3">
-                  <Button variant="outline" size="sm">Share via Email</Button>
-                  <Button variant="outline" size="sm">Share via WhatsApp</Button>
                 </div>
               </div>
             )}
 
             {tab === 'settings' && (
-              <div className="space-y-8">
-                <div>
-                  <h2 className="font-display text-2xl mb-4 italic">Profile</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    {[
-                      { label: 'First Name', value: 'Jordan' },
-                      { label: 'Last Name', value: 'Davis' },
-                      { label: 'Email', value: 'jordan@email.com', type: 'email' },
-                      { label: 'Phone', value: '+44 7700 123456', type: 'tel' },
-                    ].map(field => (
-                      <div key={field.label}>
-                        <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">{field.label}</label>
-                        <input type={field.type || 'text'} defaultValue={field.value}
-                          className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" />
-                      </div>
-                    ))}
+              <div>
+                <h2 className="font-display text-2xl mb-4 italic text-foreground">Settings</h2>
+                <div className="space-y-6 max-w-md">
+                  <div>
+                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email Notifications</label>
+                    <p className="text-[0.85rem] text-foreground font-body">Order updates, promotions, styling tips</p>
                   </div>
-                </div>
-                <div>
-                  <h2 className="font-display text-2xl mb-4 italic">Notification Preferences</h2>
-                  <div className="space-y-3">
-                    {['Email notifications', 'SMS notifications', 'Marketing emails', 'Sale alerts'].map(pref => (
-                      <label key={pref} className="flex items-center justify-between p-4 border-b border-border">
-                        <span className="text-[0.85rem] font-body text-foreground">{pref}</span>
-                        <input type="checkbox" defaultChecked className="accent-primary" />
-                      </label>
-                    ))}
+                  <div>
+                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Saved Addresses</label>
+                    <p className="text-[0.85rem] text-foreground font-body">14 George Street, Edinburgh, EH2 2PF</p>
                   </div>
+                  <div>
+                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Payment Methods</label>
+                    <p className="text-[0.85rem] text-foreground font-body">Visa ending in 4242</p>
+                  </div>
+                  <Button variant="destructive" size="sm">Delete Account</Button>
                 </div>
-                <Button variant="default">Save Changes</Button>
               </div>
             )}
           </div>

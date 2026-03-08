@@ -28,12 +28,12 @@ export default function Rewards() {
           </div>
         </Reveal>
 
-        {/* Tiers — responsive, no overflow */}
+        {/* Tiers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border mb-16">
           {tiers.map((tier, i) => (
             <Reveal key={tier.name} delay={i * 60}>
-              <div className={`bg-background p-6 h-full flex flex-col ${i === 3 ? 'ring-2 ring-accent ring-inset' : ''}`}>
-                <tier.icon className="h-5 w-5 text-accent mb-3" strokeWidth={1.5} />
+              <div className={`bg-background p-6 flex flex-col h-auto overflow-visible ${i === 3 ? 'ring-2 ring-accent ring-inset' : ''}`}>
+                <tier.icon className="h-5 w-5 text-accent mb-3 shrink-0" strokeWidth={1.5} />
                 <h3 className="font-display text-xl mb-1 text-foreground">{tier.name}</h3>
                 <p className="text-[0.7rem] text-muted-foreground mb-4 font-body tracking-wide">{tier.range}</p>
                 <ul className="space-y-2 flex-1">
