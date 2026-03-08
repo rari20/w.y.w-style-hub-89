@@ -78,7 +78,7 @@ export default function AdminRetention() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
               {[
-                { label: 'Emails Sent', value: '5' },
+                { label: 'Emails Sent', value: '25' },
                 { label: 'Open Rate', value: '40%' },
                 { label: 'Consultations Booked', value: '0' },
               ].map(m => (

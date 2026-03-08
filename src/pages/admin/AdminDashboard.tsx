@@ -10,19 +10,19 @@ import { recentOrders, adminNotifications, type AdminNotification } from '@/data
 import { useState } from 'react';
 
 const kpis = [
-  { label: 'Total Customers', value: '15', icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-  { label: 'Active This Month', value: '10', icon: Activity, color: 'text-green-500', bg: 'bg-green-500/10' },
-  { label: 'Churn Risk', value: '5', icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/10', link: '/admin/churn-risk' },
-  { label: 'Total Revenue 6M', value: '£21,067', icon: () => <span className="text-lg font-display">£</span>, color: 'text-amber-600', bg: 'bg-amber-500/10' },
-  { label: 'Avg Satisfaction', value: '3.7/5', icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+  { label: 'Total Customers', value: '50', icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { label: 'Active This Month', value: '25', icon: Activity, color: 'text-green-500', bg: 'bg-green-500/10' },
+  { label: 'Churn Risk', value: '25', icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/10', link: '/admin/churn-risk' },
+  { label: 'Total Revenue 6M', value: '£13,845', icon: () => <span className="text-lg font-display">£</span>, color: 'text-amber-600', bg: 'bg-amber-500/10' },
+  { label: 'Avg Satisfaction', value: '3.5/5', icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
   { label: 'Active Campaigns', value: '3', icon: Send, color: 'text-purple-500', bg: 'bg-purple-500/10' },
 ];
 
 const tiers = [
-  { name: 'Watt', value: 4850, max: 6540, color: 'bg-amber-500' },
-  { name: 'Surge', value: 6540, max: 6540, color: 'bg-blue-500' },
-  { name: 'Volt', value: 4432, max: 6540, color: 'bg-orange-500' },
-  { name: 'Spark', value: 2005, max: 6540, color: 'bg-muted-foreground/40' },
+  { name: 'Watt', value: 3260, max: 4870, color: 'bg-amber-500' },
+  { name: 'Surge', value: 4870, max: 4870, color: 'bg-blue-500' },
+  { name: 'Volt', value: 3270, max: 4870, color: 'bg-orange-500' },
+  { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
 ];
 
 const statusColors: Record<string, string> = {
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                   <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-body font-medium">Churn Risk Alert</p>
-                    <p className="text-xs text-muted-foreground mt-1">5 customers have been identified as high churn risk by the CART model. Last updated: today.</p>
+                    <p className="text-xs text-muted-foreground mt-1">25 customers have been identified as high churn risk by the CART model. Last updated: today.</p>
                     <Link to="/admin/churn-risk">
                       <Button variant="outline" size="sm" className="mt-3">View Customers</Button>
                     </Link>

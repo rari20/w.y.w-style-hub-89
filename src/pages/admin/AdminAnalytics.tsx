@@ -2,10 +2,10 @@ import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const tiers = [
-  { name: 'Watt', value: 4850, max: 6540, color: 'bg-amber-500' },
-  { name: 'Surge', value: 6540, max: 6540, color: 'bg-blue-500' },
-  { name: 'Volt', value: 4432, max: 6540, color: 'bg-orange-500' },
-  { name: 'Spark', value: 2005, max: 6540, color: 'bg-muted-foreground/40' },
+  { name: 'Watt', value: 3260, max: 4870, color: 'bg-amber-500' },
+  { name: 'Surge', value: 4870, max: 4870, color: 'bg-blue-500' },
+  { name: 'Volt', value: 3270, max: 4870, color: 'bg-orange-500' },
+  { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
 ];
 
 const churnIndicators = [
@@ -18,10 +18,10 @@ const churnIndicators = [
 ];
 
 const funnel = [
-  { label: 'Targeted', value: 5, width: '100%' },
-  { label: 'Emails Sent', value: 5, width: '100%' },
-  { label: 'Opened', value: 2, width: '40%' },
-  { label: 'Clicked', value: 1, width: '20%' },
+  { label: 'Targeted', value: 25, width: '100%' },
+  { label: 'Emails Sent', value: 25, width: '100%' },
+  { label: 'Opened', value: 10, width: '40%' },
+  { label: 'Clicked', value: 5, width: '20%' },
   { label: 'Converted', value: 0, width: '4%' },
 ];
 
@@ -37,15 +37,15 @@ export default function AdminAnalytics() {
           <CardContent>
             <div className="flex items-center gap-8">
               <div className="text-center">
-                <p className="text-4xl font-display text-green-600">67%</p>
+                <p className="text-4xl font-display text-green-600">50%</p>
                 <p className="text-xs text-muted-foreground font-body">Retained</p>
               </div>
               <div className="text-center">
-                <p className="text-4xl font-display text-red-500">33%</p>
+                <p className="text-4xl font-display text-red-500">50%</p>
                 <p className="text-xs text-muted-foreground font-body">Churn Risk</p>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground font-body mt-3 font-mono">CC = e/t = 5/15 = 0.33 (33%)</p>
+            <p className="text-xs text-muted-foreground font-body mt-3 font-mono">CC = e/t = 25/50 = 0.50 (50%)</p>
           </CardContent>
         </Card>
 
@@ -75,7 +75,7 @@ export default function AdminAnalytics() {
               <div key={ci.label} className="space-y-1">
                 <div className="flex justify-between text-xs font-body">
                   <span>{ci.label}</span>
-                  <span className="text-muted-foreground">{ci.pct === 100 ? '5/5' : '4/5'} ({ci.pct}%)</span>
+                  <span className="text-muted-foreground">{ci.pct === 100 ? '25/25' : '20/25'} ({ci.pct}%)</span>
                 </div>
                 <div className="h-2.5 rounded-full bg-muted overflow-hidden">
                   <div className="h-full rounded-full bg-red-500" style={{ width: `${ci.pct}%` }} />
