@@ -16,8 +16,10 @@ const brandImages: Record<string, string> = {
 export function BrandsPage() {
   return (
     <Layout>
-      <div className="wyw-container py-12 pt-24 pb-24">
-        <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-primary mb-3">Curated Partners</p>
+      <div className="wyw-container pt-24 pb-24">
+        <Breadcrumb crumbs={[{ label: 'Home', to: '/home' }, { label: 'Brands' }]} />
+        <Reveal>
+          <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-primary mb-3">Curated Partners</p>
         <h1 className="font-display italic mb-4 leading-[1.05] text-foreground" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}>Our Brands</h1>
         <p className="text-muted-foreground max-w-lg mb-12 font-body font-light leading-relaxed">
           W.Y.W curates the most exciting names in contemporary fashion. Each brand brings a unique perspective to the W.Y.W universe.
