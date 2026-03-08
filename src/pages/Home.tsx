@@ -9,10 +9,10 @@ const newIn = products.filter(p => p.isNew).slice(0, 8);
 const trending = products.filter(p => p.isTrending).slice(0, 6);
 
 const occasions = [
-  { title: 'Office Ready', filter: 'workwear', image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&h=800&fit=crop' },
-  { title: 'Weekend Edit', filter: 'casual', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop' },
-  { title: 'Evening Out', filter: 'evening', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop' },
-  { title: 'Layering Season', filter: 'outerwear', image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop' },
+  { title: 'Office Ready', filter: 'workwear', image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&q=80&fit=crop&crop=center' },
+  { title: 'Weekend Edit', filter: 'casual', image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80&fit=crop&crop=center' },
+  { title: 'Evening Out', filter: 'evening', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&fit=crop&crop=center' },
+  { title: 'Layering Season', filter: 'outerwear', image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80&fit=crop&crop=center' },
 ];
 
 const campaigns = [
@@ -21,14 +21,14 @@ const campaigns = [
     title: 'Quiet Luxury, Loud Confidence',
     cta: 'Shop New In',
     to: '/shop?filter=new',
-    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1000&fit=crop',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80&fit=crop&crop=center',
   },
   {
     eyebrow: 'The Edit',
     title: 'Layered For Impact',
     cta: 'Shop Outerwear',
     to: '/shop?category=outerwear',
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=1000&fit=crop',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80&fit=crop&crop=center',
   },
 ];
 
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-14">
             <div>
               <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">Just Dropped</p>
-              <h2 className="font-display text-[2.5rem] md:text-[3rem] italic">New In</h2>
+              <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">New In</h2>
             </div>
             <Link to="/shop?filter=new" className="font-body text-[0.7rem] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
               View All <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
@@ -82,7 +82,7 @@ export default function Home() {
           <div className="flex items-end justify-between mb-14">
             <div>
               <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">Most Popular</p>
-              <h2 className="font-display text-[2.5rem] md:text-[3rem] italic">Trending Now</h2>
+              <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">Trending Now</h2>
             </div>
             <Link to="/shop?filter=trending" className="font-body text-[0.7rem] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
               View All <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
@@ -103,7 +103,7 @@ export default function Home() {
         <div className="wyw-container">
           <div className="text-center mb-14">
             <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">Curated For You</p>
-            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic">Style by Occasion</h2>
+            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">Style by Occasion</h2>
           </div>
           <div className="grid grid-cols-2 gap-4 md:gap-6">
             {occasions.map(occ => (
@@ -145,7 +145,7 @@ export default function Home() {
         <div className="wyw-container">
           <div className="text-center mb-14">
             <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">Our Partners</p>
-            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic">The Brands</h2>
+            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">The Brands</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
             {brands.map(brand => (
@@ -154,7 +154,7 @@ export default function Home() {
                 to={`/brands/${brand.id}`}
                 className="bg-background text-center group py-12 hover:bg-muted transition-colors duration-500"
               >
-                <h3 className="font-display text-[1.5rem] tracking-[0.02em] italic group-hover:text-primary transition-colors duration-500">
+                <h3 className="font-display text-[1.5rem] tracking-[0.02em] italic group-hover:text-primary transition-colors duration-500 text-foreground">
                   {brand.name}
                 </h3>
               </Link>
@@ -163,12 +163,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Consultation CTA — asymmetric layout */}
+      {/* Consultation CTA */}
       <section className="wyw-section">
         <div className="wyw-container grid md:grid-cols-5 gap-16 items-center">
           <div className="md:col-span-3">
             <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-primary mb-4">Expert Styling</p>
-            <h2 className="font-display text-[2.5rem] md:text-[3.5rem] italic leading-[1.05] mb-6">
+            <h2 className="font-display text-[2.5rem] md:text-[3.5rem] italic leading-[1.05] mb-6 text-foreground">
               Your First Consultation<br />is Complimentary
             </h2>
             <p className="text-muted-foreground font-body font-light leading-[1.8] mb-8 max-w-[55ch]">
@@ -211,7 +211,7 @@ export default function Home() {
       {/* Email Subscribe */}
       <section className="bg-muted">
         <div className="wyw-container py-20 max-w-xl mx-auto text-center">
-          <h2 className="font-display text-[2rem] italic mb-4">Stay Connected</h2>
+          <h2 className="font-display text-[2rem] italic mb-4 text-foreground">Stay Connected</h2>
           <p className="text-muted-foreground font-body text-[0.8125rem] font-light mb-8">
             New arrivals, exclusive offers, and styling insights — delivered to your inbox.
           </p>
@@ -219,7 +219,7 @@ export default function Home() {
             <input
               type="email"
               placeholder="Your email address"
-              className="flex-1 bg-transparent px-0 py-3 font-body text-[0.9375rem] font-light focus:outline-none placeholder:text-muted-foreground"
+              className="flex-1 bg-transparent px-0 py-3 font-body text-[0.9375rem] font-light focus:outline-none placeholder:text-muted-foreground text-foreground"
             />
             <button className="font-body text-[0.7rem] uppercase tracking-[0.18em] text-foreground px-4 hover:text-primary transition-colors">
               Subscribe

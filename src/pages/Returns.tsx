@@ -10,81 +10,93 @@ export default function Returns() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8 max-w-3xl">
-        <h1 className="text-4xl md:text-5xl font-display mb-4 italic text-foreground">Returns & Refunds</h1>
+      <div className="wyw-container py-12 pt-24 pb-24">
+        <div className="max-w-[720px] mx-auto">
+          <h1 className="font-display text-foreground mb-2 leading-[1.1]" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>Returns Policy</h1>
+          <p className="text-[0.78rem] text-muted-foreground tracking-[0.08em] mb-8 pb-6 border-b border-border">Last updated: 1 March 2026</p>
 
-        {/* Policy Summary */}
-        <div className="bg-muted p-6 mb-10 space-y-3 text-[0.85rem] font-body font-light">
-          <h2 className="font-display text-xl mb-3 italic text-foreground">Returns Policy</h2>
-          <p className="text-foreground">You have <strong className="font-medium">30 days</strong> from delivery to return items for a full refund.</p>
-          <p className="text-foreground">Items must be unworn, unwashed, and in original condition with tags attached.</p>
-          <p className="text-foreground">Refunds are processed to the original payment method within 5–7 working days of receiving the return.</p>
-          <p className="text-foreground">Store credit is offered as an alternative where applicable.</p>
-          <p className="text-foreground">In-store returns desk also handles online purchases — just bring your order confirmation.</p>
-        </div>
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">1. Return Window</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">You may return most items within 28 days of the delivery date. Items purchased in-store may be returned within 28 days of purchase with proof of purchase.</p>
 
-        {/* Return Methods */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10">
-          {[
-            { title: 'W.Y.W Locker', desc: 'Drop off at any W.Y.W locker. Locker code sent via email/SMS.' },
-            { title: 'Post', desc: 'Print a pre-paid label and drop off at your nearest post office.' },
-            { title: 'In-Store', desc: 'Visit any W.Y.W returns desk with your order confirmation.' },
-          ].map(method => (
-            <div key={method.title} className="wyw-card border border-border p-5">
-              <Package className="h-5 w-5 text-accent mb-2" strokeWidth={1.5} />
-              <h3 className="font-display text-lg mb-1 text-foreground">{method.title}</h3>
-              <p className="text-[0.75rem] text-muted-foreground font-body font-light">{method.desc}</p>
-            </div>
-          ))}
-        </div>
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">2. Condition of Returns</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Items must be returned in their original condition: unworn, unwashed, unaltered, with all original tags attached and in original packaging where possible. W.Y.W reserves the right to refuse returns that do not meet these criteria.</p>
 
-        {/* Start Return */}
-        <div className="border border-border p-6 mb-10">
-          <h2 className="font-display text-xl mb-4 italic text-foreground">Start a Return</h2>
-          {!submitted ? (
-            <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Order Reference</label>
-                  <input type="text" value={orderRef} onChange={e => setOrderRef(e.target.value)} placeholder="WYW-2026-XXXX" required
-                    className="w-full bg-muted px-4 py-3 text-[0.85rem] font-body text-foreground focus:outline-none focus:ring-2 focus:ring-accent" />
-                </div>
-                <div>
-                  <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                    className="w-full bg-muted px-4 py-3 text-[0.85rem] font-body text-foreground focus:outline-none focus:ring-2 focus:ring-accent" />
-                </div>
-              </div>
-              <Button variant="default" type="submit">Find My Order</Button>
-            </form>
-          ) : (
-            <div>
-              <p className="text-[0.85rem] mb-4 font-body text-foreground">Select items to return and choose your preferred return method.</p>
-              <div className="p-4 border border-border mb-4">
-                <div className="flex items-center justify-between">
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">3. Non-Returnable Items</h2>
+          <ul className="list-disc pl-6 mb-5 space-y-2">
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Items marked as Final Sale</li>
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Personalised or tailored items</li>
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Underwear and swimwear (hygiene seal broken)</li>
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Gift cards</li>
+          </ul>
+
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">4. How to Return</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-3">Returns can be made via three methods:</p>
+          <ul className="list-disc pl-6 mb-5 space-y-2">
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">W.Y.W Locker — drop your return at any in-store W.Y.W locker using the return code sent to your email</li>
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">In-store — visit the Customer Service desk at any W.Y.W store with your order reference</li>
+            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Post — download a prepaid returns label from your account portal and drop at any Royal Mail post office</li>
+          </ul>
+
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">5. Refunds</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Refunds are processed within 5–7 working days of us receiving and inspecting your return. Refunds are issued to the original payment method. If the original method is unavailable, store credit will be offered.</p>
+
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">6. Faulty Items</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">If you receive a faulty or incorrect item, contact us within 48 hours of delivery at returns@wyw.com with your order number and photographs of the issue. We will arrange a free return and prioritised replacement or refund.</p>
+
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">7. Loyalty Points on Returns</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Loyalty points awarded for a purchase will be deducted from your account when the return is processed. If this causes your balance to go below a tier threshold, your tier status will be adjusted accordingly.</p>
+
+          <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">8. Contact</h2>
+          <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">For return queries: returns@wyw.com or speak to our team in store.</p>
+
+          {/* Start Return Form */}
+          <div className="border-t border-border pt-10 mt-10">
+            <h2 className="font-display text-xl mb-6 italic text-foreground">Start a Return</h2>
+            {!submitted ? (
+              <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-[0.85rem] font-body font-medium text-foreground">Oversized Essential Hoodie</p>
-                    <p className="text-[0.75rem] text-muted-foreground font-body">Size M · Black</p>
+                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Order Reference</label>
+                    <input type="text" value={orderRef} onChange={e => setOrderRef(e.target.value)} placeholder="WYW-2026-XXXX" required
+                      className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" />
                   </div>
-                  <input type="checkbox" className="accent-accent" />
+                  <div>
+                    <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
+                      className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" />
+                  </div>
                 </div>
+                <Button variant="default" type="submit">Find My Order</Button>
+              </form>
+            ) : (
+              <div>
+                <p className="text-[0.85rem] mb-4 font-body text-foreground">Select items to return and choose your preferred return method.</p>
+                <div className="p-4 border border-border mb-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-[0.85rem] font-body font-medium text-foreground">Oversized Essential Hoodie</p>
+                      <p className="text-[0.75rem] text-muted-foreground font-body">Size M · Black</p>
+                    </div>
+                    <input type="checkbox" className="accent-primary w-4 h-4" />
+                  </div>
+                </div>
+                <Button variant="default">Submit Return Request</Button>
               </div>
-              <Button variant="default">Submit Return Request</Button>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* Track Return */}
-        <div>
-          <h2 className="font-display text-xl mb-4 italic text-foreground">Return Tracking</h2>
-          <div className="flex items-center gap-4 text-[0.85rem] font-body">
-            {['Return Initiated', 'Item Received', 'Inspected', 'Refund Processed'].map((status, i) => (
-              <div key={status} className="flex items-center gap-2">
-                <div className={`w-3 h-3 rounded-full ${i === 0 ? 'bg-accent' : 'bg-border'}`} />
-                <span className={`${i === 0 ? 'font-medium text-foreground' : 'text-muted-foreground'}`}>{status}</span>
-                {i < 3 && <ArrowRight className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />}
-              </div>
-            ))}
+          {/* Track Return */}
+          <div className="border-t border-border pt-10 mt-10">
+            <h2 className="font-display text-xl mb-4 italic text-foreground">Return Tracking</h2>
+            <div className="flex flex-wrap items-center gap-4 text-[0.85rem] font-body">
+              {['Return Initiated', 'Item Received', 'Inspected', 'Refund Processed'].map((status, i) => (
+                <div key={status} className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${i === 0 ? 'bg-primary' : 'bg-border'}`} />
+                  <span className={`${i === 0 ? 'font-medium text-foreground' : 'text-muted-foreground'}`}>{status}</span>
+                  {i < 3 && <ArrowRight className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
