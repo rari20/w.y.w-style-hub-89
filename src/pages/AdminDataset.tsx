@@ -4,6 +4,8 @@ import Reveal from '@/components/Reveal';
 import { useAuth } from '@/context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { BarChart2, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const ADMIN_EMAIL = 'test.customer@wyw-demo.com';
 
@@ -160,6 +162,18 @@ export default function AdminDataset() {
             <p className="text-[0.85rem] text-muted-foreground font-body font-light leading-relaxed">
               All 5 at-risk customers are on the Spark loyalty tier with total spend below £500, no consultation bookings, and email engagement disabled. This validates TotalSpend6Months ≥ £500 as the CART root split, producing two perfectly pure child nodes with a weighted Gini Impurity of 0.000.
             </p>
+          </div>
+        </Reveal>
+
+        {/* Navigation */}
+        <Reveal>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link to="/churn-predictor">
+              <Button><BarChart2 className="h-4 w-4 mr-2" /> Test Model with New Customer</Button>
+            </Link>
+            <Link to="/retention-dashboard">
+              <Button variant="outline">View Retention Actions</Button>
+            </Link>
           </div>
         </Reveal>
       </div>

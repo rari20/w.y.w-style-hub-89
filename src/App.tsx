@@ -27,6 +27,8 @@ import GiftCards from "./pages/GiftCards";
 import { TermsPage, PrivacyPage, CookiePage, AccessibilityPage } from "./pages/Legal";
 import Feedback from "./pages/Feedback";
 import AdminDataset from "./pages/AdminDataset";
+import ChurnPredictor from "./pages/ChurnPredictor";
+import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -61,6 +63,8 @@ function AnimatedRoutes() {
       <Route path="/accessibility" element={<AccessibilityPage />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/admin/dataset" element={<AdminDataset />} />
+      <Route path="/churn-predictor" element={<ChurnPredictor />} />
+      <Route path="/retention-dashboard" element={<RetentionDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
