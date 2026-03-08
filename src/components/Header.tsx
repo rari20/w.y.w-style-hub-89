@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, User, Menu, X, Moon, Sun, ShoppingBag } from 'lucide-react';
+import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
+import { useMusic } from '@/context/MusicContext';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
