@@ -495,16 +495,16 @@ export default function Account() {
                     <h3 className="font-body text-sm font-medium mb-3 text-foreground">Email Preferences</h3>
                     <div className="space-y-3">
                       <label className="flex items-center gap-3">
-                        <input type="checkbox" defaultChecked disabled className="accent-primary" />
+                        <input type="checkbox" checked disabled className="accent-primary" />
                         <span className="text-[0.85rem] font-body text-foreground">Order updates</span>
                         <span className="text-[0.625rem] text-muted-foreground font-body">(required)</span>
                       </label>
                       <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <input type="checkbox" checked={promoEmails} onChange={e => { setPromoEmails(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
                         <span className="text-[0.85rem] font-body text-foreground">Promotions & new arrivals</span>
                       </label>
                       <label className="flex items-center gap-3 cursor-pointer">
-                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <input type="checkbox" checked={stylingEmails} onChange={e => { setStylingEmails(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
                         <span className="text-[0.85rem] font-body text-foreground">Styling tips & consultation reminders</span>
                       </label>
                     </div>
@@ -515,12 +515,10 @@ export default function Account() {
                   <div>
                     <h3 className="font-body text-sm font-medium mb-3 text-foreground">Other Notifications</h3>
                     <div className="space-y-3">
-                      {['Rewards milestones'].map(n => (
-                        <label key={n} className="flex items-center gap-3 cursor-pointer">
-                          <input type="checkbox" defaultChecked className="accent-primary" />
-                          <span className="text-[0.85rem] font-body text-foreground">{n}</span>
-                        </label>
-                      ))}
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" checked={rewardsMilestones} onChange={e => { setRewardsMilestones(e.target.checked); toast.success('Preference saved'); }} className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Rewards milestones</span>
+                      </label>
                     </div>
                   </div>
                   <div className="border-t border-border pt-6">

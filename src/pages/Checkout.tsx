@@ -69,10 +69,10 @@ function CheckoutHeader() {
           <span className="font-body text-[0.65rem] uppercase tracking-[0.15em]">Secure</span>
         </div>
         <Link to="/" className="font-display text-[1.6rem] tracking-[0.04em] text-foreground">W.Y.W</Link>
-        <a href="#" className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+        <Link to="/customer-service" className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
           <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} />
           <span className="font-body text-[0.65rem] uppercase tracking-[0.15em] hidden sm:inline">Need help?</span>
-        </a>
+        </Link>
       </div>
     </header>
   );
