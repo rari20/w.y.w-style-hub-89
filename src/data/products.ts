@@ -122,6 +122,8 @@ export const products: Product[] = [
   {
     id: 'lw7', name: 'Satin Wide-Leg Trousers', brand: 'Lumenwear', price: 285,
     category: 'bottoms', sizes: ['XS','S','M','L'], colors: ['Cream','Black'],
+    colorImages: { 'Cream': productLw7, 'Black': productLw6 },
+    material: 'Heavy Satin',
     image: productLw7, loyaltyPoints: 285, inStock: true,
     description: 'High-waisted wide-leg trousers in heavy satin. Pressed crease and side zip for a sleek finish.',
     storeAvailability: storeVariant(true,true,true), occasion: ['workwear','evening'],
