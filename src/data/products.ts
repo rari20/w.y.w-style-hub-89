@@ -95,6 +95,8 @@ export const products: Product[] = [
   {
     id: 'lw4', name: 'Lumen Slip Dress', brand: 'Lumenwear', price: 320,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Gold','Black','Silver'],
+    colorImages: { 'Gold': productLw4, 'Black': productLw5, 'Silver': productLw2 },
+    material: 'Liquid Satin',
     image: productLw4, loyaltyPoints: 320, inStock: true, isNew: true,
     description: 'Bias-cut slip dress in liquid satin. Adjustable straps and a cowl neckline for eveningwear elegance.',
     storeAvailability: defaultStores, occasion: ['evening'],
