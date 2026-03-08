@@ -84,7 +84,7 @@ function FeedbackForm() {
     toast.success('Thank you for your feedback!');
   };
 
-  if (done) return <p className="text-[0.85rem] text-accent font-body">✓ Feedback submitted — thank you!</p>;
+  if (done) return <p className="text-[0.85rem] text-accent font-body flex items-center gap-1.5"><Check className="h-4 w-4" strokeWidth={1.5} /> Feedback submitted — thank you!</p>;
 
   return (
     <form onSubmit={submit}>
