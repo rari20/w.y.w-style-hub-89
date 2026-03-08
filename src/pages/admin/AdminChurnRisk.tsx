@@ -64,7 +64,7 @@ export default function AdminChurnRisk() {
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <p className="font-body font-medium text-sm">{c.id}</p>
-                      <p className="text-xs text-muted-foreground">£{c.totalSpend} total spend — {c.ordersLast6M} orders in 6M</p>
+                      <p className="text-xs text-muted-foreground">£{c.totalSpend} total spend — {c.daysInactive} days inactive</p>
                     </div>
                     <span className="bg-red-500/20 text-red-700 dark:text-red-400 text-[10px] px-2.5 py-1 rounded font-bold tracking-wider uppercase font-body">
                       CHURN RISK — Segment D
