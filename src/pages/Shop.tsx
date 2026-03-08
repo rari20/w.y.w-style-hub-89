@@ -19,6 +19,7 @@ const priceRanges = [
 ];
 
 export default function Shop() {
+  usePageTitle('Shop');
   const [searchParams] = useSearchParams();
   const filterParam = searchParams.get('filter');
   const categoryParam = searchParams.get('category');

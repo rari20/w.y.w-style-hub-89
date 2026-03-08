@@ -5,6 +5,7 @@ import { Zap, Star, Award, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const tiers = [
   { icon: Zap, name: 'Spark', range: '0–499 points', benefits: ['1 point per £1 spent', 'Birthday coupon', 'Standard support'] },
@@ -14,6 +15,7 @@ const tiers = [
 ];
 
 export default function Rewards() {
+  usePageTitle('Rewards');
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
 
   return (
