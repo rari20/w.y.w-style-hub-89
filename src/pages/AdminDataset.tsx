@@ -5,9 +5,14 @@ import { useAuth } from '@/context/AuthContext';
 import { Navigate, Link } from 'react-router-dom';
 import { BarChart2, ShieldCheck, AlertTriangle, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { trainingData, giniResults, featureRanking } from '@/data/cartModel';
+import { trainingData, giniResults, datasetStats } from '@/data/cartModel';
 
 const ADMIN_EMAIL = 'admin@wyw-demo.com';
+
+// Feature ranking derived from giniResults
+const featureRanking = Object.entries(giniResults)
+  .map(([feature, data]) => [feature, data] as [string, typeof data])
+  .sort((a, b) => a[1].gini - b[1].gini);
 
 export default function AdminDataset() {
   const { user, loading } = useAuth();
@@ -26,9 +31,6 @@ export default function AdminDataset() {
     return <Navigate to="/account" replace />;
   }
 
-  const churnCount = trainingData.filter(d => d.churn).length;
-  const retainCount = trainingData.length - churnCount;
-
   return (
     <Layout>
       <div className="wyw-container pt-24 pb-16">
@@ -40,7 +42,7 @@ export default function AdminDataset() {
             <h1 className="text-3xl md:text-5xl font-display italic text-foreground">CART Training Dataset</h1>
           </div>
           <p className="text-muted-foreground font-body font-light mb-10 leading-relaxed max-w-3xl">
-            10-record dataset used to train W.Y.W's CART churn prediction model. Features are UX attributes collected from customer experience surveys: Delivery, Shopping, Security, and Price perception.
+            {datasetStats.totalCustomers}-record dataset used to train W.Y.W's CART churn prediction model. Features include LoyaltyTier, TotalSpend6Months, DaysSinceLastPurchase, ReturnRate, ConsultationBooked, and EmailEngagement — all derived from the e-commerce customer dataset.
           </p>
         </Reveal>
 
@@ -51,7 +53,7 @@ export default function AdminDataset() {
             <table className="w-full text-[0.85rem] font-body border border-border">
               <thead>
                 <tr className="border-b border-border bg-muted">
-                  {['Customer', 'Delivery', 'Shopping', 'Security', 'Price', 'Churn'].map(col => (
+                  {['Customer', 'Loyalty Tier', 'Spend 6M', 'Days Inactive', 'Return %', 'Consultation', 'Email', 'Churned'].map(col => (
                     <th key={col} className="py-3 px-4 text-left text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-medium whitespace-nowrap">
                       {col}
                     </th>
@@ -60,18 +62,20 @@ export default function AdminDataset() {
               </thead>
               <tbody>
                 {trainingData.map(row => (
-                  <tr key={row.id} className={`border-b border-border ${row.churn ? 'bg-red-50/60 dark:bg-red-950/20' : 'bg-green-50/40 dark:bg-green-950/15'} transition-colors`}>
-                    <td className="py-3 px-4 font-medium text-foreground">Customer {row.id}</td>
-                    <td className="py-3 px-4 text-foreground">{row.delivery}</td>
-                    <td className="py-3 px-4 text-foreground">{row.shopping}</td>
-                    <td className="py-3 px-4 text-foreground">{row.security}</td>
-                    <td className="py-3 px-4 text-foreground">{row.price}</td>
+                  <tr key={row.customerID} className={`border-b border-border ${row.churned ? 'bg-red-50/60 dark:bg-red-950/20' : 'bg-green-50/40 dark:bg-green-950/15'} transition-colors`}>
+                    <td className="py-3 px-4 font-medium text-foreground">{row.customerID}</td>
+                    <td className="py-3 px-4 text-foreground">{row.loyaltyTier}</td>
+                    <td className="py-3 px-4 text-foreground">£{row.totalSpend6Months}</td>
+                    <td className="py-3 px-4 text-foreground">{row.daysSinceLastPurchase}</td>
+                    <td className="py-3 px-4 text-foreground">{row.returnRate}%</td>
+                    <td className="py-3 px-4 text-foreground">{row.consultationBooked}</td>
+                    <td className="py-3 px-4 text-foreground">{row.emailEngagement}</td>
                     <td className="py-3 px-4">
-                      <span className={`text-[0.7rem] px-2.5 py-0.5 font-medium font-body ${row.churn
+                      <span className={`text-[0.7rem] px-2.5 py-0.5 font-medium font-body ${row.churned
                         ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
                         : 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
                       }`}>
-                        {row.churn ? 'Yes' : 'No'}
+                        {row.churned ? 'Yes' : 'No'}
                       </span>
                     </td>
                   </tr>
@@ -88,18 +92,18 @@ export default function AdminDataset() {
             <div className="border border-green-200 dark:border-green-800/40 bg-green-50/50 dark:bg-green-950/20 p-5 flex items-center gap-4">
               <ShieldCheck className="h-8 w-8 text-green-600 dark:text-green-400 shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="font-display text-2xl text-foreground">{retainCount} customers</p>
+                <p className="font-display text-2xl text-foreground">{datasetStats.retainedCustomers} customers</p>
                 <p className="text-[0.8rem] text-green-700 dark:text-green-400 font-body font-medium">
-                  No Churn ({Math.round((retainCount / trainingData.length) * 100)}%)
+                  No Churn ({100 - datasetStats.churnRate}%)
                 </p>
               </div>
             </div>
             <div className="border border-red-200 dark:border-red-800/40 bg-red-50/50 dark:bg-red-950/20 p-5 flex items-center gap-4">
               <AlertTriangle className="h-8 w-8 text-red-600 dark:text-red-400 shrink-0" strokeWidth={1.5} />
               <div>
-                <p className="font-display text-2xl text-foreground">{churnCount} customers</p>
+                <p className="font-display text-2xl text-foreground">{datasetStats.churnedCustomers} customers</p>
                 <p className="text-[0.8rem] text-red-700 dark:text-red-400 font-body font-medium">
-                  Churn ({Math.round((churnCount / trainingData.length) * 100)}%)
+                  Churn ({datasetStats.churnRate}%)
                 </p>
               </div>
             </div>
@@ -113,11 +117,11 @@ export default function AdminDataset() {
             The CART algorithm selects the feature with the <strong className="text-foreground">lowest weighted Gini Impurity</strong> as each split. Gini = 1 − Σ(pᵢ)² where pᵢ is the probability of class i. A Gini of 0 = perfectly pure, 0.5 = maximum impurity (50-50 split).
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {featureRanking.map(([feature, data], idx) => (
               <div key={feature} className={`border p-5 ${idx === 0 ? 'border-accent bg-accent/5 ring-1 ring-accent/20' : 'border-border'}`}>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-display text-base italic text-foreground capitalize">{feature}</h3>
+                  <h3 className="font-display text-base italic text-foreground capitalize">{feature === 'loyaltyTier' ? 'Loyalty Tier' : feature === 'emailEngagement' ? 'Email Engagement' : 'Consultation Booked'}</h3>
                   <div className="flex items-center gap-2">
                     {idx === 0 && (
                       <span className="text-[0.6rem] px-2 py-0.5 bg-accent text-accent-foreground font-body font-bold uppercase tracking-wider">Best Split</span>
@@ -129,9 +133,9 @@ export default function AdminDataset() {
                 <table className="w-full text-[0.75rem] font-body">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="py-1.5 text-left text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">{feature}</th>
-                      <th className="py-1.5 text-center text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Yes</th>
-                      <th className="py-1.5 text-center text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">No</th>
+                      <th className="py-1.5 text-left text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Value</th>
+                      <th className="py-1.5 text-center text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Churn</th>
+                      <th className="py-1.5 text-center text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Retain</th>
                       <th className="py-1.5 text-center text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Count</th>
                       <th className="py-1.5 text-right text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">Gini</th>
                     </tr>
@@ -162,15 +166,10 @@ export default function AdminDataset() {
           <div className="bg-muted p-6 md:p-8 border border-border mb-6">
             <h3 className="font-display text-lg mb-3 italic text-foreground">CART Decision Tree Structure</h3>
             <div className="text-[0.85rem] text-muted-foreground font-body font-light leading-relaxed space-y-2">
-              <p><strong className="text-foreground">Level 1 — Price</strong> (Gini = 0.286, best split)</p>
-              <p className="pl-4">• <strong className="text-red-600 dark:text-red-400">Unfair → CHURN</strong> (3/3 customers churned — pure node)</p>
-              <p className="pl-4">• Fair → proceed to Level 2</p>
-              <p className="mt-2"><strong className="text-foreground">Level 2 — Delivery</strong> (Gini = 0.191 on Fair subset)</p>
-              <p className="pl-4">• <strong className="text-green-600 dark:text-green-400">Good / OK → NO CHURN</strong> (4/4 retained — pure node)</p>
-              <p className="pl-4">• Bad → proceed to Level 3</p>
-              <p className="mt-2"><strong className="text-foreground">Level 3 — Shopping</strong> (Gini = 0.000 on Bad + Fair subset)</p>
-              <p className="pl-4">• <strong className="text-red-600 dark:text-red-400">Normal → CHURN</strong> (2/2 churned — pure node)</p>
-              <p className="pl-4">• <strong className="text-green-600 dark:text-green-400">Efficient → NO CHURN</strong> (1/1 retained — pure node)</p>
+              <p><strong className="text-foreground">Level 1 — Loyalty Tier</strong> (Gini = 0.000, perfect split)</p>
+              <p className="pl-4">• <strong className="text-red-600 dark:text-red-400">Spark → CHURN</strong> (25/25 customers churned — pure node)</p>
+              <p className="pl-4">• <strong className="text-green-600 dark:text-green-400">Watt / Surge / Volt → NO CHURN</strong> (25/25 retained — pure node)</p>
+              <p className="mt-2 text-muted-foreground/80">The model achieves 100% accuracy on training data because LoyaltyTier perfectly separates churned vs retained customers.</p>
             </div>
           </div>
         </Reveal>
@@ -180,9 +179,10 @@ export default function AdminDataset() {
           <div className="bg-muted p-6 md:p-8 border border-border mb-6">
             <h3 className="font-display text-lg mb-3 italic text-foreground">Where Does the Data Come From?</h3>
             <div className="text-[0.85rem] text-muted-foreground font-body font-light leading-relaxed space-y-2">
-              <p><strong className="text-foreground">Customer Surveys</strong> — Post-purchase satisfaction surveys collecting Delivery, Shopping, Security and Price perception ratings.</p>
-              <p><strong className="text-foreground">Browsing Activity Monitoring</strong> — Pages viewed, time on pages, usage of wishlist/saved/shopping lists.</p>
-              <p><strong className="text-foreground">Transactional Records</strong> — Products bought, quantities, frequency, time gap between purchases, account closures.</p>
+              <p><strong className="text-foreground">Customer Transactions</strong> — TotalSpend6Months, DaysSinceLastPurchase, and ReturnRate tracked from purchase history.</p>
+              <p><strong className="text-foreground">Loyalty Programme</strong> — LoyaltyTier (Spark, Volt, Surge, Watt) assigned based on cumulative engagement.</p>
+              <p><strong className="text-foreground">Engagement Metrics</strong> — ConsultationBooked and EmailEngagement captured from CRM activity logs.</p>
+              <p><strong className="text-foreground">Support Interactions</strong> — CustomerServiceContacts and WishlistItemsUnpurchased from platform analytics.</p>
             </div>
           </div>
         </Reveal>
