@@ -25,6 +25,7 @@ import Returns from "./pages/Returns";
 import CustomerService from "./pages/CustomerService";
 import GiftCards from "./pages/GiftCards";
 import { TermsPage, PrivacyPage, CookiePage, AccessibilityPage } from "./pages/Legal";
+import Feedback from "./pages/Feedback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
