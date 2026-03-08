@@ -30,6 +30,15 @@ import AdminDataset from "./pages/AdminDataset";
 import ChurnPredictor from "./pages/ChurnPredictor";
 import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminChurnRisk from "./pages/admin/AdminChurnRisk";
+import AdminRetention from "./pages/admin/AdminRetention";
+import AdminDiscounts from "./pages/admin/AdminDiscounts";
+import AdminEmailCampaigns from "./pages/admin/AdminEmailCampaigns";
+import AdminSocial from "./pages/admin/AdminSocial";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 
 const queryClient = new QueryClient();
 
