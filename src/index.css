@@ -139,6 +139,14 @@
     letter-spacing: -0.02em;
     line-height: 1.1;
     text-transform: none;
+    text-shadow: none;
+  }
+
+  /* Kill all pseudo-element ghosts on hero headings */
+  h1::before, h1::after,
+  h1 span::before, h1 span::after {
+    display: none !important;
+    content: none !important;
   }
 
   /* Focus states */
