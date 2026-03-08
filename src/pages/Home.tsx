@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
 import { products, brands } from '@/data/products';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const newIn = products.filter(p => p.isNew).slice(0, 8);
 const trending = products.filter(p => p.isTrending).slice(0, 6);
