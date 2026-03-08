@@ -19,10 +19,10 @@ const kpis = [
 ];
 
 const tiers = [
-  { name: 'Watt', value: 4850, max: 6540, color: 'bg-amber-500' },
-  { name: 'Surge', value: 6540, max: 6540, color: 'bg-blue-500' },
-  { name: 'Volt', value: 4432, max: 6540, color: 'bg-orange-500' },
-  { name: 'Spark', value: 2005, max: 6540, color: 'bg-muted-foreground/40' },
+  { name: 'Watt', value: 3260, max: 4870, color: 'bg-amber-500' },
+  { name: 'Surge', value: 4870, max: 4870, color: 'bg-blue-500' },
+  { name: 'Volt', value: 3270, max: 4870, color: 'bg-orange-500' },
+  { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
 ];
 
 const statusColors: Record<string, string> = {
