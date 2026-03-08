@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX } from 'lucide-react';
+import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX, Shield } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useMusic } from '@/context/MusicContext';
+import { useAuth } from '@/context/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ADMIN_EMAIL } from '@/data/adminData';
 
 const navLinks = [
   { label: 'Shop', to: '/shop' },
