@@ -60,8 +60,8 @@ export default function ProductDetail() {
           {/* Details */}
           <div className="flex flex-col justify-center">
             <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-1">{product.brand}</p>
-            <h1 className="text-4xl md:text-5xl font-display mb-2">{product.name.toUpperCase()}</h1>
-            <div className="flex items-center gap-4 mb-6">
+            <h1 className="text-4xl md:text-5xl font-display mb-6">{product.name.toUpperCase()}</h1>
+            <div className="flex items-center gap-4 mb-8">
               <span className="text-2xl font-semibold font-body">£{product.price.toFixed(2)}</span>
               <span className="text-sm text-muted-foreground flex items-center gap-1">
                 <Zap className="h-3 w-3 text-accent" /> +{product.loyaltyPoints} points
