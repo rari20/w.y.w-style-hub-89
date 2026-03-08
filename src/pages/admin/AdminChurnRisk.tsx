@@ -26,8 +26,8 @@ export default function AdminChurnRisk() {
   };
 
   const exportCSV = () => {
-    const header = 'ID,TotalSpend,DaysInactive,LoyaltyTier,EmailEngaged,Satisfaction,ReturnRate,OrdersLast6M,ChurnRisk';
-    const rows = atRisk.map(c => `${c.id},${c.totalSpend},${c.daysInactive},${c.loyaltyTier},${c.emailEngaged},${c.satisfaction},${c.returnRate},${c.ordersLast6M},${c.churnRisk}`);
+    const header = 'ID,TotalSpend,DaysInactive,LoyaltyTier,EmailEngaged,Satisfaction,ReturnRate,ChurnRisk';
+    const rows = atRisk.map(c => `${c.id},${c.totalSpend},${c.daysInactive},${c.loyaltyTier},${c.emailEngaged},${c.satisfaction},${c.returnRate},${c.churnRisk}`);
     const blob = new Blob([header + '\n' + rows.join('\n')], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
