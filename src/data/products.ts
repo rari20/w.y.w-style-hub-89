@@ -142,6 +142,8 @@ export const products: Product[] = [
   {
     id: 'vs1', name: 'Powerline Structured Blazer', brand: 'Voltex Studio', price: 495,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Navy'],
+    colorImages: { 'Black': productVs1, 'Navy': productVs2 },
+    material: 'Technical Wool Blend',
     image: productVs1, loyaltyPoints: 495, inStock: true, isTrending: true, isNew: true,
     description: 'Technical blazer with internal taping and a sharp shoulder. Minimalist design, maximum impact.',
     storeAvailability: defaultStores, occasion: ['workwear'],
@@ -149,6 +151,8 @@ export const products: Product[] = [
   {
     id: 'vs2', name: 'Circuit Tailored Trousers', brand: 'Voltex Studio', price: 275,
     category: 'bottoms', sizes: ['28','30','32','34','36'], colors: ['Charcoal','Black','Navy'],
+    colorImages: { 'Charcoal': productVs2, 'Black': productVs1, 'Navy': productVs8 },
+    material: 'Stretch Wool Blend',
     image: productVs2, loyaltyPoints: 275, inStock: true,
     description: 'Slim tailored trousers with a modern taper. Stretch wool blend for all-day comfort.',
     storeAvailability: storeVariant(true,true,false), occasion: ['workwear'],
@@ -156,6 +160,8 @@ export const products: Product[] = [
   {
     id: 'vs3', name: 'Current Minimal Tee', brand: 'Voltex Studio', price: 85,
     category: 'tops', sizes: ['XS','S','M','L','XL','XXL'], colors: ['White','Black','Grey'],
+    colorImages: { 'White': productVs3, 'Black': productVs4, 'Grey': productVs6 },
+    material: 'Heavyweight Organic Cotton',
     image: productVs3, loyaltyPoints: 85, inStock: true, isNew: true,
     description: 'Heavyweight organic cotton tee with a boxy cut. Ribbed crew neck and rolled hem.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -163,6 +169,8 @@ export const products: Product[] = [
   {
     id: 'vs4', name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Olive'],
+    colorImages: { 'Black': productVs4, 'Olive': productVs7 },
+    material: 'Technical Nylon',
     image: productVs4, loyaltyPoints: 345, inStock: true, isTrending: true,
     description: 'Performance-inspired track jacket in technical nylon. Contrast zip and standing collar.',
     storeAvailability: storeVariant(true,false,true), occasion: ['casual'],
@@ -170,13 +178,17 @@ export const products: Product[] = [
   {
     id: 'vs5', name: 'Grid-Stitch Hoodie', brand: 'Voltex Studio', price: 225,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Grey Marl','Black'],
-    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80&fit=crop&crop=center', loyaltyPoints: 225, inStock: true,
+    colorImages: { 'Grey Marl': productVs5, 'Black': productVs4 },
+    material: 'Heavy Loopback Cotton',
+    image: productVs5, loyaltyPoints: 225, inStock: true,
     description: 'Heavyweight hoodie with a distinctive grid-stitch texture. Kangaroo pocket and drawstring hood.',
     storeAvailability: defaultStores, occasion: ['casual'],
   },
   {
     id: 'vs6', name: 'Arc Zip Gilet', brand: 'Voltex Studio', price: 310,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Stone'],
+    colorImages: { 'Black': productVs6, 'Stone': productVs8 },
+    material: 'Quilted Nylon',
     image: productVs6, loyaltyPoints: 310, inStock: true, isNew: true,
     description: 'Quilted gilet with concealed zip and high collar. Lightweight insulation for transitional weather.',
     storeAvailability: storeVariant(true,true,true), occasion: ['casual','outerwear'],
@@ -184,6 +196,8 @@ export const products: Product[] = [
   {
     id: 'vs7', name: 'Flux Bomber Jacket', brand: 'Voltex Studio', price: 465,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Khaki'],
+    colorImages: { 'Black': productVs7, 'Khaki': productVs4 },
+    material: 'Water-Resistant Nylon',
     image: productVs7, loyaltyPoints: 465, inStock: true, isTrending: true,
     description: 'MA-1 inspired bomber in water-resistant nylon. Ribbed cuffs and hem, internal zip pocket.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -191,6 +205,8 @@ export const products: Product[] = [
   {
     id: 'vs8', name: 'Charged Slim Chinos', brand: 'Voltex Studio', price: 195,
     category: 'bottoms', sizes: ['28','30','32','34','36'], colors: ['Sand','Black','Navy'],
+    colorImages: { 'Sand': productVs8, 'Black': productVs2, 'Navy': productVs1 },
+    material: 'Brushed Stretch Cotton',
     image: productVs8, loyaltyPoints: 195, inStock: true,
     description: 'Slim-fit chinos in brushed stretch cotton. Flat front with side entry pockets.',
     storeAvailability: storeVariant(true,true,true), occasion: ['workwear','casual'],
