@@ -480,9 +480,30 @@ export default function Account() {
                     <p className="text-[0.75rem] text-muted-foreground font-body mb-2">Signed in as <span className="text-foreground">{user.email}</span></p>
                   </div>
                   <div>
-                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Notifications</h3>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Email Preferences</h3>
                     <div className="space-y-3">
-                      {['Order updates', 'Promotions & offers', 'Rewards milestones', 'New arrivals'].map(n => (
+                      <label className="flex items-center gap-3">
+                        <input type="checkbox" defaultChecked disabled className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Order updates</span>
+                        <span className="text-[0.625rem] text-muted-foreground font-body">(required)</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Promotions & new arrivals</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Styling tips & consultation reminders</span>
+                      </label>
+                    </div>
+                    <p className="text-[0.65rem] text-muted-foreground font-body mt-2">
+                      Your email preferences help us tailor communications. Opting out of promotional emails is recorded as a signal in our engagement model.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Other Notifications</h3>
+                    <div className="space-y-3">
+                      {['Rewards milestones'].map(n => (
                         <label key={n} className="flex items-center gap-3 cursor-pointer">
                           <input type="checkbox" defaultChecked className="accent-primary" />
                           <span className="text-[0.85rem] font-body text-foreground">{n}</span>

@@ -195,6 +195,20 @@ export default function CustomerService() {
             </div>
           </div>
         </Reveal>
+
+        {/* Feedback Survey — churn signal collection */}
+        <Reveal delay={150}>
+          <div className="mt-16 border border-border p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-2">
+              <Star className="h-5 w-5 text-accent" strokeWidth={1.5} />
+              <h2 className="font-display text-xl italic text-foreground">Help Us Improve</h2>
+            </div>
+            <p className="text-[0.8rem] text-muted-foreground font-body font-light mb-6">
+              Your feedback directly shapes our service. Three quick questions — takes 30 seconds.
+            </p>
+            <FeedbackForm />
+          </div>
+        </Reveal>
       </div>
     </Layout>
   );
