@@ -3,17 +3,24 @@ import { Button } from '@/components/ui/button';
 import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { lovable } from '@/integrations/lovable';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
 export default function Account() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, profile, loading, signOut } = useAuth();
   const [tab, setTab] = useState<Tab>('overview');
+  const [copied, setCopied] = useState(false);
+
+  // Auth form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [copied, setCopied] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState('');
 
   const copyCode = () => {
     navigator.clipboard.writeText('WYW-JD2024');
@@ -22,16 +29,86 @@ export default function Account() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (!isLoggedIn) {
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError('');
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setAuthError(error.message);
+      toast.error(error.message);
+    } else {
+      toast.success('Welcome back!');
+    }
+    setAuthLoading(false);
+  };
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError('');
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+        data: { first_name: firstName, last_name: lastName },
+      },
+    });
+    if (error) {
+      setAuthError(error.message);
+      toast.error(error.message);
+    } else {
+      toast.success('Check your email to confirm your account!');
+    }
+    setAuthLoading(false);
+  };
+
+  const handleOAuth = async (provider: 'google' | 'apple') => {
+    setAuthLoading(true);
+    setAuthError('');
+    const result = await lovable.auth.signInWithOAuth(provider, {
+      redirect_uri: window.location.origin + '/account',
+    });
+    if (result.error) {
+      setAuthError(result.error.message);
+      toast.error(result.error.message);
+    }
+    setAuthLoading(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast('Signed out');
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="wyw-container pt-24 pb-16 flex justify-center">
+          <p className="text-muted-foreground font-body">Loading…</p>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) {
     return (
       <Layout>
         <div className="wyw-container pt-24 pb-16 max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-5xl font-display mb-10 md:mb-12 text-center italic text-foreground">My Account</h1>
+
+          {authError && (
+            <div className="mb-6 border border-destructive/30 bg-destructive/5 p-3 text-center">
+              <p className="text-sm text-destructive font-body">{authError}</p>
+            </div>
+          )}
+
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
             {/* Sign In */}
             <div>
               <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Sign In</h2>
-              <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Welcome back!'); }} className="space-y-5">
+              <form onSubmit={handleSignIn} className="space-y-5">
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
@@ -39,17 +116,32 @@ export default function Account() {
                 </div>
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
+                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
                     className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" placeholder="••••••••" />
                 </div>
-                <Button variant="default" size="lg" type="submit" className="w-full">Sign In</Button>
+                <Button variant="default" size="lg" type="submit" className="w-full" disabled={authLoading}>
+                  {authLoading ? 'Signing in…' : 'Sign In'}
+                </Button>
               </form>
+
+              {/* Social Login */}
+              <div className="mt-6 space-y-3">
+                <p className="text-center text-[0.7rem] text-muted-foreground font-body uppercase tracking-[0.15em]">Or continue with</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button variant="outline" onClick={() => handleOAuth('google')} disabled={authLoading} className="w-full text-[0.75rem]">
+                    Google
+                  </Button>
+                  <Button variant="outline" onClick={() => handleOAuth('apple')} disabled={authLoading} className="w-full text-[0.75rem]">
+                    Apple
+                  </Button>
+                </div>
+              </div>
             </div>
 
             {/* Create Account */}
             <div>
               <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Create Account</h2>
-              <form onSubmit={e => { e.preventDefault(); setIsLoggedIn(true); toast.success('Account created!'); }} className="space-y-5">
+              <form onSubmit={handleSignUp} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">First Name</label>
@@ -64,15 +156,17 @@ export default function Account() {
                 </div>
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
-                  <input type="email" required
+                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
                     className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" placeholder="you@email.com" />
                 </div>
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Password</label>
-                  <input type="password" required
-                    className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" placeholder="••••••••" />
+                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
+                    className="w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground" placeholder="Min 6 characters" />
                 </div>
-                <Button variant="default" size="lg" type="submit" className="w-full">Create Account</Button>
+                <Button variant="default" size="lg" type="submit" className="w-full" disabled={authLoading}>
+                  {authLoading ? 'Creating…' : 'Create Account'}
+                </Button>
               </form>
               <p className="text-[0.75rem] text-muted-foreground mt-4 text-center font-body">
                 Or scan a QR code in-store to register instantly
@@ -83,6 +177,10 @@ export default function Account() {
       </Layout>
     );
   }
+
+  const displayName = profile?.first_name
+    ? `${profile.first_name} ${profile.last_name || ''}`.trim()
+    : user.email?.split('@')[0] || 'User';
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'overview', label: 'Overview', icon: User },
@@ -98,7 +196,9 @@ export default function Account() {
   return (
     <Layout>
       <div className="wyw-container pt-24 pb-8">
-        <h1 className="text-3xl md:text-5xl font-display mb-8 italic text-foreground">My Account</h1>
+        <div className="flex items-center justify-between mb-8 flex-wrap gap-2">
+          <h1 className="text-3xl md:text-5xl font-display italic text-foreground">Welcome, {displayName}</h1>
+        </div>
 
         <div className="grid lg:grid-cols-[220px_1fr] gap-0">
           {/* Sidebar */}
@@ -116,7 +216,7 @@ export default function Account() {
                   {t.label}
                 </button>
               ))}
-              <button onClick={() => { setIsLoggedIn(false); toast('Signed out'); }}
+              <button onClick={handleSignOut}
                 className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted whitespace-nowrap shrink-0 lg:w-full lg:mt-2 lg:border-t border-border lg:pt-4">
                 Sign Out
               </button>
@@ -327,6 +427,9 @@ export default function Account() {
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Settings</h2>
                 <div className="space-y-6">
+                  <div>
+                    <p className="text-[0.75rem] text-muted-foreground font-body mb-2">Signed in as <span className="text-foreground">{user.email}</span></p>
+                  </div>
                   <div>
                     <h3 className="font-body text-sm font-medium mb-3 text-foreground">Notifications</h3>
                     <div className="space-y-3">

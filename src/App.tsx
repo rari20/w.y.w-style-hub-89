@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
 import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
 import CookieBanner from "@/components/CookieBanner";
 import Landing from "./pages/Landing";
@@ -69,18 +70,20 @@ function AnimatedRoutes() {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
-      <MusicProvider>
-        <CartProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AnimatedRoutes />
-              <CookieBanner />
-            </BrowserRouter>
-          </TooltipProvider>
-        </CartProvider>
-      </MusicProvider>
+      <AuthProvider>
+        <MusicProvider>
+          <CartProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AnimatedRoutes />
+                <CookieBanner />
+              </BrowserRouter>
+            </TooltipProvider>
+          </CartProvider>
+        </MusicProvider>
+      </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );
