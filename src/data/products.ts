@@ -77,6 +77,8 @@ export const products: Product[] = [
   {
     id: 'lw2', name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Champagne','Black'],
+    colorImages: { 'Champagne': productLw2, 'Black': productLw5 },
+    material: 'Silk Georgette',
     image: productLw2, loyaltyPoints: 385, inStock: true, isTrending: true,
     description: 'Lightweight wrap dress in gossamer-weight silk georgette. Self-tie waist creates an effortless silhouette.',
     storeAvailability: storeVariant(true,false,true), occasion: ['evening','casual'],
