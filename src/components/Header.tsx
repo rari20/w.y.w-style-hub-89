@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX } from 'lucide-react';
+import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX, Shield } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useMusic } from '@/context/MusicContext';
+import { useAuth } from '@/context/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ADMIN_EMAIL } from '@/data/adminData';
 
 const navLinks = [
   { label: 'Shop', to: '/shop' },
@@ -17,11 +19,13 @@ export default function Header() {
   const { totalItems } = useCart();
   const { theme, toggleTheme } = useTheme();
   const { isPlaying, toggleMusic } = useMusic();
+  const { user } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const location = useLocation();
+  const isAdmin = user?.email === ADMIN_EMAIL;
 
   const isLanding = location.pathname === '/';
 
@@ -118,6 +122,13 @@ export default function Header() {
               {theme === 'light' ? <Moon className="h-3.5 w-3.5" strokeWidth={1.5} /> : <Sun className="h-3.5 w-3.5" strokeWidth={1.5} />}
             </motion.div>
           </button>
+          {isAdmin && (
+            <Link to="/admin">
+              <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`} title="Admin Portal">
+                <Shield className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </button>
+            </Link>
+          )}
           <Link to="/account">
             <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`}>
               <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
