@@ -26,8 +26,8 @@ export default function AdminChurnRisk() {
   };
 
   const exportCSV = () => {
-    const header = 'ID,TotalSpend,DaysInactive,LoyaltyTier,EmailEngaged,Satisfaction,ReturnRate,OrdersLast6M,ChurnRisk';
-    const rows = atRisk.map(c => `${c.id},${c.totalSpend},${c.daysInactive},${c.loyaltyTier},${c.emailEngaged},${c.satisfaction},${c.returnRate},${c.ordersLast6M},${c.churnRisk}`);
+    const header = 'ID,TotalSpend,DaysInactive,LoyaltyTier,EmailEngaged,Satisfaction,ReturnRate,ChurnRisk';
+    const rows = atRisk.map(c => `${c.id},${c.totalSpend},${c.daysInactive},${c.loyaltyTier},${c.emailEngaged},${c.satisfaction},${c.returnRate},${c.churnRisk}`);
     const blob = new Blob([header + '\n' + rows.join('\n')], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -64,7 +64,7 @@ export default function AdminChurnRisk() {
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <p className="font-body font-medium text-sm">{c.id}</p>
-                      <p className="text-xs text-muted-foreground">£{c.totalSpend} total spend — {c.ordersLast6M} orders in 6M</p>
+                      <p className="text-xs text-muted-foreground">£{c.totalSpend} total spend — {c.daysInactive} days inactive</p>
                     </div>
                     <span className="bg-red-500/20 text-red-700 dark:text-red-400 text-[10px] px-2.5 py-1 rounded font-bold tracking-wider uppercase font-body">
                       CHURN RISK — Segment D
