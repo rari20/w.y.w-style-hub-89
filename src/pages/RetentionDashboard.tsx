@@ -11,7 +11,7 @@ const ADMIN_EMAIL = 'admin@wyw-demo.com';
 const atRiskCustomers = [
   { id: 'WYW011', days: 112, spend: 185, tier: 'Spark', satisfaction: '2/5', risk: 'High', action: 'Re-engagement email sent', status: 'Pending' },
   { id: 'WYW012', days: 95, spend: 240, tier: 'Spark', satisfaction: '2/5', risk: 'High', action: 'Re-engagement email sent', status: 'Pending' },
-  { id: 'WYW013', days: 78, spend: 310, tier: 'Spark', satisfaction: '3/5', risk: 'High', action: 'WhatsApp follow-up sent', status: 'Pending' },
+  { id: 'WYW013 ★', days: 78, spend: 310, tier: 'Spark', satisfaction: '3/5', risk: 'High', action: 'WhatsApp follow-up sent', status: 'Pending' },
   { id: 'WYW014', days: 88, spend: 420, tier: 'Spark', satisfaction: '1/5', risk: 'Critical', action: 'Free consultation offered', status: 'Pending' },
   { id: 'WYW015', days: 67, spend: 465, tier: 'Spark', satisfaction: '2/5', risk: 'High', action: 'Re-engagement email sent', status: 'Pending' },
 ];
