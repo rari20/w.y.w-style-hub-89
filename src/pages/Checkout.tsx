@@ -145,8 +145,14 @@ export default function Checkout() {
     }
   };
 
+  // Save points before cart clear
+  const [savedPoints, setSavedPoints] = useState(0);
+  const [savedTotal, setSavedTotal] = useState(0);
+
   const handlePlaceOrder = () => {
     setProcessing(true);
+    setSavedPoints(totalPoints);
+    setSavedTotal(orderTotal);
     setTimeout(() => {
       clearCart();
       setStep(6);
