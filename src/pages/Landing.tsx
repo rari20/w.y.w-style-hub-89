@@ -64,36 +64,36 @@ export default function Landing() {
 
         {/* Content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <motion.p
-            className="text-white/50 font-body text-[0.625rem] tracking-[0.3em] uppercase mb-8"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Multi-Brand Fashion Destination
-          </motion.p>
-
           <motion.h1
-            className="font-display text-white leading-[0.95] mb-8 flex flex-col items-center"
-            style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)' }}
+            className="font-display text-white leading-[0.92] mb-6 flex flex-col items-center text-center"
+            style={{ fontSize: 'clamp(3rem, 11vw, 9rem)' }}
           >
             <motion.span
               className="block"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              Power Your
+              What Do
             </motion.span>
             <motion.span
               className="block italic"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
-              Style
+              You Want?
             </motion.span>
           </motion.h1>
+
+          <motion.p
+            className="text-white/50 font-body text-[0.625rem] tracking-[0.3em] uppercase mb-8"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            W.Y.W — Multi-Brand Fashion Destination
+          </motion.p>
 
           <motion.p
             className="text-white/60 max-w-[50ch] mx-auto font-body text-[0.8125rem] font-light mb-12 leading-relaxed"
@@ -112,7 +112,7 @@ export default function Landing() {
           >
             <Link
               to="/home"
-              className="bg-white text-foreground font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 hover:bg-white/90 transition-all duration-[400ms]"
+              className="bg-white !text-[#1C1410] font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 hover:bg-transparent hover:!text-white hover:border-white border border-white transition-all duration-[400ms]"
             >
               Shop Now
             </Link>
