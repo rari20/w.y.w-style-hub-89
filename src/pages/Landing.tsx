@@ -11,8 +11,8 @@ export default function Landing() {
         {/* Background — static image, no CORS issues */}
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80&fit=crop"
-            alt=""
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+            alt="Fashion editorial background"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ filter: 'saturate(0.75) contrast(1.05)', opacity: 0.55 }}
           />
