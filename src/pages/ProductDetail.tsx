@@ -78,7 +78,14 @@ export default function ProductDetail() {
               </span>
             </div>
 
-            <p className="text-muted-foreground font-body mb-8 leading-relaxed">{product.description}</p>
+            <p className="text-muted-foreground font-body mb-4 leading-relaxed">{product.description}</p>
+
+            {/* Material */}
+            {product.material && (
+              <p className="text-sm text-muted-foreground mb-8 flex items-center gap-2">
+                <span className="text-xs uppercase tracking-widest">Material:</span> {product.material}
+              </p>
+            )}
 
             {/* Color Selection */}
             {product.colors.length > 0 && (
