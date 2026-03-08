@@ -257,6 +257,25 @@ export default function Account() {
                   </div>
                 </div>
 
+                {/* Your Activity — churn model data */}
+                <div>
+                  <h3 className="font-display text-xl mb-4 italic text-foreground">Your Activity</h3>
+                  <p className="text-[0.7rem] text-muted-foreground font-body mb-3">These metrics help us personalise your experience.</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                      { label: 'Last Purchase', value: '12 days ago', key: 'DaysSinceLastPurchase' },
+                      { label: 'Orders This Year', value: '3', key: 'NumberOfOrders' },
+                      { label: 'Return Rate', value: '0%', key: 'ReturnRate' },
+                      { label: 'Consultations Booked', value: '1', key: 'ConsultationBooked' },
+                    ].map(stat => (
+                      <div key={stat.label} className="border border-border p-3 md:p-4">
+                        <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
+                        <p className="font-display text-lg md:text-xl mt-1 text-foreground">{stat.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                   {[
                     { icon: Gift, label: 'Active Coupons', value: '2' },
