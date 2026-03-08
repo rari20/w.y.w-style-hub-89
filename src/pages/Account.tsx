@@ -1,7 +1,8 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check } from 'lucide-react';
+import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, BarChart2 } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -222,6 +223,15 @@ export default function Account() {
                   {t.label}
                 </button>
               ))}
+              {user.email === 'test.customer@wyw-demo.com' && (
+                <Link
+                  to="/admin/dataset"
+                  className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 hover:bg-muted text-foreground lg:w-full"
+                >
+                  <BarChart2 className="h-4 w-4" strokeWidth={1.5} />
+                  Churn Dataset
+                </Link>
+              )}
               <button onClick={handleSignOut}
                 className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted whitespace-nowrap shrink-0 lg:w-full lg:mt-2 lg:border-t border-border lg:pt-4">
                 Sign Out
