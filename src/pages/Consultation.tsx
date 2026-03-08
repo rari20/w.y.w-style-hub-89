@@ -28,8 +28,8 @@ export default function Consultation() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
-        {/* The W.Y.W Difference */}
+      <div className="wyw-container pt-24 pb-16">
+        <Breadcrumb crumbs={[{ label: 'Home', to: '/home' }, { label: 'Consultation' }]} />
         <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-primary mb-3 flex items-center gap-2">

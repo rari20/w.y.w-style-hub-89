@@ -67,9 +67,10 @@ export default function Shop() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
+      <div className="wyw-container pt-24 pb-8">
+        <Breadcrumb crumbs={[{ label: 'Home', to: '/home' }, { label: getTitle() }]} />
         <div className="mb-8">
-          <h1 className="text-5xl md:text-6xl font-display mb-2">{getTitle()}</h1>
+          <h1 className="text-5xl md:text-6xl font-display mb-2 text-foreground">{getTitle()}</h1>
           <p className="text-muted-foreground">{filtered.length} products</p>
         </div>
 
