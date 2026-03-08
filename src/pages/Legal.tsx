@@ -59,13 +59,13 @@ export function PrivacyPage() {
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">2. Data We Collect</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-3">We collect the following categories of personal data:</p>
-      <ul className="list-disc pl-6 mb-5 space-y-2">
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Identity data: name, email address, phone number</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Transactional data: order history, payment records (excluding full card details)</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Behavioural data: browsing activity, wishlist, session history</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Loyalty data: points balance, tier status, redemption history</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Communication data: email preferences, marketing consent</li>
-      </ul>
+      <div className="pl-6 mb-5 border-l-2 border-border">
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Identity data: name, email address, phone number</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Transactional data: order history, payment records (excluding full card details)</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Behavioural data: browsing activity, wishlist, session history</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Loyalty data: points balance, tier status, redemption history</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Communication data: email preferences, marketing consent</p>
+      </div>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">3. How We Use Your Data</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">We use your data to process orders, manage your account, deliver marketing communications (with consent), improve our services, and comply with legal obligations.</p>
