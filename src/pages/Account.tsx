@@ -335,7 +335,7 @@ export default function Account() {
                     { icon: Gift, label: 'Active Coupons', value: '2' },
                     { icon: MapPin, label: 'Saved Addresses', value: '1' },
                     { icon: CreditCard, label: 'Payment Methods', value: '1' },
-                    { icon: Share2, label: 'Referral Code', value: 'WYW-JD2024' },
+                    { icon: Share2, label: 'Referral Code', value: referralCode },
                   ].map(item => (
                     <div key={item.label} className="border border-border p-3 md:p-4 text-center">
                       <item.icon className="h-5 w-5 mx-auto text-primary mb-2" strokeWidth={1.5} />
