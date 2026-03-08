@@ -284,18 +284,18 @@ export default function Account() {
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
                       <h3 className="font-display flex items-center gap-2 text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>
-                        <Zap className="h-5 w-5 text-amber-500" strokeWidth={1.5} /> Volt
+                        <Zap className="h-5 w-5 text-amber-500" strokeWidth={1.5} /> {loyalty.tier}
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>847</p>
+                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>{loyalty.points}</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
-                    <div className="bg-primary h-1" style={{ width: '56%' }} />
+                    <div className="bg-primary h-1" style={{ width: `${loyalty.progress}%` }} />
                   </div>
-                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">653 points to Surge</p>
+                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">{loyalty.toNext} points to {loyalty.nextTier}</p>
                 </div>
 
                 {/* Section B: Four-metric activity */}
