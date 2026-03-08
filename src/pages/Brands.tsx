@@ -24,6 +24,7 @@ export function BrandsPage() {
         <p className="text-muted-foreground max-w-lg mb-12 font-body font-light leading-relaxed">
           W.Y.W curates the most exciting names in contemporary fashion. Each brand brings a unique perspective to the W.Y.W universe.
         </p>
+        </Reveal>
 
         {/* Brand Cards Grid */}
         <div className="grid md:grid-cols-2 gap-[2px] mb-16">
