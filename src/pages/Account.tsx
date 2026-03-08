@@ -355,7 +355,37 @@ export default function Account() {
             {tab === 'wishlist' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Wishlist</h2>
-                <p className="text-muted-foreground font-body font-light">Your wishlist is empty. Browse our collections to add items.</p>
+                <div className="space-y-4">
+                  {/* Mock wishlist items with churn nudge */}
+                  {[
+                    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 32, priceChanged: false },
+                    { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 8, priceChanged: false },
+                  ].map(item => (
+                    <div key={item.name} className="border border-border p-4 flex items-center justify-between gap-4 flex-wrap">
+                      <div>
+                        <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.brand}</p>
+                        <p className="font-body text-[0.9rem] font-medium text-foreground">{item.name}</p>
+                        <p className="font-body text-[0.85rem] text-foreground">£{item.price.toFixed(2)}</p>
+                        {item.savedDays >= 30 && (
+                          <div className="mt-2 flex items-center gap-2">
+                            <span className="text-[0.7rem] bg-accent/10 text-accent px-2 py-0.5 font-body">
+                              Saved {item.savedDays} days ago · Price unchanged
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        {item.savedDays >= 30 && (
+                          <Button variant="default" size="sm" className="text-[0.75rem]">Move to Basket</Button>
+                        )}
+                        <Button variant="ghost" size="sm" className="text-[0.75rem] text-destructive">Remove</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[0.7rem] text-muted-foreground font-body mt-4">
+                  Items saved for 30+ days are flagged — we don't want you to miss out.
+                </p>
               </div>
             )}
 
