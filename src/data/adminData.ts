@@ -82,3 +82,72 @@ export const socialPostTemplates = [
   "W.Y.W Rewards members get more. From free delivery at Volt tier to your own personal stylist at Watt — every purchase powers your next level. Join free at [link] #WYWRewards #LoyaltyPerks",
   "New in from Lumenwear, Voltex Studio, ArcThread & KiloKouture. Four brands. One destination. Shop the edit now at W.Y.W. #PowerYourStyle #NewIn #WYW [link]",
 ];
+
+// ─── Admin Notifications ───
+export interface AdminNotification {
+  id: string;
+  type: 'order' | 'churn' | 'campaign' | 'return' | 'system';
+  title: string;
+  message: string;
+  time: string;
+  read: boolean;
+  link?: string;
+}
+
+export const adminNotifications: AdminNotification[] = [
+  { id: 'n1', type: 'order', title: 'New Order', message: 'Isabella Grant placed a £1,245 order (3 items)', time: '12 min ago', read: false, link: '/admin/orders' },
+  { id: 'n2', type: 'churn', title: 'Churn Alert', message: 'Nadia Kowalski has been inactive for 67 days — flagged as high risk', time: '1 hr ago', read: false, link: '/admin/churn-risk' },
+  { id: 'n3', type: 'campaign', title: 'Campaign Update', message: 'Churn Re-engagement Campaign: 2 of 5 emails opened', time: '2 hrs ago', read: false, link: '/admin/email-campaigns' },
+  { id: 'n4', type: 'order', title: 'New Order', message: 'Daniel Frost placed a £680 order (2 items)', time: '3 hrs ago', read: true, link: '/admin/orders' },
+  { id: 'n5', type: 'return', title: 'Return Request', message: 'Amara Osei requested a return for WYW-2026-0039', time: '5 hrs ago', read: true, link: '/admin/returns' },
+  { id: 'n6', type: 'churn', title: 'Churn Alert', message: 'Ryan O\'Brien satisfaction score dropped to 2/5', time: '6 hrs ago', read: true, link: '/admin/churn-risk' },
+  { id: 'n7', type: 'system', title: 'System', message: 'CART model recalculated — 5 customers flagged as at-risk', time: '8 hrs ago', read: true, link: '/admin/analytics' },
+  { id: 'n8', type: 'campaign', title: 'Discount Used', message: 'COMEBACK20 code redeemed by Ethan Moss (first use)', time: '1 day ago', read: true, link: '/admin/discounts' },
+];
+
+// ─── Customer Activity Timeline ───
+export interface ActivityEvent {
+  id: string;
+  type: 'order' | 'return' | 'discount' | 'email' | 'consultation' | 'tier' | 'login' | 'review';
+  title: string;
+  description: string;
+  date: string;
+  icon?: string;
+}
+
+export const customerTimelines: Record<string, ActivityEvent[]> = {
+  WYW001: [
+    { id: 'a1', type: 'order', title: 'Order Placed', description: 'WYW-2026-0045 — 2 items, £214.00', date: '05 Mar 2026' },
+    { id: 'a2', type: 'consultation', title: 'Styling Consultation', description: 'Virtual session with stylist Alex M.', date: '20 Feb 2026' },
+    { id: 'a3', type: 'order', title: 'Order Placed', description: 'WYW-2026-0031 — 1 item, £385.00', date: '14 Jan 2026' },
+    { id: 'a4', type: 'tier', title: 'Tier Upgrade', description: 'Promoted from Spark to Volt tier', date: '14 Jan 2026' },
+    { id: 'a5', type: 'order', title: 'Order Placed', description: 'WYW-2026-0018 — 3 items, £647.00', date: '03 Dec 2025' },
+    { id: 'a6', type: 'login', title: 'Account Created', description: 'Registered via email', date: '15 Nov 2025' },
+  ],
+  WYW006: [
+    { id: 'a1', type: 'order', title: 'Order Placed', description: 'WYW-2026-0048 — 3 items, £1,245.00', date: '08 Mar 2026' },
+    { id: 'a2', type: 'consultation', title: 'Personal Styling', description: 'In-store session at London flagship', date: '01 Mar 2026' },
+    { id: 'a3', type: 'review', title: 'Review Left', description: '5/5 for Ethereal Silk Blouse', date: '25 Feb 2026' },
+    { id: 'a4', type: 'order', title: 'Order Placed', description: 'WYW-2026-0040 — 2 items, £895.00', date: '18 Feb 2026' },
+  ],
+  WYW011: [
+    { id: 'a1', type: 'email', title: 'Re-engagement Email', description: 'COMEBACK20 discount code sent', date: '08 Mar 2026' },
+    { id: 'a2', type: 'return', title: 'Return Processed', description: 'Thread Linen Shirt — refunded £135', date: '18 Nov 2025' },
+    { id: 'a3', type: 'order', title: 'Order Placed', description: 'WYW-2025-0089 — 1 item, £185.00', date: '15 Nov 2025' },
+    { id: 'a4', type: 'login', title: 'Account Created', description: 'Registered in-store via QR code', date: '15 Nov 2025' },
+  ],
+  WYW013: [
+    { id: 'a1', type: 'email', title: 'WhatsApp Follow-up', description: 'Sent after email went unopened', date: '01 Mar 2026' },
+    { id: 'a2', type: 'email', title: 'Re-engagement Email', description: 'COMEBACK20 discount code sent', date: '22 Feb 2026' },
+    { id: 'a3', type: 'return', title: 'Return Processed', description: 'Arc Pleat Skirt — refunded £245', date: '28 Dec 2025' },
+    { id: 'a4', type: 'order', title: 'Order Placed', description: 'WYW-2025-0094 — 2 items, £310.00', date: '20 Dec 2025' },
+    { id: 'a5', type: 'login', title: 'Account Created', description: 'Registered via email', date: '18 Dec 2025' },
+  ],
+  WYW014: [
+    { id: 'a1', type: 'consultation', title: 'Free Consultation Offered', description: 'Awaiting response — final retention offer', date: '08 Mar 2026' },
+    { id: 'a2', type: 'email', title: 'WhatsApp Follow-up', description: 'Sent after email went unopened', date: '01 Mar 2026' },
+    { id: 'a3', type: 'email', title: 'Re-engagement Email', description: 'COMEBACK20 discount code sent', date: '22 Feb 2026' },
+    { id: 'a4', type: 'order', title: 'Order Placed', description: 'WYW-2025-0091 — 1 item, £420.00', date: '10 Dec 2025' },
+    { id: 'a5', type: 'return', title: 'Return Processed', description: 'Voltage Track Jacket — refunded £345', date: '22 Dec 2025' },
+  ],
+};
