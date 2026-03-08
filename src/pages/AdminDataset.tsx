@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { useAuth } from '@/context/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { BarChart2, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { BarChart2, ShieldCheck, AlertTriangle, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 

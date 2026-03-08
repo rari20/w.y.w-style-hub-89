@@ -101,7 +101,7 @@ export const adminNotifications: AdminNotification[] = [
   { id: 'n4', type: 'order', title: 'New Order', message: 'Daniel Frost placed a £680 order (2 items)', time: '3 hrs ago', read: true, link: '/admin/orders' },
   { id: 'n5', type: 'return', title: 'Return Request', message: 'Amara Osei requested a return for WYW-2026-0039', time: '5 hrs ago', read: true, link: '/admin/returns' },
   { id: 'n6', type: 'churn', title: 'Churn Alert', message: 'Ryan O\'Brien satisfaction score dropped to 2/5', time: '6 hrs ago', read: true, link: '/admin/churn-risk' },
-  { id: 'n7', type: 'system', title: 'System', message: 'CART model recalculated — 5 customers flagged as at-risk', time: '8 hrs ago', read: true, link: '/admin/analytics' },
+  { id: 'n7', type: 'system', title: 'System', message: 'CART model recalculated — 25 customers flagged as at-risk', time: '8 hrs ago', read: true, link: '/admin/analytics' },
   { id: 'n8', type: 'campaign', title: 'Discount Used', message: 'COMEBACK20 code redeemed by Ethan Moss (first use)', time: '1 day ago', read: true, link: '/admin/discounts' },
 ];
 

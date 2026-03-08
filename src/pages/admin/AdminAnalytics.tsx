@@ -18,10 +18,10 @@ const churnIndicators = [
 ];
 
 const funnel = [
-  { label: 'Targeted', value: 5, width: '100%' },
-  { label: 'Emails Sent', value: 5, width: '100%' },
-  { label: 'Opened', value: 2, width: '40%' },
-  { label: 'Clicked', value: 1, width: '20%' },
+  { label: 'Targeted', value: 25, width: '100%' },
+  { label: 'Emails Sent', value: 25, width: '100%' },
+  { label: 'Opened', value: 10, width: '40%' },
+  { label: 'Clicked', value: 5, width: '20%' },
   { label: 'Converted', value: 0, width: '4%' },
 ];
 

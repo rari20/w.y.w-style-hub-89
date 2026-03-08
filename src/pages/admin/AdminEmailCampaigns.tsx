@@ -26,7 +26,7 @@ const campaigns = [
     statusColor: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
     target: '10 Volt tier customers',
     preview: "You're [X] points away from Surge tier — shop now to unlock free express delivery.",
-    sent: 5, opened: 4, clicked: 3, converted: 2,
+    sent: 10, opened: 8, clicked: 6, converted: 4,
     hasWhatsApp: false,
   },
 ];

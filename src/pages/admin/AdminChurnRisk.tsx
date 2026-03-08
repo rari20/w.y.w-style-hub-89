@@ -107,11 +107,11 @@ export default function AdminChurnRisk() {
         {/* Bulk Actions */}
         <Card>
           <CardContent className="p-4 flex flex-wrap gap-3">
-            <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => { atRisk.forEach(c => act(c.id, 'discount', '')); toast.success('20% discount sent to all 5 at-risk customers.'); }}>
-              <Tag className="h-3.5 w-3.5" /> Send 20% to all 5
+            <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => { atRisk.forEach(c => act(c.id, 'discount', '')); toast.success(`20% discount sent to all ${atRisk.length} at-risk customers.`); }}>
+              <Tag className="h-3.5 w-3.5" /> Send 20% to all {atRisk.length}
             </Button>
-            <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => { atRisk.forEach(c => act(c.id, 'email', '')); toast.success('Re-engagement email sent to all 5.'); }}>
-              Send re-engagement email to all 5
+            <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => { atRisk.forEach(c => act(c.id, 'email', '')); toast.success(`Re-engagement email sent to all ${atRisk.length}.`); }}>
+              Send re-engagement email to all {atRisk.length}
             </Button>
             <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={exportCSV}>
               <Download className="h-3.5 w-3.5" /> Export as CSV

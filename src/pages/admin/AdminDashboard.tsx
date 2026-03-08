@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                   <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-body font-medium">Churn Risk Alert</p>
-                    <p className="text-xs text-muted-foreground mt-1">5 customers have been identified as high churn risk by the CART model. Last updated: today.</p>
+                    <p className="text-xs text-muted-foreground mt-1">25 customers have been identified as high churn risk by the CART model. Last updated: today.</p>
                     <Link to="/admin/churn-risk">
                       <Button variant="outline" size="sm" className="mt-3">View Customers</Button>
                     </Link>
