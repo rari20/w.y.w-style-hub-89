@@ -4,133 +4,98 @@ import Reveal from '@/components/Reveal';
 import { useAuth } from '@/context/AuthContext';
 import { Navigate, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { BarChart2, Star, ArrowLeft } from 'lucide-react';
+import { BarChart2, ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
+import {
+  type Delivery, type Shopping, type Security, type Price,
+  type PredictionResult, predictChurn, trainingData, retentionActions,
+} from '@/data/cartModel';
 
 const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
-type PredictionResult = {
-  result: 'RETAIN' | 'MONITOR' | 'CHURN RISK';
-  segment: string;
-  risk: string;
-  confidence: string;
-} | null;
+/* ── Interactive Decision Tree Visualisation ── */
+function DecisionTree({ result }: { result: PredictionResult }) {
+  const path = result.path;
+  const priceUnfair = path[0] === 'Price = Unfair';
+  const priceFair = path[0] === 'Price = Fair';
+  const deliveryBad = path.includes('Delivery = Bad');
+  const deliveryGoodOK = priceFair && !deliveryBad;
 
-function predictChurn(data: {
-  totalSpend: number;
-  loyaltyTier: number;
-  consultationBooked: number;
-  emailEngagement: number;
-  satisfactionScore: number;
-}): NonNullable<PredictionResult> {
-  if (data.totalSpend >= 500) {
-    if (data.loyaltyTier >= 3) {
-      return { result: 'RETAIN', segment: 'A — Champion', risk: 'Low', confidence: '95%' };
-    } else if (data.consultationBooked === 1 || data.emailEngagement === 1) {
-      return { result: 'RETAIN', segment: 'B — Engaged', risk: 'Low-Medium', confidence: '88%' };
-    } else {
-      return { result: 'MONITOR', segment: 'C — Borderline', risk: 'Medium', confidence: '74%' };
-    }
-  } else {
-    if (data.satisfactionScore <= 2 && data.emailEngagement === 0) {
-      return { result: 'CHURN RISK', segment: 'D — At Risk', risk: 'High', confidence: '91%' };
-    } else {
-      return { result: 'CHURN RISK', segment: 'D — At Risk', risk: 'High', confidence: '83%' };
-    }
-  }
-}
-
-const recommendedActions: Record<string, string> = {
-  'A — Champion': 'No action required. Consider VIP early access invitation.',
-  'B — Engaged': 'Send tier progression nudge — [X] points to next tier.',
-  'C — Borderline': 'Offer free styling consultation and double-points promotion.',
-  'D — At Risk': 'Trigger re-engagement campaign: Day 1 email with 20% discount, Day 7 WhatsApp if unopened, Day 14 free consultation offer.',
-};
-
-function StarRating({ value, onChange }: { value: number; onChange: (v: number) => void }) {
-  return (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((s) => (
-        <button
-          key={s}
-          type="button"
-          onClick={() => onChange(s)}
-          className="p-0.5 transition-colors"
-        >
-          <Star
-            className={`h-6 w-6 ${s <= value ? 'fill-amber-400 text-amber-400' : 'text-muted-foreground/40'}`}
-            strokeWidth={1.5}
-          />
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function DecisionTree({ prediction }: { prediction: NonNullable<PredictionResult> }) {
-  const spendHigh = prediction.result !== 'CHURN RISK';
-  const isA = prediction.segment.startsWith('A');
-  const isBC = prediction.segment.startsWith('B') || prediction.segment.startsWith('C');
-  const isD = prediction.segment.startsWith('D');
-
-  const active = 'border-amber-500 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 ring-2 ring-amber-400/40';
+  const active = 'border-accent bg-accent/10 text-accent-foreground ring-2 ring-accent/40 font-medium';
   const inactive = 'border-border bg-muted/50 text-muted-foreground';
-  const activeLine = 'bg-amber-400';
+  const activeLine = 'bg-accent';
   const inactiveLine = 'bg-border';
 
+  const churnLeaf = 'border-red-500 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300 ring-2 ring-red-400/40';
+  const retainLeaf = 'border-green-500 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-300 ring-2 ring-green-400/40';
+
   return (
-    <div className="mt-6 flex flex-col items-center gap-0 text-[0.7rem] font-body select-none">
-      {/* Root */}
-      <div className={`border px-4 py-2 font-medium text-center ${active}`}>
-        Total Spend ≥ £500?
+    <div className="mt-4 flex flex-col items-center gap-0 text-[0.7rem] font-body select-none overflow-x-auto">
+      {/* Root: Price */}
+      <div className={`border px-4 py-2 text-center ${active}`}>
+        Price Perception?
+        <span className="block text-[0.55rem] text-muted-foreground mt-0.5">Gini = 0.286 (best split)</span>
       </div>
 
-      {/* Branches */}
-      <div className="flex w-full max-w-md">
-        {/* Left branch */}
+      <div className="flex w-full max-w-lg">
+        {/* Left: Unfair → Churn */}
         <div className="flex-1 flex flex-col items-center">
-          <div className={`w-px h-6 ${spendHigh ? activeLine : inactiveLine}`} />
-          <span className={`text-[0.6rem] font-medium mb-1 ${spendHigh ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'}`}>YES</span>
-          <div className={`border px-3 py-1.5 text-center ${spendHigh ? active : inactive}`}>
-            Loyalty Tier ≥ Surge?
-          </div>
-          <div className="flex w-full">
-            <div className="flex-1 flex flex-col items-center">
-              <div className={`w-px h-5 ${isA ? activeLine : inactiveLine}`} />
-              <span className={`text-[0.6rem] mb-1 ${isA ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'}`}>YES</span>
-              <div className={`border px-2 py-1 text-center text-[0.6rem] ${isA ? active : inactive}`}>
-                Seg A
-              </div>
-            </div>
-            <div className="flex-1 flex flex-col items-center">
-              <div className={`w-px h-5 ${isBC ? activeLine : inactiveLine}`} />
-              <span className={`text-[0.6rem] mb-1 ${isBC ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'}`}>NO</span>
-              <div className={`border px-2 py-1 text-center text-[0.6rem] ${isBC ? active : inactive}`}>
-                Seg B/C
-              </div>
-            </div>
+          <div className={`w-px h-6 ${priceUnfair ? activeLine : inactiveLine}`} />
+          <span className={`text-[0.6rem] font-medium mb-1 ${priceUnfair ? 'text-accent' : 'text-muted-foreground'}`}>UNFAIR</span>
+          <div className={`border px-3 py-1.5 text-center ${priceUnfair ? churnLeaf : inactive}`}>
+            CHURN (3/3)
           </div>
         </div>
 
-        {/* Right branch */}
+        {/* Right: Fair → Delivery */}
         <div className="flex-1 flex flex-col items-center">
-          <div className={`w-px h-6 ${!spendHigh ? activeLine : inactiveLine}`} />
-          <span className={`text-[0.6rem] font-medium mb-1 ${!spendHigh ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'}`}>NO</span>
-          <div className={`border px-3 py-1.5 text-center ${isD ? active : inactive}`}>
-            Churn Risk
+          <div className={`w-px h-6 ${priceFair ? activeLine : inactiveLine}`} />
+          <span className={`text-[0.6rem] font-medium mb-1 ${priceFair ? 'text-accent' : 'text-muted-foreground'}`}>FAIR</span>
+          <div className={`border px-3 py-1.5 text-center ${priceFair ? active : inactive}`}>
+            Delivery?
+            <span className="block text-[0.55rem] text-muted-foreground mt-0.5">Gini = 0.191</span>
           </div>
-          <div className={`w-px h-5 ${isD ? activeLine : inactiveLine}`} />
-          <div className={`border px-2 py-1 text-center text-[0.6rem] ${isD ? active : inactive}`}>
-            Seg D
+
+          <div className="flex w-full">
+            {/* Good/OK → No Churn */}
+            <div className="flex-1 flex flex-col items-center">
+              <div className={`w-px h-5 ${deliveryGoodOK ? activeLine : inactiveLine}`} />
+              <span className={`text-[0.6rem] mb-1 ${deliveryGoodOK ? 'text-accent' : 'text-muted-foreground'}`}>GOOD/OK</span>
+              <div className={`border px-2 py-1 text-center text-[0.6rem] ${deliveryGoodOK ? retainLeaf : inactive}`}>
+                NO CHURN (4/4)
+              </div>
+            </div>
+
+            {/* Bad → Shopping */}
+            <div className="flex-1 flex flex-col items-center">
+              <div className={`w-px h-5 ${deliveryBad ? activeLine : inactiveLine}`} />
+              <span className={`text-[0.6rem] mb-1 ${deliveryBad ? 'text-accent' : 'text-muted-foreground'}`}>BAD</span>
+              <div className={`border px-2 py-1 text-center text-[0.6rem] ${deliveryBad ? active : inactive}`}>
+                Shopping?
+                <span className="block text-[0.5rem] text-muted-foreground">Gini = 0.000</span>
+              </div>
+
+              <div className="flex w-full">
+                <div className="flex-1 flex flex-col items-center">
+                  <div className={`w-px h-4 ${deliveryBad && result.path.includes('Shopping = Normal') ? activeLine : inactiveLine}`} />
+                  <span className="text-[0.55rem] text-muted-foreground mb-0.5">NORMAL</span>
+                  <div className={`border px-1.5 py-0.5 text-center text-[0.55rem] ${deliveryBad && result.path.includes('Shopping = Normal') ? churnLeaf : inactive}`}>
+                    CHURN
+                  </div>
+                </div>
+                <div className="flex-1 flex flex-col items-center">
+                  <div className={`w-px h-4 ${deliveryBad && result.path.includes('Shopping = Efficient') ? activeLine : inactiveLine}`} />
+                  <span className="text-[0.55rem] text-muted-foreground mb-0.5">EFFICIENT</span>
+                  <div className={`border px-1.5 py-0.5 text-center text-[0.55rem] ${deliveryBad && result.path.includes('Shopping = Efficient') ? retainLeaf : inactive}`}>
+                    NO CHURN
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -140,18 +105,12 @@ function DecisionTree({ prediction }: { prediction: NonNullable<PredictionResult
 
 export default function ChurnPredictor() {
   const { user, loading } = useAuth();
-  const [prediction, setPrediction] = useState<PredictionResult>(null);
+  const [result, setResult] = useState<PredictionResult | null>(null);
 
-  const [days, setDays] = useState('');
-  const [spend, setSpend] = useState('');
-  const [orders, setOrders] = useState('');
-  const [tier, setTier] = useState('');
-  const [returnRate, setReturnRate] = useState('');
-  const [wishlist, setWishlist] = useState('');
-  const [consultation, setConsultation] = useState<number | null>(null);
-  const [csContacts, setCsContacts] = useState('');
-  const [emailEng, setEmailEng] = useState<number | null>(null);
-  const [satisfaction, setSatisfaction] = useState(0);
+  const [delivery, setDelivery] = useState<Delivery | ''>('');
+  const [shopping, setShopping] = useState<Shopping | ''>('');
+  const [security, setSecurity] = useState<Security | ''>('');
+  const [price, setPrice] = useState<Price | ''>('');
 
   if (loading) {
     return (
@@ -167,43 +126,25 @@ export default function ChurnPredictor() {
     return <Navigate to="/account" replace />;
   }
 
+  const canPredict = delivery && shopping && security && price;
+
   const handlePredict = () => {
-    if (!tier || consultation === null || emailEng === null || satisfaction === 0) return;
-    const result = predictChurn({
-      totalSpend: Number(spend) || 0,
-      loyaltyTier: Number(tier),
-      consultationBooked: consultation,
-      emailEngagement: emailEng,
-      satisfactionScore: satisfaction,
-    });
-    setPrediction(result);
+    if (!canPredict) return;
+    setResult(predictChurn({
+      delivery: delivery as Delivery,
+      shopping: shopping as Shopping,
+      security: security as Security,
+      price: price as Price,
+    }));
   };
 
-  const resultColor = prediction
-    ? prediction.result === 'RETAIN'
-      ? 'border-green-500 bg-green-50 dark:bg-green-950/20'
-      : prediction.result === 'MONITOR'
-        ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/20'
-        : 'border-red-500 bg-red-50 dark:bg-red-950/20'
-    : '';
-
-  const resultHeaderColor = prediction
-    ? prediction.result === 'RETAIN'
-      ? 'bg-green-600 dark:bg-green-700'
-      : prediction.result === 'MONITOR'
-        ? 'bg-amber-500 dark:bg-amber-600'
-        : 'bg-red-600 dark:bg-red-700'
-    : '';
-
-  const riskBadgeColor = prediction
-    ? prediction.risk === 'Low'
-      ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
-      : prediction.risk === 'Low-Medium'
-        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
-        : prediction.risk === 'Medium'
-          ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300'
-          : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
-    : '';
+  const handleReset = () => {
+    setDelivery('');
+    setShopping('');
+    setSecurity('');
+    setPrice('');
+    setResult(null);
+  };
 
   return (
     <Layout>
@@ -216,7 +157,7 @@ export default function ChurnPredictor() {
             <h1 className="text-3xl md:text-5xl font-display italic text-foreground">Customer Churn Predictor</h1>
           </div>
           <p className="text-muted-foreground font-body font-light mb-10 leading-relaxed max-w-3xl">
-            Test the CART churn prediction model with custom customer data. Enter values below and run the prediction to see the classification result.
+            Test W.Y.W's CART decision tree model with a new customer's UX attributes. The model is trained on 10 customer records using Gini Impurity to determine the optimal splits.
           </p>
         </Reveal>
 
@@ -224,153 +165,215 @@ export default function ChurnPredictor() {
           {/* LEFT — Input Form */}
           <Reveal>
             <div className="border border-border p-6 md:p-8">
-              <h2 className="font-display text-xl italic text-foreground mb-6">Enter Customer Data</h2>
+              <h2 className="font-display text-xl italic text-foreground mb-6">Enter Customer UX Attributes</h2>
 
               <div className="space-y-5">
                 <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Days Since Last Purchase</Label>
-                  <Input type="number" min={0} max={999} placeholder="e.g. 45" value={days} onChange={(e) => setDays(e.target.value)} className="rounded-none" />
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Total Spend Last 6 Months (£)</Label>
-                  <Input type="number" min={0} placeholder="e.g. 520" value={spend} onChange={(e) => setSpend(e.target.value)} className="rounded-none" />
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Number of Orders</Label>
-                  <Input type="number" min={0} max={50} placeholder="e.g. 2" value={orders} onChange={(e) => setOrders(e.target.value)} className="rounded-none" />
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Loyalty Tier</Label>
-                  <Select value={tier} onValueChange={setTier}>
-                    <SelectTrigger className="rounded-none">
-                      <SelectValue placeholder="Select tier" />
-                    </SelectTrigger>
+                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">
+                    Delivery Experience
+                  </Label>
+                  <Select value={delivery} onValueChange={(v) => setDelivery(v as Delivery)}>
+                    <SelectTrigger className="rounded-none"><SelectValue placeholder="Select…" /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">Spark (1)</SelectItem>
-                      <SelectItem value="2">Volt (2)</SelectItem>
-                      <SelectItem value="3">Surge (3)</SelectItem>
-                      <SelectItem value="4">Watt (4)</SelectItem>
+                      <SelectItem value="Good">Good</SelectItem>
+                      <SelectItem value="OK">OK</SelectItem>
+                      <SelectItem value="Bad">Bad</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p className="text-[0.65rem] text-muted-foreground font-body mt-1">How the customer rates their delivery experience</p>
                 </div>
 
                 <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Return Rate (%)</Label>
-                  <Input type="number" min={0} max={100} placeholder="e.g. 15" value={returnRate} onChange={(e) => setReturnRate(e.target.value)} className="rounded-none" />
+                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">
+                    Shopping Experience
+                  </Label>
+                  <Select value={shopping} onValueChange={(v) => setShopping(v as Shopping)}>
+                    <SelectTrigger className="rounded-none"><SelectValue placeholder="Select…" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Efficient">Efficient</SelectItem>
+                      <SelectItem value="Normal">Normal</SelectItem>
+                      <SelectItem value="Confusing">Confusing</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-[0.65rem] text-muted-foreground font-body mt-1">How easy the online/in-store shopping process was</p>
                 </div>
 
                 <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Wishlist Items Unpurchased</Label>
-                  <Input type="number" min={0} placeholder="e.g. 7" value={wishlist} onChange={(e) => setWishlist(e.target.value)} className="rounded-none" />
+                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">
+                    Website Security
+                  </Label>
+                  <Select value={security} onValueChange={(v) => setSecurity(v as Security)}>
+                    <SelectTrigger className="rounded-none"><SelectValue placeholder="Select…" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Reliable">Reliable</SelectItem>
+                      <SelectItem value="Unreliable">Unreliable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-[0.65rem] text-muted-foreground font-body mt-1">Customer's perception of website/payment security</p>
                 </div>
 
                 <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Consultation Booked</Label>
-                  <div className="flex gap-6 mt-1">
-                    <label className="flex items-center gap-2 cursor-pointer font-body text-sm text-foreground">
-                      <input type="radio" name="consultation" className="accent-foreground" checked={consultation === 1} onChange={() => setConsultation(1)} /> Yes
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer font-body text-sm text-foreground">
-                      <input type="radio" name="consultation" className="accent-foreground" checked={consultation === 0} onChange={() => setConsultation(0)} /> No
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Customer Service Contacts</Label>
-                  <Input type="number" min={0} max={20} placeholder="e.g. 1" value={csContacts} onChange={(e) => setCsContacts(e.target.value)} className="rounded-none" />
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Email Engagement</Label>
-                  <div className="flex gap-6 mt-1">
-                    <label className="flex items-center gap-2 cursor-pointer font-body text-sm text-foreground">
-                      <input type="radio" name="email" className="accent-foreground" checked={emailEng === 1} onChange={() => setEmailEng(1)} /> Yes
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer font-body text-sm text-foreground">
-                      <input type="radio" name="email" className="accent-foreground" checked={emailEng === 0} onChange={() => setEmailEng(0)} /> No
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">Satisfaction Score</Label>
-                  <StarRating value={satisfaction} onChange={setSatisfaction} />
+                  <Label className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1.5 block">
+                    Price Perception
+                  </Label>
+                  <Select value={price} onValueChange={(v) => setPrice(v as Price)}>
+                    <SelectTrigger className="rounded-none"><SelectValue placeholder="Select…" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Fair">Fair</SelectItem>
+                      <SelectItem value="Unfair">Unfair</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-[0.65rem] text-muted-foreground font-body mt-1">Whether the customer considers pricing fair or unfair</p>
                 </div>
               </div>
 
-              <Button onClick={handlePredict} className="w-full mt-8" size="lg">
-                <BarChart2 className="h-4 w-4 mr-2" /> Run CART Prediction
-              </Button>
+              <div className="flex gap-3 mt-8">
+                <Button onClick={handlePredict} className="flex-1" size="lg" disabled={!canPredict}>
+                  <BarChart2 className="h-4 w-4 mr-2" /> Run CART Prediction
+                </Button>
+                {result && (
+                  <Button onClick={handleReset} variant="outline" size="lg">Reset</Button>
+                )}
+              </div>
+            </div>
+
+            {/* Training Data Reference */}
+            <div className="border border-border mt-6 p-5">
+              <h3 className="font-display text-sm italic text-foreground mb-3">Training Data (10 Records)</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[0.7rem] font-body">
+                  <thead>
+                    <tr className="border-b border-border bg-muted">
+                      {['#', 'Delivery', 'Shopping', 'Security', 'Price', 'Churn'].map(h => (
+                        <th key={h} className="py-2 px-2 text-left text-[0.6rem] uppercase tracking-[0.1em] text-muted-foreground font-medium">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {trainingData.map(r => (
+                      <tr key={r.id} className={`border-b border-border ${r.churn ? 'bg-red-50/60 dark:bg-red-950/20' : 'bg-green-50/40 dark:bg-green-950/15'}`}>
+                        <td className="py-1.5 px-2 font-medium text-foreground">{r.id}</td>
+                        <td className="py-1.5 px-2 text-foreground">{r.delivery}</td>
+                        <td className="py-1.5 px-2 text-foreground">{r.shopping}</td>
+                        <td className="py-1.5 px-2 text-foreground">{r.security}</td>
+                        <td className="py-1.5 px-2 text-foreground">{r.price}</td>
+                        <td className="py-1.5 px-2">
+                          <span className={`text-[0.6rem] px-2 py-0.5 font-medium ${r.churn ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' : 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'}`}>
+                            {r.churn ? 'Yes' : 'No'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </Reveal>
 
           {/* RIGHT — Result */}
           <Reveal>
             <div className="lg:sticky lg:top-28">
-              {!prediction ? (
+              {!result ? (
                 <div className="border border-border p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] text-center">
                   <BarChart2 className="h-10 w-10 text-muted-foreground/30 mb-4" strokeWidth={1.5} />
                   <p className="text-muted-foreground font-body font-light text-sm leading-relaxed max-w-xs">
-                    Enter customer data and click <span className="font-medium text-foreground">Run CART Prediction</span> to see the result.
+                    Select the four UX attributes and click <span className="font-medium text-foreground">Run CART Prediction</span> to classify the customer.
                   </p>
                 </div>
               ) : (
-                <div className={`border-2 ${resultColor} overflow-hidden`}>
-                  {/* Coloured header */}
-                  <div className={`${resultHeaderColor} px-6 py-4`}>
-                    <p className="text-white font-display text-3xl md:text-4xl italic">{prediction.result}</p>
+                <div className={`border-2 ${result.churn ? 'border-red-500 bg-red-50 dark:bg-red-950/20' : 'border-green-500 bg-green-50 dark:bg-green-950/20'} overflow-hidden`}>
+                  {/* Header */}
+                  <div className={`${result.churn ? 'bg-red-600 dark:bg-red-700' : 'bg-green-600 dark:bg-green-700'} px-6 py-4 flex items-center gap-3`}>
+                    {result.churn
+                      ? <XCircle className="h-7 w-7 text-white" strokeWidth={1.5} />
+                      : <CheckCircle2 className="h-7 w-7 text-white" strokeWidth={1.5} />
+                    }
+                    <p className="text-white font-display text-3xl md:text-4xl italic">
+                      {result.churn ? 'CHURN RISK' : 'RETAIN'}
+                    </p>
                   </div>
 
                   <div className="p-6 md:p-8 space-y-5">
-                    <div>
-                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1">Customer Segment</p>
-                      <p className="font-display text-lg text-foreground italic">Segment {prediction.segment}</p>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1">Risk Level</p>
-                        <span className={`text-[0.65rem] px-2.5 py-1 font-body font-medium ${riskBadgeColor}`}>
-                          {prediction.risk}
-                        </span>
-                      </div>
+                    {/* Confidence */}
+                    <div className="flex items-center gap-6">
                       <div>
                         <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1">Confidence</p>
-                        <p className="font-body text-foreground font-medium">{prediction.confidence}</p>
+                        <p className="font-body text-foreground font-medium text-lg">{result.confidence}%</p>
+                      </div>
+                      <div>
+                        <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-1">Matching Training Records</p>
+                        <p className="font-body text-foreground font-medium">
+                          {result.matchedCustomers.length > 0
+                            ? result.matchedCustomers.map(id => `Customer ${id}`).join(', ')
+                            : 'No exact match (extrapolated)'}
+                        </p>
                       </div>
                     </div>
 
-                    {/* Recommended Action */}
-                    <div className="border border-border bg-muted/50 p-4 mt-4">
-                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-2">Recommended Action</p>
-                      <p className="text-sm text-foreground font-body font-light leading-relaxed">
-                        {recommendedActions[prediction.segment]}
-                      </p>
+                    {/* Decision Path */}
+                    <div>
+                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-2">Decision Path</p>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {result.path.map((step, i) => (
+                          <span key={i} className="flex items-center gap-1.5">
+                            <span className={`text-[0.7rem] px-2.5 py-1 font-body font-medium ${
+                              i === result.path.length - 1
+                                ? result.churn
+                                  ? 'bg-red-200 text-red-900 dark:bg-red-800/60 dark:text-red-200'
+                                  : 'bg-green-200 text-green-900 dark:bg-green-800/60 dark:text-green-200'
+                                : 'bg-muted text-foreground'
+                            }`}>
+                              {step}
+                            </span>
+                            {i < result.path.length - 1 && <span className="text-muted-foreground">→</span>}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Decision Tree */}
+                    {/* Decision Tree Visual */}
                     <div className="border border-border p-4">
-                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-3">Decision Path</p>
-                      <DecisionTree prediction={prediction} />
+                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-2">CART Decision Tree</p>
+                      <DecisionTree result={result} />
+                    </div>
+
+                    {/* Recommended Actions */}
+                    <div className="border border-border bg-muted/50 p-4">
+                      <p className="text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground font-body mb-3">Recommended Retention Actions</p>
+                      {result.churn ? (
+                        <div className="space-y-3">
+                          {retentionActions.churn.map(a => (
+                            <div key={a.day} className="flex gap-3">
+                              <span className="text-[0.65rem] font-medium text-accent whitespace-nowrap font-body">Day {a.day}</span>
+                              <div>
+                                <p className="text-sm font-body font-medium text-foreground">{a.title}</p>
+                                <p className="text-[0.75rem] text-muted-foreground font-body font-light">{a.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-foreground font-body font-light">{retentionActions.noChurn[0].description}</p>
+                      )}
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Model note */}
               <p className="text-[0.7rem] text-muted-foreground font-body font-light mt-4 leading-relaxed">
-                This prediction is generated by W.Y.W's CART model trained on 50 customer records. Root split: Total Spend 6M ≥ £500 (Weighted Gini Impurity: 0.000).
+                CART model trained on 10 customer records. Root split: Price (Weighted Gini = 0.286). Algorithm: Classification and Regression Tree using Gini Impurity.
               </p>
 
-              <Link to="/admin/dataset">
-                <Button variant="outline" size="sm" className="mt-4">
-                  <ArrowLeft className="h-3.5 w-3.5 mr-1.5" /> Back to Dataset
-                </Button>
-              </Link>
+              <div className="flex gap-3 mt-4">
+                <Link to="/admin/dataset">
+                  <Button variant="outline" size="sm">
+                    <ArrowLeft className="h-3.5 w-3.5 mr-1.5" /> Back to Dataset
+                  </Button>
+                </Link>
+                <Link to="/retention-dashboard">
+                  <Button variant="outline" size="sm">View Retention Dashboard</Button>
+                </Link>
+              </div>
             </div>
           </Reveal>
         </div>
