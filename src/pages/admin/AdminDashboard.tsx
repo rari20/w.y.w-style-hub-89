@@ -149,41 +149,6 @@ export default function AdminDashboard() {
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Left 60% */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Recent Orders */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-body font-medium">Recent Orders</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-xs">Order ID</TableHead>
-                      <TableHead className="text-xs">Customer</TableHead>
-                      <TableHead className="text-xs">Items</TableHead>
-                      <TableHead className="text-xs">Total</TableHead>
-                      <TableHead className="text-xs">Status</TableHead>
-                      <TableHead className="text-xs">Date</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {recentOrders.map(o => (
-                      <TableRow key={o.id}>
-                        <TableCell className="text-xs font-mono">{o.id}</TableCell>
-                        <TableCell className="text-xs">{o.customer}</TableCell>
-                        <TableCell className="text-xs">{o.items}</TableCell>
-                        <TableCell className="text-xs font-medium">{o.total}</TableCell>
-                        <TableCell>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColors[o.status] || ''}`}>{o.status}</span>
-                        </TableCell>
-                        <TableCell className="text-xs text-muted-foreground">{o.date}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-
             {/* Churn Risk Alert */}
             <Card className="border-l-4 border-l-red-500">
               <CardContent className="p-5">
