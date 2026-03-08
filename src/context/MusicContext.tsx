@@ -7,7 +7,7 @@ interface MusicContextType {
 
 const MusicContext = createContext<MusicContextType>({ isPlaying: false, toggleMusic: () => {} });
 
-const AUDIO_URL = 'https://cdn.pixabay.com/audio/2022/02/23/audio_ea70ad08e0.mp3';
+const AUDIO_URL = 'https://cdn.pixabay.com/audio/2022/10/18/audio_2fb02c4535.mp3';
 const TARGET_VOLUME = 0.18;
 
 export function MusicProvider({ children }: { children: ReactNode }) {
@@ -21,7 +21,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = 0;
     audio.preload = 'auto';
-    audio.crossOrigin = 'anonymous';
+    audio.src = AUDIO_URL;
     audio.src = AUDIO_URL;
     document.body.appendChild(audio);
     audioRef.current = audio;
