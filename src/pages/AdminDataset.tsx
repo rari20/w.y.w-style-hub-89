@@ -7,7 +7,7 @@ import { BarChart2, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-const ADMIN_EMAIL = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
 const dataset = [
   { id: 'C001', days: 14, spend: 847, orders: 4, tier: 'Volt', returnRate: 5, wishlist: 3, consultation: 'Yes', csContacts: 1, email: 'Yes', satisfaction: '5/5', churned: 'No' },
@@ -22,7 +22,7 @@ const dataset = [
   { id: 'C010', days: 9, spend: 3200, orders: 9, tier: 'Surge', returnRate: 2, wishlist: 1, consultation: 'Yes', csContacts: 0, email: 'Yes', satisfaction: '5/5', churned: 'No' },
   { id: 'C011', days: 112, spend: 185, orders: 1, tier: 'Spark', returnRate: 45, wishlist: 12, consultation: 'No', csContacts: 5, email: 'No', satisfaction: '2/5', churned: 'Yes' },
   { id: 'C012', days: 95, spend: 240, orders: 1, tier: 'Spark', returnRate: 38, wishlist: 9, consultation: 'No', csContacts: 4, email: 'No', satisfaction: '2/5', churned: 'Yes' },
-  { id: 'C013', days: 78, spend: 310, orders: 2, tier: 'Spark', returnRate: 28, wishlist: 11, consultation: 'No', csContacts: 3, email: 'No', satisfaction: '3/5', churned: 'Yes' },
+  { id: 'C013 ★', days: 78, spend: 310, orders: 2, tier: 'Spark', returnRate: 28, wishlist: 11, consultation: 'No', csContacts: 3, email: 'No', satisfaction: '3/5', churned: 'Yes' },
   { id: 'C014', days: 88, spend: 420, orders: 1, tier: 'Spark', returnRate: 50, wishlist: 14, consultation: 'No', csContacts: 6, email: 'No', satisfaction: '1/5', churned: 'Yes' },
   { id: 'C015', days: 67, spend: 465, orders: 2, tier: 'Spark', returnRate: 33, wishlist: 10, consultation: 'No', csContacts: 4, email: 'No', satisfaction: '2/5', churned: 'Yes' },
 ];

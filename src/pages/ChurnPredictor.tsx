@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const ADMIN_EMAIL = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
 type PredictionResult = {
   result: 'RETAIN' | 'MONITOR' | 'CHURN RISK';

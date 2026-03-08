@@ -12,9 +12,11 @@ import { products } from '@/data/products';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
-const TEST_ADMIN = 'test.customer@wyw-demo.com';
+const ADMIN_EMAIL = 'admin@wyw-demo.com';
+const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 
-const testOrders = [
+// ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
+const adminOrders = [
   { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
     { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
     { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
@@ -29,12 +31,37 @@ const testOrders = [
   ]},
 ];
 
-const wishlistItems = [
+const adminWishlist = [
   { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
   { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
   { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
   { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
 ];
+
+const adminActivity = { lastPurchase: '14 days ago', ordersThisYear: '3', returnRate: '0%', consultations: '1' };
+const adminLoyalty = { tier: 'Volt', points: 847, toNext: 653, nextTier: 'Surge', progress: 56 };
+const adminReferralCode = 'WYW-JD2024';
+
+// ─── Test customer profile data (Sam Riley — Spark tier, 310 pts, at-risk) ───
+// This mirrors dataset row C013 on the admin dashboard
+const customerOrders = [
+  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
+  ]},
+  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
+  ]},
+];
+
+const customerWishlist = [
+  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
+  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
+  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
+];
+
+const customerActivity = { lastPurchase: '78 days ago', ordersThisYear: '2', returnRate: '28%', consultations: '0' };
+const customerLoyalty = { tier: 'Spark', points: 310, toNext: 190, nextTier: 'Volt', progress: 62 };
+const customerReferralCode = 'WYW-SR2025';
 
 const tiers = [
   { name: 'Spark', range: '0–499 pts', color: 'border-muted', benefits: ['Early access to sales', 'Birthday discount 10%'] },
@@ -63,8 +90,8 @@ export default function Account() {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
 
-  const copyCode = () => {
-    navigator.clipboard.writeText('WYW-JD2024');
+  const copyCode = (code: string) => {
+    navigator.clipboard.writeText(code);
     setCopied(true);
     toast.success('Referral code copied!');
     setTimeout(() => setCopied(false), 2000);
@@ -190,7 +217,15 @@ export default function Account() {
     ? `${profile.first_name} ${profile.last_name || ''}`.trim()
     : user.email?.split('@')[0] || 'User';
 
-  const isTestAdmin = user.email === TEST_ADMIN;
+  const isTestAdmin = user.email === ADMIN_EMAIL;
+  const isTestCustomer = user.email === TEST_CUSTOMER_EMAIL;
+
+  // Select profile-specific data
+  const testOrders = isTestAdmin ? adminOrders : isTestCustomer ? customerOrders : [];
+  const wishlistItems = isTestAdmin ? adminWishlist : isTestCustomer ? customerWishlist : [];
+  const activity = isTestAdmin ? adminActivity : isTestCustomer ? customerActivity : { lastPurchase: '—', ordersThisYear: '0', returnRate: '0%', consultations: '0' };
+  const loyalty = isTestAdmin ? adminLoyalty : isTestCustomer ? customerLoyalty : { tier: 'Spark', points: 0, toNext: 500, nextTier: 'Volt', progress: 0 };
+  const referralCode = isTestAdmin ? adminReferralCode : isTestCustomer ? customerReferralCode : 'WYW-XXXX';
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'overview', label: 'Overview', icon: User },
@@ -249,27 +284,27 @@ export default function Account() {
                     <div>
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Current Tier</p>
                       <h3 className="font-display flex items-center gap-2 text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>
-                        <Zap className="h-5 w-5 text-amber-500" strokeWidth={1.5} /> Volt
+                        <Zap className="h-5 w-5 text-amber-500" strokeWidth={1.5} /> {loyalty.tier}
                       </h3>
                     </div>
                     <div className="text-right">
                       <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">Points Balance</p>
-                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>847</p>
+                      <p className="font-display text-foreground" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}>{loyalty.points}</p>
                     </div>
                   </div>
                   <div className="w-full bg-muted h-1">
-                    <div className="bg-primary h-1" style={{ width: '56%' }} />
+                    <div className="bg-primary h-1" style={{ width: `${loyalty.progress}%` }} />
                   </div>
-                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">653 points to Surge</p>
+                  <p className="text-[0.75rem] text-muted-foreground mt-2 font-body">{loyalty.toNext} points to {loyalty.nextTier}</p>
                 </div>
 
                 {/* Section B: Four-metric activity */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[
-                    { label: 'Last Purchase', value: '14 days ago' },
-                    { label: 'Orders This Year', value: '3' },
-                    { label: 'Return Rate', value: '0%' },
-                    { label: 'Consultations Booked', value: '1' },
+                    { label: 'Last Purchase', value: activity.lastPurchase },
+                    { label: 'Orders This Year', value: activity.ordersThisYear },
+                    { label: 'Return Rate', value: activity.returnRate },
+                    { label: 'Consultations Booked', value: activity.consultations },
                   ].map(stat => (
                     <div key={stat.label} className="border border-border p-3 md:p-4">
                       <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
@@ -300,7 +335,7 @@ export default function Account() {
                     { icon: Gift, label: 'Active Coupons', value: '2' },
                     { icon: MapPin, label: 'Saved Addresses', value: '1' },
                     { icon: CreditCard, label: 'Payment Methods', value: '1' },
-                    { icon: Share2, label: 'Referral Code', value: 'WYW-JD2024' },
+                    { icon: Share2, label: 'Referral Code', value: referralCode },
                   ].map(item => (
                     <div key={item.label} className="border border-border p-3 md:p-4 text-center">
                       <item.icon className="h-5 w-5 mx-auto text-primary mb-2" strokeWidth={1.5} />
@@ -436,7 +471,7 @@ export default function Account() {
                 <p className="text-[0.8rem] text-muted-foreground font-body">1 point earned per £1 spent.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {tiers.map(tier => (
-                    <div key={tier.name} className={`border-2 p-5 ${tier.name === 'Volt' ? tier.color : 'border-border'}`}>
+                    <div key={tier.name} className={`border-2 p-5 ${tier.name === loyalty.tier ? tier.color : 'border-border'}`}>
                       <h3 className="font-display text-lg text-foreground mb-1">{tier.name}</h3>
                       <p className="text-[0.7rem] text-muted-foreground font-body mb-3">{tier.range}</p>
                       <ul className="space-y-1">
@@ -447,7 +482,7 @@ export default function Account() {
                           </li>
                         ))}
                       </ul>
-                      {tier.name === 'Volt' && (
+                      {tier.name === loyalty.tier && (
                         <p className="text-[0.7rem] text-amber-600 dark:text-amber-400 font-body mt-3 font-medium">Your current tier</p>
                       )}
                     </div>
@@ -491,9 +526,9 @@ export default function Account() {
                 <div className="border-2 border-border p-6 md:p-8 flex items-center justify-between flex-wrap gap-4 mb-8">
                   <div>
                     <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body mb-1">Your Referral Code</p>
-                    <p className="font-display text-2xl md:text-3xl text-foreground">WYW-JD2024</p>
+                    <p className="font-display text-2xl md:text-3xl text-foreground">{referralCode}</p>
                   </div>
-                  <Button variant="outline" size="sm" onClick={copyCode} className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={() => copyCode(referralCode)} className="flex items-center gap-2">
                     {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copied' : 'Copy Code'}
                   </Button>
