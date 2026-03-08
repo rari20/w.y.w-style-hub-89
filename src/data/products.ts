@@ -290,6 +290,8 @@ export const products: Product[] = [
   {
     id: 'kk1', name: 'Weighted Silk Scarf', brand: 'KiloKouture', price: 245,
     category: 'accessories', sizes: ['One Size'], colors: ['Burgundy','Gold','Black'],
+    colorImages: { 'Burgundy': productKk1, 'Gold': productKk4, 'Black': productKk5 },
+    material: 'Silk Twill',
     image: productKk1, loyaltyPoints: 245, inStock: true, isNew: true,
     description: 'Oversized silk twill scarf with hand-rolled edges. Heavy weight for luxurious drape.',
     storeAvailability: defaultStores,
@@ -297,6 +299,8 @@ export const products: Product[] = [
   {
     id: 'kk2', name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Charcoal','Camel'],
+    colorImages: { 'Charcoal': productKk2, 'Camel': productKk7 },
+    material: 'Heavyweight Italian Wool',
     image: productKk2, loyaltyPoints: 895, inStock: true, isTrending: true,
     description: 'Double-breasted overcoat in heavyweight Italian wool. Peak lapel and deep pockets.',
     storeAvailability: storeVariant(true,false,true), occasion: ['outerwear'],
@@ -304,6 +308,8 @@ export const products: Product[] = [
   {
     id: 'kk3', name: 'Dense Knit Cardigan', brand: 'KiloKouture', price: 545,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Oatmeal','Charcoal'],
+    colorImages: { 'Oatmeal': productKk3, 'Charcoal': productKk6 },
+    material: 'Merino Wool Blend',
     image: productKk3, loyaltyPoints: 545, inStock: true, isNew: true,
     description: 'Chunky rib-knit cardigan in merino wool blend. Oversized fit with horn buttons.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -311,6 +317,8 @@ export const products: Product[] = [
   {
     id: 'kk4', name: 'Kilo Leather Belt', brand: 'KiloKouture', price: 185,
     category: 'accessories', sizes: ['S','M','L'], colors: ['Black','Tan'],
+    colorImages: { 'Black': productKk4, 'Tan': productKk1 },
+    material: 'Full-Grain Italian Leather',
     image: productKk4, loyaltyPoints: 185, inStock: true,
     description: 'Wide leather belt with a substantial brass buckle. Full-grain Italian leather.',
     storeAvailability: storeVariant(true,true,true),
@@ -318,6 +326,8 @@ export const products: Product[] = [
   {
     id: 'kk5', name: 'Substantial Tote Bag', brand: 'KiloKouture', price: 465,
     category: 'accessories', sizes: ['One Size'], colors: ['Black','Cognac'],
+    colorImages: { 'Black': productKk5, 'Cognac': productKk4 },
+    material: 'Pebbled Leather',
     image: productKk5, loyaltyPoints: 465, inStock: true, isTrending: true,
     description: 'Large structured tote in pebbled leather. Internal zip pocket and magnetic snap closure.',
     storeAvailability: defaultStores,
@@ -325,6 +335,8 @@ export const products: Product[] = [
   {
     id: 'kk6', name: 'Thick Rib Polo', brand: 'KiloKouture', price: 215,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Navy','Cream','Black'],
+    colorImages: { 'Navy': productKk6, 'Cream': productKk3, 'Black': productKk8 },
+    material: 'Heavy Rib Knit Cotton',
     image: productKk6, loyaltyPoints: 215, inStock: true,
     description: 'Heavy rib-knit polo shirt with a Johnny collar. Substantial weight for a premium feel.',
     storeAvailability: storeVariant(true,true,false), occasion: ['casual','workwear'],
@@ -332,6 +344,8 @@ export const products: Product[] = [
   {
     id: 'kk7', name: 'Mass Denim Jacket', brand: 'KiloKouture', price: 395,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Indigo','Black'],
+    colorImages: { 'Indigo': productKk7, 'Black': productKk2 },
+    material: '16oz Japanese Selvedge Denim',
     image: productKk7, loyaltyPoints: 395, inStock: true, isNew: true,
     description: 'Heavyweight 16oz Japanese selvedge denim jacket. Relaxed fit with contrast stitching.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -339,6 +353,8 @@ export const products: Product[] = [
   {
     id: 'kk8', name: 'Volume Puffer Coat', brand: 'KiloKouture', price: 785,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Olive'],
+    colorImages: { 'Black': productKk8, 'Olive': productKk7 },
+    material: 'Recycled Nylon with Down Fill',
     image: productKk8, loyaltyPoints: 785, inStock: true, isTrending: true,
     description: 'Oversized puffer coat with responsibly sourced down fill. Dramatic volume, lightweight warmth.',
     storeAvailability: storeVariant(true,true,true), occasion: ['outerwear','casual'],
