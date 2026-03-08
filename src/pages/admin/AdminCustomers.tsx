@@ -6,10 +6,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Eye, Edit, Gift, Search } from 'lucide-react';
+import { Eye, Edit, Gift, Search, ShoppingBag, RotateCcw, Tag, Mail, Calendar, TrendingUp, LogIn, Star } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { customers, tierColors, riskColors, type AdminCustomer } from '@/data/adminData';
+import { customers, tierColors, riskColors, customerTimelines, type AdminCustomer } from '@/data/adminData';
 
 export default function AdminCustomers() {
   const [search, setSearch] = useState('');
