@@ -1,9 +1,13 @@
+import { lazy, Suspense } from 'react';
 import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { stores } from '@/data/products';
 import { MapPin, Phone, Clock, Package, QrCode, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+
+const Globe = lazy(() => import('@/components/Globe'));
 
 const storeMapUrls: Record<string, string> = {
   's1': 'https://www.google.com/maps/search/?api=1&query=14+George+Street+Edinburgh+EH2+2PF',
@@ -12,6 +16,13 @@ const storeMapUrls: Record<string, string> = {
 };
 
 export default function StoreLocator() {
+  const globeStores = stores.map(s => ({
+    name: s.name,
+    lat: s.lat,
+    lng: s.lng,
+    address: s.address,
+  }));
+
   return (
     <Layout>
       <div className="wyw-container pt-24 pb-16">
@@ -20,9 +31,22 @@ export default function StoreLocator() {
         <Reveal>
           <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">Curated Selection</p>
           <h1 className="font-display text-[2.5rem] md:text-[3.5rem] italic leading-[1.05] mb-4 text-foreground">Find a Store</h1>
-          <p className="text-muted-foreground font-body font-light mb-14 max-w-lg">
+          <p className="text-muted-foreground font-body font-light mb-10 max-w-lg">
             Visit us in person for the full W.Y.W experience.
           </p>
+        </Reveal>
+
+        {/* 3D Globe */}
+        <Reveal>
+          <div className="border border-border mb-14 overflow-hidden">
+            <Suspense fallback={
+              <div className="w-full h-[400px] md:h-[500px] flex items-center justify-center bg-muted">
+                <p className="text-muted-foreground font-body text-sm">Loading globe…</p>
+              </div>
+            }>
+              <Globe stores={globeStores} />
+            </Suspense>
+          </div>
         </Reveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -31,9 +55,9 @@ export default function StoreLocator() {
             const mapsUrl = storeMapUrls[store.id] || '#';
             return (
               <Reveal key={store.id} delay={i * 80}>
-                <div className="border border-border p-8 h-full flex flex-col">
+                <div className="border border-border p-6 md:p-8 h-full flex flex-col">
                   <p className="font-body text-[0.625rem] tracking-[0.18em] uppercase text-muted-foreground mb-1">W.Y.W</p>
-                  <h2 className="font-display text-[2rem] italic leading-[1.1] mb-6 text-foreground">{cityName}</h2>
+                  <h2 className="font-display text-[1.75rem] md:text-[2rem] italic leading-[1.1] mb-6 text-foreground">{cityName}</h2>
                   <div className="space-y-3 text-[0.85rem] font-body font-light">
                     <a
                       href={mapsUrl}
@@ -84,16 +108,16 @@ export default function StoreLocator() {
 
         {/* W.Y.W Lockers */}
         <Reveal delay={100}>
-          <div className="mt-20 bg-primary text-primary-foreground p-10 md:p-14">
-            <div className="flex items-start gap-6">
+          <div className="mt-20 bg-primary text-primary-foreground p-8 md:p-14">
+            <div className="flex flex-col md:flex-row items-start gap-6">
               <Package className="h-8 w-8 shrink-0 mt-1" strokeWidth={1.5} />
               <div>
-                <h2 className="font-display text-[1.8rem] italic mb-3">W.Y.W Lockers</h2>
-                <p className="font-body font-light leading-[1.8] max-w-xl opacity-90">
+                <h2 className="font-display text-[1.5rem] md:text-[1.8rem] italic mb-3">W.Y.W Lockers</h2>
+                <p className="font-body font-light leading-[1.8] max-w-xl opacity-90 text-sm md:text-base">
                   Our in-store smart lockers let you collect online orders and drop off returns 7 days a week — no queue, no wait.
                 </p>
-                <Button variant="outline" size="sm" className="mt-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                  Learn More
+                <Button variant="outline" size="sm" className="mt-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+                  <Link to="/customer-service">Learn More</Link>
                 </Button>
               </div>
             </div>
@@ -102,13 +126,13 @@ export default function StoreLocator() {
 
         {/* QR Code */}
         <Reveal delay={150}>
-          <div className="mt-8 border border-border p-10 md:p-14 flex flex-col md:flex-row items-start gap-10">
-            <div className="w-24 h-24 bg-muted flex items-center justify-center shrink-0">
-              <QrCode className="h-12 w-12 text-primary" strokeWidth={1} />
+          <div className="mt-8 border border-border p-8 md:p-14 flex flex-col md:flex-row items-start gap-8 md:gap-10">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-muted flex items-center justify-center shrink-0">
+              <QrCode className="h-10 w-10 md:h-12 md:w-12 text-primary" strokeWidth={1} />
             </div>
             <div>
-              <h3 className="font-display text-[1.5rem] italic mb-3 text-foreground">Create Your Account In-Store</h3>
-              <p className="text-muted-foreground font-body font-light leading-[1.8]">
+              <h3 className="font-display text-[1.25rem] md:text-[1.5rem] italic mb-3 text-foreground">Create Your Account In-Store</h3>
+              <p className="text-muted-foreground font-body font-light leading-[1.8] text-sm md:text-base">
                 Scan the QR code at any till or entrance kiosk to register your W.Y.W account on the spot.
               </p>
             </div>

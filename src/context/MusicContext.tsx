@@ -7,71 +7,72 @@ interface MusicContextType {
 
 const MusicContext = createContext<MusicContextType>({ isPlaying: false, toggleMusic: () => {} });
 
+const AUDIO_URL = 'https://cdn.pixabay.com/audio/2024/11/26/audio_fe0e4498d3.mp3';
+const TARGET_VOLUME = 0.18;
+
 export function MusicProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const hasAutoPlayed = useRef(false);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    const audio = new Audio(
-      'https://cdn.pixabay.com/audio/2024/11/26/audio_fe0e4498d3.mp3'
-    );
+    // Create audio element in DOM for better compatibility
+    const audio = document.createElement('audio');
     audio.loop = true;
     audio.volume = 0;
+    audio.preload = 'auto';
+    audio.crossOrigin = 'anonymous';
+    audio.src = AUDIO_URL;
+    document.body.appendChild(audio);
     audioRef.current = audio;
 
-    // Attempt autoplay with fade-in
-    const tryAutoPlay = () => {
-      if (hasAutoPlayed.current) return;
-      hasAutoPlayed.current = true;
-      audio.play().then(() => {
-        setIsPlaying(true);
-        // Fade in volume
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          vol = Math.min(vol + 0.01, 0.15);
-          audio.volume = vol;
-          if (vol >= 0.15) clearInterval(fadeIn);
-        }, 50);
-      }).catch(() => {
-        // Autoplay blocked — wait for user interaction
-        const handler = () => {
-          audio.play().then(() => {
-            setIsPlaying(true);
-            let vol = 0;
-            const fadeIn = setInterval(() => {
-              vol = Math.min(vol + 0.01, 0.15);
-              audio.volume = vol;
-              if (vol >= 0.15) clearInterval(fadeIn);
-            }, 50);
-          }).catch(() => {});
-          document.removeEventListener('click', handler);
-          document.removeEventListener('touchstart', handler);
-        };
-        document.addEventListener('click', handler, { once: true });
-        document.addEventListener('touchstart', handler, { once: true });
-      });
+    const fadeIn = () => {
+      let vol = 0;
+      const interval = setInterval(() => {
+        vol = Math.min(vol + 0.005, TARGET_VOLUME);
+        audio.volume = vol;
+        if (vol >= TARGET_VOLUME) clearInterval(interval);
+      }, 40);
     };
 
-    // Small delay to let page settle
-    const timer = setTimeout(tryAutoPlay, 800);
+    const startPlayback = () => {
+      if (initializedRef.current) return;
+      initializedRef.current = true;
+      // Synchronously call play within user gesture
+      const promise = audio.play();
+      if (promise) {
+        promise.then(() => {
+          setIsPlaying(true);
+          fadeIn();
+        }).catch(() => {});
+      }
+    };
+
+    // Listen for first user interaction
+    const events = ['click', 'touchstart', 'keydown'] as const;
+    events.forEach(evt => {
+      document.addEventListener(evt, startPlayback, { once: true, passive: true });
+    });
 
     return () => {
-      clearTimeout(timer);
+      events.forEach(evt => {
+        document.removeEventListener(evt, startPlayback);
+      });
       audio.pause();
       audio.src = '';
+      audio.remove();
     };
   }, []);
 
   const toggleMusic = () => {
-    if (!audioRef.current) return;
+    const audio = audioRef.current;
+    if (!audio) return;
     if (isPlaying) {
-      audioRef.current.pause();
+      audio.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(() => {});
-      audioRef.current.volume = 0.15;
-      setIsPlaying(true);
+      audio.volume = TARGET_VOLUME;
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
     }
   };
 
