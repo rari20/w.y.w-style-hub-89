@@ -25,11 +25,6 @@ const tiers = [
   { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
 ];
 
-const statusColors: Record<string, string> = {
-  Processing: 'bg-blue-500/20 text-blue-700 dark:text-blue-400',
-  Shipped: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
-  Delivered: 'bg-green-500/20 text-green-700 dark:text-green-400',
-};
 
 const notifIcons: Record<string, React.ElementType> = {
   order: ShoppingBag,
