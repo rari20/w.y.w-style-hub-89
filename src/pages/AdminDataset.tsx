@@ -202,6 +202,9 @@ export default function AdminDataset() {
         {/* Navigation */}
         <Reveal>
           <div className="flex flex-wrap gap-3 mt-6">
+            <a href="/ecom_dataset.xlsx" download>
+              <Button variant="outline"><Download className="h-4 w-4 mr-2" /> Download Dataset (.xlsx)</Button>
+            </a>
             <Link to="/churn-predictor">
               <Button><BarChart2 className="h-4 w-4 mr-2" /> Test Model with New Customer</Button>
             </Link>
