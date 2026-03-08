@@ -608,7 +608,7 @@ export default function Checkout() {
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}>
               <p className="font-body text-[0.85rem] flex items-center gap-2 text-foreground">
                 <Zap className="h-4 w-4 text-accent" strokeWidth={1.5} />
-                {totalPoints || Math.floor(orderTotal)} points added to your W.Y.W Rewards
+                {savedPoints || Math.floor(savedTotal)} points added to your W.Y.W Rewards
               </p>
             </motion.div>
 
