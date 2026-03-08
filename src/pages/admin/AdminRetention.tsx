@@ -9,35 +9,35 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { customers } from '@/data/adminData';
 
+const churnCustomers = customers.filter(c => c.churnRisk === 'High');
+
 const columns = [
   {
     title: 'Day 1: Email Sent',
     color: 'border-blue-500',
     headerBg: 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-    cards: [
-      { id: 'WYW011', label: 'Email sent today' },
-      { id: 'WYW012', label: 'Email sent today' },
-      { id: 'WYW015', label: 'Email sent today' },
-    ],
+    ids: churnCustomers.filter(c => c.daysInactive < 80).map(c => c.id),
+    label: 'COMEBACK20 email sent',
   },
   {
     title: 'Day 7: WhatsApp Follow-up',
     color: 'border-amber-500',
     headerBg: 'bg-amber-500/10 text-amber-700 dark:text-amber-400',
-    cards: [{ id: 'WYW013', label: 'Email unopened — WhatsApp sent' }],
+    ids: churnCustomers.filter(c => c.daysInactive >= 80 && c.daysInactive < 100).map(c => c.id),
+    label: 'Email unopened — WhatsApp sent',
   },
   {
     title: 'Day 14: Final Offer',
     color: 'border-red-500',
     headerBg: 'bg-red-500/10 text-red-700 dark:text-red-400',
-    cards: [{ id: 'WYW014', label: 'Free consultation offered — awaiting response' }],
+    ids: churnCustomers.filter(c => c.daysInactive >= 100).map(c => c.id),
+    label: 'Free consultation offered — awaiting response',
   },
 ];
 
 export default function AdminRetention() {
   const [showCreate, setShowCreate] = useState(false);
 
-  const getName = (id: string) => customers.find(c => c.id === id)?.name || id;
   const getDays = (id: string) => customers.find(c => c.id === id)?.daysInactive || 0;
 
   return (
@@ -52,16 +52,17 @@ export default function AdminRetention() {
         <div className="grid md:grid-cols-3 gap-4">
           {columns.map(col => (
             <div key={col.title} className={`border-t-2 ${col.color} rounded-lg bg-card`}>
-              <div className={`px-4 py-2.5 ${col.headerBg} rounded-t-lg`}>
+              <div className={`px-4 py-2.5 ${col.headerBg} rounded-t-lg flex justify-between items-center`}>
                 <p className="text-xs font-body font-medium">{col.title}</p>
+                <span className="text-[10px] font-bold">{col.ids.length}</span>
               </div>
-              <div className="p-3 space-y-2">
-                {col.cards.map(card => (
-                  <Card key={card.id} className="border">
+              <div className="p-3 space-y-2 max-h-[400px] overflow-y-auto">
+                {col.ids.map(id => (
+                  <Card key={id} className="border">
                     <CardContent className="p-3">
-                      <p className="text-xs font-body font-medium">{getName(card.id)}</p>
-                      <p className="text-[10px] text-muted-foreground">{getDays(card.id)} days inactive</p>
-                      <p className="text-[10px] text-muted-foreground mt-1">{card.label}</p>
+                      <p className="text-xs font-body font-medium">{id}</p>
+                      <p className="text-[10px] text-muted-foreground">{getDays(id)} days inactive</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">{col.label}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -78,7 +79,7 @@ export default function AdminRetention() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
               {[
-                { label: 'Emails Sent', value: '25' },
+                { label: 'Emails Sent', value: `${churnCustomers.length}` },
                 { label: 'Open Rate', value: '40%' },
                 { label: 'Consultations Booked', value: '0' },
               ].map(m => (
@@ -92,7 +93,6 @@ export default function AdminRetention() {
         </Card>
       </div>
 
-      {/* Create Campaign Modal */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
         <DialogContent className="max-w-md">
           <DialogHeader>
@@ -104,7 +104,7 @@ export default function AdminRetention() {
             <Select defaultValue="churn">
               <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="churn">All Churn Risk</SelectItem>
+                <SelectItem value="churn">All Churn Risk ({churnCustomers.length})</SelectItem>
                 <SelectItem value="spark">Spark Tier</SelectItem>
                 <SelectItem value="inactive">Inactive 60+ days</SelectItem>
                 <SelectItem value="custom">Custom</SelectItem>

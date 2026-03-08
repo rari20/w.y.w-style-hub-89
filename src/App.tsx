@@ -72,7 +72,7 @@ function AnimatedRoutes() {
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/analytics" element={<AdminAnalytics />} />
-      <Route path="/admin/customers" element={<AdminCustomers />} />
+      
       <Route path="/admin/churn-risk" element={<AdminChurnRisk />} />
       <Route path="/admin/retention" element={<AdminRetention />} />
       <Route path="/admin/discounts" element={<AdminDiscounts />} />

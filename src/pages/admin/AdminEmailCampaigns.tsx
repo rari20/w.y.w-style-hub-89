@@ -1,5 +1,5 @@
 import AdminLayout from '@/components/AdminLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,24 +9,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Pause, Eye, Send } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { customers } from '@/data/adminData';
+
+const churnCount = customers.filter(c => c.churnRisk === 'High').length;
+const voltCount = customers.filter(c => c.loyaltyTier === 'Volt').length;
 
 const campaigns = [
   {
     name: 'Churn Re-engagement Campaign',
     status: 'ACTIVE',
     statusColor: 'bg-red-500/20 text-red-700 dark:text-red-400',
-    target: '25 at-risk customers (Segment D)',
-    preview: "We miss you [Name] — here's 20% off your next W.Y.W order. Use code COMEBACK20.",
-    sent: 25, opened: 10, clicked: 5, converted: 0,
+    target: `${churnCount} at-risk customers (Segment D)`,
+    preview: "We miss you — here's 20% off your next W.Y.W order. Use code COMEBACK20.",
+    sent: churnCount, opened: 10, clicked: 5, converted: 0,
     hasWhatsApp: true,
   },
   {
     name: 'Volt Tier Progression Nudge',
     status: 'ACTIVE',
     statusColor: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
-    target: '10 Volt tier customers',
-    preview: "You're [X] points away from Surge tier — shop now to unlock free express delivery.",
-    sent: 10, opened: 8, clicked: 6, converted: 4,
+    target: `${voltCount} Volt tier customers`,
+    preview: "You're close to Surge tier — shop now to unlock free express delivery.",
+    sent: voltCount, opened: 8, clicked: 6, converted: 4,
     hasWhatsApp: false,
   },
 ];
@@ -112,9 +116,9 @@ export default function AdminEmailCampaigns() {
             <Select defaultValue="all">
               <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All customers</SelectItem>
+                <SelectItem value="all">All customers ({customers.length})</SelectItem>
                 <SelectItem value="tier">By tier</SelectItem>
-                <SelectItem value="churn">Churn risk only</SelectItem>
+                <SelectItem value="churn">Churn risk only ({churnCount})</SelectItem>
                 <SelectItem value="custom">Custom segment</SelectItem>
               </SelectContent>
             </Select>

@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ADMIN_EMAIL } from '@/data/adminData';
 import {
-  LayoutDashboard, BarChart2, Users, AlertTriangle, Mail,
+  LayoutDashboard, BarChart2, AlertTriangle, Mail,
   Tag, Send, Share2, Brain, TrendingUp, Database,
   Menu, X, LogOut,
 } from 'lucide-react';
@@ -19,8 +19,7 @@ const sections = [
   {
     label: 'CUSTOMERS',
     links: [
-      { label: 'All Customers', icon: Users, to: '/admin/customers' },
-      { label: 'Churn Risk', icon: AlertTriangle, to: '/admin/churn-risk', badge: '5' },
+      { label: 'Churn Risk', icon: AlertTriangle, to: '/admin/churn-risk', badge: '25' },
       { label: 'Retention Campaigns', icon: Mail, to: '/admin/retention' },
     ],
   },
@@ -71,13 +70,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const sidebar = (
     <div className="flex flex-col h-full" style={{ background: '#0D1117' }}>
-      {/* Logo */}
       <div className="px-6 py-6 border-b border-white/10">
         <Link to="/admin" className="font-display text-xl tracking-widest text-white">W.Y.W</Link>
         <p className="text-[10px] tracking-[0.2em] uppercase text-white/40 mt-0.5 font-body">Admin Portal</p>
       </div>
 
-      {/* Nav sections */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
         {sections.map(section => (
           <div key={section.label}>
@@ -108,7 +105,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         ))}
       </nav>
 
-      {/* Admin user info */}
       <div className="px-4 py-4 border-t border-white/10 flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white text-xs font-body font-medium">A</div>
         <div className="flex-1 min-w-0">
@@ -126,12 +122,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen flex bg-background">
-      {/* Desktop sidebar */}
       <aside className="hidden md:block w-60 shrink-0 fixed left-0 top-0 bottom-0 z-40">
         {sidebar}
       </aside>
 
-      {/* Mobile header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center px-4 border-b border-border bg-background">
         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-foreground">
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -140,7 +134,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <span className="text-[9px] tracking-wider uppercase text-muted-foreground ml-2 font-body">Admin</span>
       </div>
 
-      {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40">
           <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
@@ -150,7 +143,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       )}
 
-      {/* Main content */}
       <main className="flex-1 md:ml-60 min-h-screen">
         <div className="p-6 md:p-8 pt-20 md:pt-8 max-w-[1400px]">
           {children}
