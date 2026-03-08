@@ -4,41 +4,37 @@ import { Button } from '@/components/ui/button';
 
 import { Link } from 'react-router-dom';
 import {
-  Users, Activity, AlertTriangle, Star, Send, Tag, UserPlus, Bell, ShoppingBag, RotateCcw, Zap, Check,
+  Users, Activity, AlertTriangle, Star, Send, Tag, Bell, Zap, Check,
 } from 'lucide-react';
-import { adminNotifications, type AdminNotification } from '@/data/adminData';
+import { adminNotifications, datasetTotals, type AdminNotification } from '@/data/adminData';
 import { useState } from 'react';
 
 const kpis = [
-  { label: 'Total Customers', value: '50', icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-  { label: 'Active This Month', value: '25', icon: Activity, color: 'text-green-500', bg: 'bg-green-500/10' },
-  { label: 'Churn Risk', value: '25', icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/10', link: '/admin/churn-risk' },
-  { label: 'Total Revenue 6M', value: '£13,845', icon: () => <span className="text-lg font-display">£</span>, color: 'text-amber-600', bg: 'bg-amber-500/10' },
-  { label: 'Avg Satisfaction', value: '3.5/5', icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+  { label: 'Total Customers', value: `${datasetTotals.totalCustomers}`, icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { label: 'Retained', value: `${datasetTotals.retainedCount}`, icon: Activity, color: 'text-green-500', bg: 'bg-green-500/10' },
+  { label: 'Churn Risk', value: `${datasetTotals.churnCount}`, icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/10', link: '/admin/churn-risk' },
+  { label: 'Total Revenue 6M', value: `£${datasetTotals.totalRevenue.toLocaleString()}`, icon: () => <span className="text-lg font-display">£</span>, color: 'text-amber-600', bg: 'bg-amber-500/10' },
+  { label: 'Avg Satisfaction', value: `${datasetTotals.avgSatisfaction}/5`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
   { label: 'Active Campaigns', value: '3', icon: Send, color: 'text-purple-500', bg: 'bg-purple-500/10' },
 ];
 
+const maxRevenue = Math.max(datasetTotals.revenueWatt, datasetTotals.revenueSurge, datasetTotals.revenueVolt, datasetTotals.revenueSpark);
 const tiers = [
-  { name: 'Watt', value: 3260, max: 4870, color: 'bg-amber-500' },
-  { name: 'Surge', value: 4870, max: 4870, color: 'bg-blue-500' },
-  { name: 'Volt', value: 3270, max: 4870, color: 'bg-orange-500' },
-  { name: 'Spark', value: 2445, max: 4870, color: 'bg-muted-foreground/40' },
+  { name: 'Watt', value: datasetTotals.revenueWatt, max: maxRevenue, color: 'bg-amber-500' },
+  { name: 'Surge', value: datasetTotals.revenueSurge, max: maxRevenue, color: 'bg-blue-500' },
+  { name: 'Volt', value: datasetTotals.revenueVolt, max: maxRevenue, color: 'bg-orange-500' },
+  { name: 'Spark', value: datasetTotals.revenueSpark, max: maxRevenue, color: 'bg-muted-foreground/40' },
 ];
 
-
 const notifIcons: Record<string, React.ElementType> = {
-  order: ShoppingBag,
   churn: AlertTriangle,
   campaign: Send,
-  return: RotateCcw,
   system: Zap,
 };
 
 const notifColors: Record<string, string> = {
-  order: 'text-blue-500 bg-blue-500/10',
   churn: 'text-red-500 bg-red-500/10',
   campaign: 'text-purple-500 bg-purple-500/10',
-  return: 'text-amber-500 bg-amber-500/10',
   system: 'text-muted-foreground bg-muted',
 };
 
@@ -79,7 +75,6 @@ export default function AdminDashboard() {
               )}
             </button>
 
-            {/* Notification dropdown */}
             {showNotifs && (
               <div className="absolute right-0 top-12 w-80 md:w-96 bg-card border border-border rounded-lg shadow-lg z-50 max-h-[480px] overflow-hidden flex flex-col">
                 <div className="flex items-center justify-between p-3 border-b border-border">
@@ -147,18 +142,16 @@ export default function AdminDashboard() {
 
         {/* Two columns */}
         <div className="grid lg:grid-cols-5 gap-6">
-          {/* Left 60% */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Churn Risk Alert */}
             <Card className="border-l-4 border-l-red-500">
               <CardContent className="p-5">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-body font-medium">Churn Risk Alert</p>
-                    <p className="text-xs text-muted-foreground mt-1">25 customers have been identified as high churn risk by the CART model. Last updated: today.</p>
+                    <p className="text-xs text-muted-foreground mt-1">25 customers have been identified as high churn risk by the CART model. All are Spark tier with Total Spend &lt; £500.</p>
                     <Link to="/admin/churn-risk">
-                      <Button variant="outline" size="sm" className="mt-3">View Customers</Button>
+                      <Button variant="outline" size="sm" className="mt-3">View At-Risk Customers</Button>
                     </Link>
                   </div>
                 </div>
@@ -166,9 +159,7 @@ export default function AdminDashboard() {
             </Card>
           </div>
 
-          {/* Right 40% */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Revenue by Tier */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base font-body font-medium">Revenue by Loyalty Tier</CardTitle>
@@ -188,7 +179,6 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
 
-            {/* Quick Actions */}
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base font-body font-medium">Quick Actions</CardTitle>
@@ -198,8 +188,8 @@ export default function AdminDashboard() {
                   {[
                     { label: 'Create Discount', icon: Tag, to: '/admin/discounts' },
                     { label: 'Send Campaign', icon: Send, to: '/admin/email-campaigns' },
-                    { label: 'Add Customer', icon: UserPlus, to: '/admin/customers' },
                     { label: 'View Churn Risk', icon: AlertTriangle, to: '/admin/churn-risk' },
+                    { label: 'Social Media', icon: () => <span className="text-xs">📱</span>, to: '/admin/social' },
                   ].map(a => (
                     <Link key={a.label} to={a.to}>
                       <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs h-10">
@@ -212,7 +202,6 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
 
-            {/* Recent Notifications */}
             <Card>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">

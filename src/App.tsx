@@ -31,7 +31,7 @@ import ChurnPredictor from "./pages/ChurnPredictor";
 import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminCustomers from "./pages/admin/AdminCustomers";
+
 import AdminChurnRisk from "./pages/admin/AdminChurnRisk";
 import AdminRetention from "./pages/admin/AdminRetention";
 import AdminDiscounts from "./pages/admin/AdminDiscounts";
@@ -72,7 +72,7 @@ function AnimatedRoutes() {
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/analytics" element={<AdminAnalytics />} />
-      <Route path="/admin/customers" element={<AdminCustomers />} />
+      
       <Route path="/admin/churn-risk" element={<AdminChurnRisk />} />
       <Route path="/admin/retention" element={<AdminRetention />} />
       <Route path="/admin/discounts" element={<AdminDiscounts />} />

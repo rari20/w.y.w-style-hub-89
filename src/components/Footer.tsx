@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { socialPlatforms } from '@/data/adminData';
 
 const footerLinks = [
   {
@@ -40,6 +41,9 @@ const footerLinks = [
   },
 ];
 
+// Filter to only show platforms with public profiles (exclude WhatsApp)
+const footerSocials = socialPlatforms.filter(p => p.name !== 'WhatsApp Business');
+
 export default function Footer() {
   return (
     <footer className="bg-foreground text-background">
@@ -78,8 +82,17 @@ export default function Footer() {
             © 2026 W.Y.W — What Do You Want? All rights reserved.
           </p>
           <div className="flex gap-8">
-            <span className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-background/40 hover:text-background/70 transition-colors cursor-pointer">Instagram</span>
-            <span className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-background/40 hover:text-background/70 transition-colors cursor-pointer">TikTok</span>
+            {footerSocials.map(p => (
+              <a
+                key={p.name}
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-background/40 hover:text-background/70 transition-colors"
+              >
+                {p.name === 'X / Twitter' ? 'X' : p.name}
+              </a>
+            ))}
           </div>
         </div>
       </div>
