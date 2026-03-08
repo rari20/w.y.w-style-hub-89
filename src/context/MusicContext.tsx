@@ -18,8 +18,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = TARGET_VOLUME;
     audio.preload = 'auto';
-    // Use a reliable, CORS-friendly audio source
-    audio.src = 'https://upload.wikimedia.org/wikipedia/commons/4/4e/Erik_Satie_-_Gymnop%C3%A9die_No.1.ogg';
+    audio.src = 'https://cdn.freesound.org/previews/612/612095_5674468-lq.mp3';
     audioRef.current = audio;
 
     return () => {

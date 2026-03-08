@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -29,50 +29,36 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-  }, [pathname]);
-  return null;
-}
-
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="min-h-screen"
-      >
-        <Routes location={location}>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/brands" element={<BrandsPage />} />
-          <Route path="/brands/:id" element={<BrandDetail />} />
-          <Route path="/consultation" element={<Consultation />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/stores" element={<StoreLocator />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/returns" element={<Returns />} />
-          <Route path="/customer-service" element={<CustomerService />} />
-          <Route path="/gift-cards" element={<GiftCards />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/cookies" element={<CookiePage />} />
-          <Route path="/accessibility" element={<AccessibilityPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </motion.div>
-    </AnimatePresence>
+    <Routes location={location}>
+      <Route path="/" element={<Landing />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/product/:id" element={<ProductDetail />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/brands" element={<BrandsPage />} />
+      <Route path="/brands/:id" element={<BrandDetail />} />
+      <Route path="/consultation" element={<Consultation />} />
+      <Route path="/rewards" element={<Rewards />} />
+      <Route path="/stores" element={<StoreLocator />} />
+      <Route path="/account" element={<Account />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/returns" element={<Returns />} />
+      <Route path="/customer-service" element={<CustomerService />} />
+      <Route path="/gift-cards" element={<GiftCards />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/cookies" element={<CookiePage />} />
+      <Route path="/accessibility" element={<AccessibilityPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
@@ -86,7 +72,6 @@ const App = () => (
               <Toaster />
               <Sonner />
               <BrowserRouter>
-                <ScrollToTop />
                 <AnimatedRoutes />
                 <CookieBanner />
               </BrowserRouter>
