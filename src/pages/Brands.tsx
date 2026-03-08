@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 const brandImages: Record<string, string> = {
   lumenwear: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80&fit=crop&crop=center',
   'voltex-studio': 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200&q=80&fit=crop&crop=center',
-  arcthread: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&q=80&fit=crop&crop=center',
+  arcthread: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&fit=crop&crop=center',
   kilokouture: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1200&q=80&fit=crop&crop=center',
 };
 
