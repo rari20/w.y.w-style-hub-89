@@ -15,7 +15,7 @@ const campaigns = [
     name: 'Churn Re-engagement Campaign',
     status: 'ACTIVE',
     statusColor: 'bg-red-500/20 text-red-700 dark:text-red-400',
-    target: '5 at-risk customers (Segment D)',
+    target: '25 at-risk customers (Segment D)',
     preview: "We miss you [Name] — here's 20% off your next W.Y.W order. Use code COMEBACK20.",
     sent: 5, opened: 2, clicked: 1, converted: 0,
     hasWhatsApp: true,
