@@ -136,15 +136,15 @@ export function AccessibilityPage() {
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">W.Y.W is committed to making our website accessible to all users, including those with disabilities. We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standard.</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">2. What We Do</h2>
-      <ul className="list-disc pl-6 mb-5 space-y-2">
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">All images include descriptive alt text</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">The site is fully navigable by keyboard</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Colour contrast meets WCAG AA minimum ratios</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Form fields are correctly labelled for screen readers</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Animations respect the prefers-reduced-motion setting</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Font sizes scale with browser text size settings</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Interactive elements have visible focus indicators</li>
-      </ul>
+      <div className="pl-6 mb-5 border-l-2 border-border">
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">All images include descriptive alt text</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">The site is fully navigable by keyboard</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Colour contrast meets WCAG AA minimum ratios</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Form fields are correctly labelled for screen readers</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Animations respect the prefers-reduced-motion setting</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Font sizes scale with browser text size settings</p>
+        <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">Interactive elements have visible focus indicators</p>
+      </div>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">3. Known Limitations</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-3">We are aware of the following areas currently being improved:</p>
