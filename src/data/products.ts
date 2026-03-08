@@ -152,7 +152,7 @@ export const products: Product[] = [
   {
     id: 'vs5', name: 'Grid-Stitch Hoodie', brand: 'Voltex Studio', price: 225,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Grey Marl','Black'],
-    image: productVs5, loyaltyPoints: 225, inStock: true,
+    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80&fit=crop&crop=center', loyaltyPoints: 225, inStock: true,
     description: 'Heavyweight hoodie with a distinctive grid-stitch texture. Kangaroo pocket and drawstring hood.',
     storeAvailability: defaultStores, occasion: ['casual'],
   },
