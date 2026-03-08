@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
+import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
 import CookieBanner from "@/components/CookieBanner";
