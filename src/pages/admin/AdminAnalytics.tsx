@@ -75,7 +75,7 @@ export default function AdminAnalytics() {
               <div key={ci.label} className="space-y-1">
                 <div className="flex justify-between text-xs font-body">
                   <span>{ci.label}</span>
-                  <span className="text-muted-foreground">{ci.pct === 100 ? '5/5' : '4/5'} ({ci.pct}%)</span>
+                  <span className="text-muted-foreground">{ci.pct === 100 ? '25/25' : '20/25'} ({ci.pct}%)</span>
                 </div>
                 <div className="h-2.5 rounded-full bg-muted overflow-hidden">
                   <div className="h-full rounded-full bg-red-500" style={{ width: `${ci.pct}%` }} />
