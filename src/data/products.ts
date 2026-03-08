@@ -86,6 +86,8 @@ export const products: Product[] = [
   {
     id: 'lw3', name: 'Sheer Organza Top', brand: 'Lumenwear', price: 195,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['White','Nude'],
+    colorImages: { 'White': productLw3, 'Nude': productLw8 },
+    material: 'Organza',
     image: productLw3, loyaltyPoints: 195, inStock: true,
     description: 'Sheer organza shell top with a structured shoulder and relaxed body. Layer over a silk camisole.',
     storeAvailability: storeVariant(true,true,false), occasion: ['evening'],
