@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { Minus, Plus, X, Zap, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Cart() {
+  usePageTitle('Basket');
   const { items, updateQuantity, removeItem, totalPrice, totalPoints } = useCart();
   const { user } = useAuth();
   const [coupon, setCoupon] = useState('');

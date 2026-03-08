@@ -6,8 +6,10 @@ import { Calendar, MapPin, Video, Scissors, Check } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { stores } from '@/data/products';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Consultation() {
+  usePageTitle('Consultation');
   const [type, setType] = useState<'in-store' | 'virtual'>('in-store');
   const [store, setStore] = useState('');
   const [date, setDate] = useState('');

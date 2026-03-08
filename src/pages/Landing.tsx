@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import Header from '@/components/Header';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Landing() {
+  usePageTitle('Multi-Brand Fashion Destination');
   return (
     <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
@@ -40,7 +42,7 @@ export default function Landing() {
             className="mb-5 flex flex-col items-center text-center"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.5rem, 8vw, 6.5rem)',
+              fontSize: 'clamp(2.5rem, 7vw, 6rem)',
               fontWeight: 400,
               lineHeight: 0.92,
               letterSpacing: '-0.015em',

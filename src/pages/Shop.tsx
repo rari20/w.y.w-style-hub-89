@@ -6,6 +6,7 @@ import { products } from '@/data/products';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories'] as const;
 const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
@@ -18,6 +19,7 @@ const priceRanges = [
 ];
 
 export default function Shop() {
+  usePageTitle('Shop');
   const [searchParams] = useSearchParams();
   const filterParam = searchParams.get('filter');
   const categoryParam = searchParams.get('category');

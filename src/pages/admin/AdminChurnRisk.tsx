@@ -94,7 +94,7 @@ export default function AdminChurnRisk() {
                       { label: 'Discount Applied', done: a.discount },
                     ].map(s => (
                       <span key={s.label} className={`flex items-center gap-1 ${s.done ? 'text-green-600' : 'text-muted-foreground/40'}`}>
-                        {s.done && <Check className="h-3 w-3" />} {s.label} {s.done ? '✓' : ''}
+                        {s.done && <Check className="h-3 w-3" />} {s.label}
                       </span>
                     ))}
                   </div>

@@ -38,7 +38,6 @@ import AdminDiscounts from "./pages/admin/AdminDiscounts";
 import AdminEmailCampaigns from "./pages/admin/AdminEmailCampaigns";
 import AdminSocial from "./pages/admin/AdminSocial";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
-import AdminPlaceholder from "./pages/admin/AdminPlaceholder";
 
 const queryClient = new QueryClient();
 
@@ -76,13 +75,9 @@ function AnimatedRoutes() {
       <Route path="/admin/customers" element={<AdminCustomers />} />
       <Route path="/admin/churn-risk" element={<AdminChurnRisk />} />
       <Route path="/admin/retention" element={<AdminRetention />} />
-      <Route path="/admin/products" element={<AdminPlaceholder />} />
-      <Route path="/admin/inventory" element={<AdminPlaceholder />} />
       <Route path="/admin/discounts" element={<AdminDiscounts />} />
       <Route path="/admin/email-campaigns" element={<AdminEmailCampaigns />} />
       <Route path="/admin/social" element={<AdminSocial />} />
-      <Route path="/admin/orders" element={<AdminPlaceholder />} />
-      <Route path="/admin/returns" element={<AdminPlaceholder />} />
       <Route path="/admin/dataset" element={<AdminDataset />} />
       <Route path="/churn-predictor" element={<ChurnPredictor />} />
       <Route path="/retention-dashboard" element={<RetentionDashboard />} />

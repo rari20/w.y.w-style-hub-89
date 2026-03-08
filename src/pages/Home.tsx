@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
 import { products, brands } from '@/data/products';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const newIn = products.filter(p => p.isNew).slice(0, 8);
 const trending = products.filter(p => p.isTrending).slice(0, 6);
@@ -33,6 +34,7 @@ const campaigns = [
 ];
 
 export default function Home() {
+  usePageTitle('Home');
   return (
     <Layout>
       {/* Campaign Tiles — 50/50 split */}
@@ -203,7 +205,7 @@ export default function Home() {
               Every piece we curate is chosen with intention. We believe in the quiet power of dressing well — not for attention, but for self-assurance.
               Visit us in-store, and you'll understand.
             </p>
-            <p className="font-script text-[1.5rem] text-primary">The W.Y.W Team</p>
+            <p className="font-display text-[1.25rem] italic text-primary">The W.Y.W Team</p>
           </div>
         </div>
       </section>
