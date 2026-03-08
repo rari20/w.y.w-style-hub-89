@@ -1,8 +1,10 @@
 import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
-import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown } from 'lucide-react';
+import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown, Star } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const WHATSAPP_URL = 'https://wa.me/447700000001?text=' + encodeURIComponent('Hi, I need help with my W.Y.W order.');
 const EMAIL_URL = 'mailto:hello@wyw.com?subject=Customer%20Enquiry';
@@ -52,6 +54,52 @@ const faqData = [
     ],
   },
 ];
+
+function FeedbackStarRow({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) {
+  return (
+    <div className="mb-4">
+      <p className="font-body text-[0.85rem] font-medium text-foreground mb-2">{label}</p>
+      <div className="flex gap-1">
+        {[1, 2, 3, 4, 5].map(s => (
+          <button key={s} type="button" onClick={() => onChange(s)} className="p-0.5 transition-colors">
+            <Star className={`h-5 w-5 transition-colors ${s <= value ? 'text-accent fill-accent' : 'text-muted-foreground/30'}`} strokeWidth={1.5} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FeedbackForm() {
+  const [sat, setSat] = useState(0);
+  const [like, setLike] = useState(0);
+  const [comment, setComment] = useState('');
+  const [done, setDone] = useState(false);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (sat === 0 || like === 0) { toast.error('Please rate both questions.'); return; }
+    console.log('CS Feedback:', { sat, like, comment });
+    setDone(true);
+    toast.success('Thank you for your feedback!');
+  };
+
+  if (done) return <p className="text-[0.85rem] text-accent font-body">✓ Feedback submitted — thank you!</p>;
+
+  return (
+    <form onSubmit={submit}>
+      <FeedbackStarRow value={sat} onChange={setSat} label="How satisfied are you with W.Y.W overall?" />
+      <FeedbackStarRow value={like} onChange={setLike} label="How likely are you to shop with us again?" />
+      <div className="mb-4">
+        <p className="font-body text-[0.85rem] font-medium text-foreground mb-2">Is there anything we can improve? <span className="text-muted-foreground font-light">(optional)</span></p>
+        <textarea value={comment} onChange={e => setComment(e.target.value)} maxLength={1000} rows={3}
+          className="w-full bg-transparent border border-border p-3 font-body text-[0.85rem] focus:outline-none focus:border-foreground transition-colors text-foreground resize-none"
+          placeholder="Tell us what's on your mind…" />
+      </div>
+      <Button variant="default" size="sm" type="submit">Submit Feedback</Button>
+    </form>
+  );
+}
 
 export default function CustomerService() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
@@ -191,6 +239,20 @@ export default function CustomerService() {
                 Every W.Y.W interaction is handled by a trained team member who understands style and service.
               </p>
             </div>
+          </div>
+        </Reveal>
+
+        {/* Feedback Survey — churn signal collection */}
+        <Reveal delay={150}>
+          <div className="mt-16 border border-border p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-2">
+              <Star className="h-5 w-5 text-accent" strokeWidth={1.5} />
+              <h2 className="font-display text-xl italic text-foreground">Help Us Improve</h2>
+            </div>
+            <p className="text-[0.8rem] text-muted-foreground font-body font-light mb-6">
+              Your feedback directly shapes our service. Three quick questions — takes 30 seconds.
+            </p>
+            <FeedbackForm />
           </div>
         </Reveal>
       </div>

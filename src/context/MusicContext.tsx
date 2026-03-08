@@ -18,7 +18,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = TARGET_VOLUME;
     audio.preload = 'auto';
-    audio.src = '/audio/piano-ambient.mp3';
+    audio.src = 'https://upload.wikimedia.org/wikipedia/commons/8/85/Satie_-_Gymnop%C3%A9die_No._1.ogg';
     audioRef.current = audio;
 
     return () => {

@@ -16,6 +16,7 @@ const footerLinks = [
       { label: 'Customer Service', to: '/customer-service' },
       { label: 'Returns & Refunds', to: '/returns' },
       { label: 'Track My Order', to: '/account' },
+      { label: 'Share Feedback', to: '/feedback' },
       { label: 'FAQ', to: '/customer-service' },
     ],
   },

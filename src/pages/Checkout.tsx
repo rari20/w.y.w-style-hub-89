@@ -2,7 +2,7 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft } from 'lucide-react';
+import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, Star } from 'lucide-react';
 import { stores } from '@/data/products';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -101,6 +101,44 @@ function OrderSummaryPanel({ items, subtotal, deliveryPrice, deliveryLabel, coup
         </div>
       </div>
     </div>
+  );
+}
+
+function NpsSurvey() {
+  const [score, setScore] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [skipped, setSkipped] = useState(false);
+
+  if (skipped) return null;
+  if (submitted) return (
+    <motion.div className="mt-8 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <p className="text-[0.85rem] text-accent font-body">✓ Thank you for your feedback!</p>
+    </motion.div>
+  );
+
+  return (
+    <motion.div className="mt-10 border border-border p-6 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.8 }}>
+      <p className="font-body text-[0.9rem] font-medium text-foreground mb-4">How likely are you to recommend W.Y.W to a friend?</p>
+      <div className="flex justify-center gap-1 mb-3 flex-wrap">
+        {Array.from({ length: 11 }, (_, i) => (
+          <button key={i} onClick={() => setScore(i)}
+            className={`w-8 h-8 text-[0.75rem] font-body border transition-colors ${
+              score === i ? 'bg-foreground text-background border-foreground' : 'border-border hover:border-foreground text-foreground'
+            }`}>
+            {i}
+          </button>
+        ))}
+      </div>
+      <div className="flex justify-between text-[0.6rem] text-muted-foreground font-body mb-4 max-w-[352px] mx-auto">
+        <span>Not at all likely</span><span>Extremely likely</span>
+      </div>
+      <div className="flex justify-center gap-3">
+        <Button variant="default" size="sm" onClick={() => { console.log('NPS score:', score); setSubmitted(true); toast.success('Thanks!'); }} disabled={score === null}>
+          Submit
+        </Button>
+        <button onClick={() => setSkipped(true)} className="text-[0.75rem] text-muted-foreground font-body hover:text-foreground transition-colors">Skip</button>
+      </div>
+    </motion.div>
   );
 }
 
@@ -611,6 +649,9 @@ export default function Checkout() {
                 {savedPoints || Math.floor(savedTotal)} points added to your W.Y.W Rewards
               </p>
             </motion.div>
+
+            {/* NPS Micro-Survey */}
+            <NpsSurvey />
 
             <motion.div className="mt-10 flex justify-center gap-4"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}>

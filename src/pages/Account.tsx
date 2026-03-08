@@ -257,6 +257,25 @@ export default function Account() {
                   </div>
                 </div>
 
+                {/* Your Activity — churn model data */}
+                <div>
+                  <h3 className="font-display text-xl mb-4 italic text-foreground">Your Activity</h3>
+                  <p className="text-[0.7rem] text-muted-foreground font-body mb-3">These metrics help us personalise your experience.</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[
+                      { label: 'Last Purchase', value: '12 days ago', key: 'DaysSinceLastPurchase' },
+                      { label: 'Orders This Year', value: '3', key: 'NumberOfOrders' },
+                      { label: 'Return Rate', value: '0%', key: 'ReturnRate' },
+                      { label: 'Consultations Booked', value: '1', key: 'ConsultationBooked' },
+                    ].map(stat => (
+                      <div key={stat.label} className="border border-border p-3 md:p-4">
+                        <p className="text-[0.575rem] md:text-[0.625rem] text-muted-foreground font-body uppercase tracking-[0.1em]">{stat.label}</p>
+                        <p className="font-display text-lg md:text-xl mt-1 text-foreground">{stat.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                   {[
                     { icon: Gift, label: 'Active Coupons', value: '2' },
@@ -336,7 +355,37 @@ export default function Account() {
             {tab === 'wishlist' && (
               <div>
                 <h2 className="font-display text-2xl mb-4 italic text-foreground">Wishlist</h2>
-                <p className="text-muted-foreground font-body font-light">Your wishlist is empty. Browse our collections to add items.</p>
+                <div className="space-y-4">
+                  {/* Mock wishlist items with churn nudge */}
+                  {[
+                    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 32, priceChanged: false },
+                    { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 8, priceChanged: false },
+                  ].map(item => (
+                    <div key={item.name} className="border border-border p-4 flex items-center justify-between gap-4 flex-wrap">
+                      <div>
+                        <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.brand}</p>
+                        <p className="font-body text-[0.9rem] font-medium text-foreground">{item.name}</p>
+                        <p className="font-body text-[0.85rem] text-foreground">£{item.price.toFixed(2)}</p>
+                        {item.savedDays >= 30 && (
+                          <div className="mt-2 flex items-center gap-2">
+                            <span className="text-[0.7rem] bg-accent/10 text-accent px-2 py-0.5 font-body">
+                              Saved {item.savedDays} days ago · Price unchanged
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        {item.savedDays >= 30 && (
+                          <Button variant="default" size="sm" className="text-[0.75rem]">Move to Basket</Button>
+                        )}
+                        <Button variant="ghost" size="sm" className="text-[0.75rem] text-destructive">Remove</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[0.7rem] text-muted-foreground font-body mt-4">
+                  Items saved for 30+ days are flagged — we don't want you to miss out.
+                </p>
               </div>
             )}
 
@@ -431,9 +480,30 @@ export default function Account() {
                     <p className="text-[0.75rem] text-muted-foreground font-body mb-2">Signed in as <span className="text-foreground">{user.email}</span></p>
                   </div>
                   <div>
-                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Notifications</h3>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Email Preferences</h3>
                     <div className="space-y-3">
-                      {['Order updates', 'Promotions & offers', 'Rewards milestones', 'New arrivals'].map(n => (
+                      <label className="flex items-center gap-3">
+                        <input type="checkbox" defaultChecked disabled className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Order updates</span>
+                        <span className="text-[0.625rem] text-muted-foreground font-body">(required)</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Promotions & new arrivals</span>
+                      </label>
+                      <label className="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" defaultChecked className="accent-primary" />
+                        <span className="text-[0.85rem] font-body text-foreground">Styling tips & consultation reminders</span>
+                      </label>
+                    </div>
+                    <p className="text-[0.65rem] text-muted-foreground font-body mt-2">
+                      Your email preferences help us tailor communications. Opting out of promotional emails is recorded as a signal in our engagement model.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="font-body text-sm font-medium mb-3 text-foreground">Other Notifications</h3>
+                    <div className="space-y-3">
+                      {['Rewards milestones'].map(n => (
                         <label key={n} className="flex items-center gap-3 cursor-pointer">
                           <input type="checkbox" defaultChecked className="accent-primary" />
                           <span className="text-[0.85rem] font-body text-foreground">{n}</span>
