@@ -90,8 +90,8 @@ export default function Account() {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
 
-  const copyCode = () => {
-    navigator.clipboard.writeText('WYW-JD2024');
+  const copyCode = (code: string) => {
+    navigator.clipboard.writeText(code);
     setCopied(true);
     toast.success('Referral code copied!');
     setTimeout(() => setCopied(false), 2000);
