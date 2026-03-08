@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
 import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
 import CookieBanner from "@/components/CookieBanner";
 import Landing from "./pages/Landing";
