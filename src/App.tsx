@@ -27,6 +27,8 @@ import GiftCards from "./pages/GiftCards";
 import { TermsPage, PrivacyPage, CookiePage, AccessibilityPage } from "./pages/Legal";
 import Feedback from "./pages/Feedback";
 import AdminDataset from "./pages/AdminDataset";
+import ChurnPredictor from "./pages/ChurnPredictor";
+import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
