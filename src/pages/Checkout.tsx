@@ -166,7 +166,7 @@ export default function Checkout() {
   };
 
   const inputClass = "w-full bg-transparent border-b border-muted-foreground/30 px-0 py-3 font-body text-[0.9375rem] focus:outline-none focus:border-foreground transition-colors text-foreground";
-  const labelClass = "font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block";
+  const labelClass = "font-body text-[0.68rem] uppercase tracking-[0.12em] text-foreground font-medium mb-1 block";
 
   if (items.length === 0 && step < 6) {
     return (
