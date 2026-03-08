@@ -1,8 +1,10 @@
 import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
-import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown } from 'lucide-react';
+import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown, Star } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const WHATSAPP_URL = 'https://wa.me/447700000001?text=' + encodeURIComponent('Hi, I need help with my W.Y.W order.');
 const EMAIL_URL = 'mailto:hello@wyw.com?subject=Customer%20Enquiry';
