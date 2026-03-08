@@ -5,8 +5,9 @@ import { useState, useRef } from 'react';
 import Header from '@/components/Header';
 
 const VIDEO_SOURCES = [
+  "https://cdn.coverr.co/videos/coverr-a-model-walks-the-runway-at-a-fashion-show-6618/1080p.mp4",
+  "https://cdn.coverr.co/videos/coverr-fashion-items-on-a-rack-4882/1080p.mp4",
   "https://cdn.coverr.co/videos/coverr-fashion-clothing-on-rack-7914/1080p.mp4",
-  "https://cdn.coverr.co/videos/coverr-garments-hanging-in-a-store-2125/1080p.mp4",
 ];
 
 export default function Landing() {
@@ -26,7 +27,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="relative w-full bg-foreground">
+    <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
       <div className="relative h-screen w-full overflow-hidden">
         {/* Video / Fallback Background */}
@@ -49,7 +50,7 @@ export default function Landing() {
             </video>
           )}
 
-          {/* Animated dark gradient fallback */}
+          {/* Animated dark gradient fallback — always visible until video loads */}
           {(!videoLoaded || videoFailed) && (
             <motion.div
               className="absolute inset-0"
@@ -69,14 +70,24 @@ export default function Landing() {
         {/* Header */}
         <Header />
 
-        {/* Content */}
+        {/* Content — NO pseudo-elements, NO text-shadow, NO watermarks */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <motion.h1
-            className="font-display text-white leading-[0.92] mb-5 flex flex-col items-center text-center"
-            style={{ fontSize: 'clamp(3rem, 11vw, 9rem)' }}
+          {/* Title — simple, clean, no decorative duplicates */}
+          <h1
+            className="mb-5 flex flex-col items-center text-center"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(3rem, 11vw, 9rem)',
+              fontWeight: 400,
+              lineHeight: 0.92,
+              letterSpacing: '-0.02em',
+              color: '#FFFFFF',
+              textShadow: 'none',
+            }}
           >
             <motion.span
               className="block"
+              style={{ textShadow: 'none' }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -85,16 +96,18 @@ export default function Landing() {
             </motion.span>
             <motion.span
               className="block italic"
+              style={{ textShadow: 'none' }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             >
               You Want?
             </motion.span>
-          </motion.h1>
+          </h1>
 
           <motion.p
-            className="text-white/50 font-body text-[0.625rem] tracking-[0.3em] uppercase mb-8"
+            className="font-body text-[0.625rem] tracking-[0.3em] uppercase mb-8"
+            style={{ color: 'rgba(255,255,255,0.5)' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -103,7 +116,8 @@ export default function Landing() {
           </motion.p>
 
           <motion.p
-            className="text-white/60 max-w-[50ch] mx-auto font-body text-[0.8125rem] font-light mb-12 leading-relaxed"
+            className="max-w-[50ch] mx-auto font-body text-[0.8125rem] font-light mb-12 leading-relaxed"
+            style={{ color: 'rgba(255,255,255,0.6)' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -119,14 +133,39 @@ export default function Landing() {
           >
             <Link
               to="/home"
-              className="bg-white font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 border border-white transition-all duration-[400ms] hover:bg-transparent hover:text-white"
-              style={{ color: '#111111' }}
+              className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 border transition-all duration-[400ms] hover:bg-transparent inline-block"
+              style={{
+                backgroundColor: '#FFFFFF',
+                color: '#111111',
+                borderColor: '#FFFFFF',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#FFFFFF';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
+                e.currentTarget.style.color = '#111111';
+              }}
             >
               Shop Now
             </Link>
             <Link
               to="/consultation"
-              className="border border-white/40 text-white font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 hover:bg-white/5 hover:border-white transition-all duration-[400ms]"
+              className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 transition-all duration-[400ms] inline-block"
+              style={{
+                border: '1px solid rgba(255,255,255,0.4)',
+                color: '#FFFFFF',
+                backgroundColor: 'transparent',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = '#FFFFFF';
+                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
             >
               Book Consultation
             </Link>
@@ -140,12 +179,12 @@ export default function Landing() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.9 }}
         >
-          <span className="text-white/40 font-body text-[0.55rem] tracking-[0.25em] uppercase">Scroll</span>
+          <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>Scroll</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <ChevronDown className="h-4 w-4 text-white/40" strokeWidth={1.5} />
+            <ChevronDown className="h-4 w-4" style={{ color: 'rgba(255,255,255,0.4)' }} strokeWidth={1.5} />
           </motion.div>
         </motion.div>
 
@@ -153,7 +192,12 @@ export default function Landing() {
         {!videoFailed && videoLoaded && (
           <button
             onClick={togglePlay}
-            className="absolute bottom-10 right-10 z-20 w-9 h-9 rounded-full border border-white/30 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:border-white/60 transition-all duration-300"
+            className="absolute bottom-10 right-10 z-20 w-9 h-9 rounded-full border backdrop-blur-sm flex items-center justify-center transition-all duration-300"
+            style={{
+              borderColor: 'rgba(255,255,255,0.3)',
+              backgroundColor: 'rgba(0,0,0,0.3)',
+              color: 'rgba(255,255,255,0.6)',
+            }}
           >
             {isPaused ? <Play className="h-3 w-3" strokeWidth={1.5} /> : <Pause className="h-3 w-3" strokeWidth={1.5} />}
           </button>
