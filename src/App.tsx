@@ -31,7 +31,7 @@ import ChurnPredictor from "./pages/ChurnPredictor";
 import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminCustomers from "./pages/admin/AdminCustomers";
+
 import AdminChurnRisk from "./pages/admin/AdminChurnRisk";
 import AdminRetention from "./pages/admin/AdminRetention";
 import AdminDiscounts from "./pages/admin/AdminDiscounts";
