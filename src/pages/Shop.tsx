@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
+import Breadcrumb from '@/components/Breadcrumb';
 import { products } from '@/data/products';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
