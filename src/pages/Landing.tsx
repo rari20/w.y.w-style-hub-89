@@ -1,44 +1,14 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown, Volume2, VolumeX } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
 import Header from '@/components/Header';
 
 export default function Landing() {
-  const [isMuted, setIsMuted] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    // Create audio element with a royalty-free elegant piano ambient track
-    const audio = new Audio(
-      'https://cdn.pixabay.com/audio/2024/11/26/audio_fe0e4498d3.mp3'
-    );
-    audio.loop = true;
-    audio.volume = 0.15;
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audio.src = '';
-    };
-  }, []);
-
-  const toggleSound = () => {
-    if (!audioRef.current) return;
-    if (isMuted) {
-      audioRef.current.play().catch(() => {});
-      setIsMuted(false);
-    } else {
-      audioRef.current.pause();
-      setIsMuted(true);
-    }
-  };
-
   return (
     <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
       <div className="relative h-screen w-full overflow-hidden">
-        {/* Background with Ken Burns animation */}
+        {/* Background with Ken Burns animation — auto plays */}
         <div className="absolute inset-0">
           <motion.img
             src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -54,7 +24,6 @@ export default function Landing() {
               repeatType: 'reverse',
             }}
           />
-          {/* Dark gradient overlay for text legibility */}
           <div
             className="absolute inset-0"
             style={{
@@ -63,36 +32,10 @@ export default function Landing() {
           />
         </div>
 
-        {/* Header */}
         <Header />
-
-        {/* Sound toggle button */}
-        <motion.button
-          onClick={toggleSound}
-          className="absolute top-6 right-6 z-20 flex items-center gap-2 font-body text-[0.6rem] tracking-[0.2em] uppercase transition-all duration-300"
-          style={{ color: 'rgba(255,255,255,0.5)' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          whileHover={{ color: 'rgba(255,255,255,0.9)' }}
-          aria-label={isMuted ? 'Unmute background music' : 'Mute background music'}
-        >
-          {isMuted ? (
-            <>
-              <VolumeX className="h-4 w-4" strokeWidth={1.5} />
-              <span className="hidden sm:inline">Sound</span>
-            </>
-          ) : (
-            <>
-              <Volume2 className="h-4 w-4" strokeWidth={1.5} />
-              <span className="hidden sm:inline">Playing</span>
-            </>
-          )}
-        </motion.button>
 
         {/* Hero content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          {/* Title — reduced size to prevent ghost/hairline artifacts */}
           <h1
             className="mb-5 flex flex-col items-center text-center"
             style={{
@@ -154,38 +97,18 @@ export default function Landing() {
             <Link
               to="/home"
               className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 border transition-all duration-[400ms] inline-block"
-              style={{
-                backgroundColor: '#FFFFFF',
-                color: '#111111',
-                borderColor: '#FFFFFF',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = '#FFFFFF';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.color = '#111111';
-              }}
+              style={{ backgroundColor: '#FFFFFF', color: '#111111', borderColor: '#FFFFFF' }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#FFFFFF'; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#FFFFFF'; e.currentTarget.style.color = '#111111'; }}
             >
               Shop Now
             </Link>
             <Link
               to="/consultation"
               className="font-body text-[0.7rem] uppercase tracking-[0.18em] font-normal px-10 py-4 transition-all duration-[400ms] inline-block"
-              style={{
-                border: '1px solid rgba(255,255,255,0.5)',
-                color: '#FFFFFF',
-                backgroundColor: 'transparent',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = '#FFFFFF';
-                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
+              style={{ border: '1px solid rgba(255,255,255,0.5)', color: '#FFFFFF', backgroundColor: 'transparent' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFFFFF'; e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.06)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
             >
               Book Consultation
             </Link>
@@ -200,10 +123,7 @@ export default function Landing() {
           transition={{ delay: 1.2, duration: 0.9 }}
         >
           <span className="font-body text-[0.55rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          >
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}>
             <ChevronDown className="h-4 w-4" style={{ color: 'rgba(255,255,255,0.4)' }} strokeWidth={1.5} />
           </motion.div>
         </motion.div>

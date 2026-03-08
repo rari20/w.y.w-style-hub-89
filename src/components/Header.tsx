@@ -93,6 +93,13 @@ export default function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
+          <button
+            onClick={toggleMusic}
+            className={`hidden md:flex p-2 transition-opacity hover:opacity-55 ${linkColor}`}
+            aria-label={isPlaying ? 'Mute music' : 'Play music'}
+          >
+            {isPlaying ? <Volume2 className="h-[18px] w-[18px]" strokeWidth={1.5} /> : <VolumeX className="h-[18px] w-[18px]" strokeWidth={1.5} />}
+          </button>
           <Link to="/shop" className="hidden md:flex">
             <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`}>
               <Search className="h-[18px] w-[18px]" strokeWidth={1.5} />
