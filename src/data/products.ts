@@ -68,6 +68,8 @@ export const products: Product[] = [
   {
     id: 'lw1', name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245,
     category: 'tops', sizes: ['XS','S','M','L'], colors: ['Ivory','Blush'],
+    colorImages: { 'Ivory': productLw1, 'Blush': productLw3 },
+    material: '100% Mulberry Silk',
     image: productLw1, loyaltyPoints: 245, inStock: true, isNew: true,
     description: 'Delicate silk blouse with a fluid drape and hidden button placket. Luminous sheen catches light beautifully.',
     storeAvailability: defaultStores, occasion: ['workwear','evening'],
