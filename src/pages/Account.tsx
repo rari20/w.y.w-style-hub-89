@@ -217,7 +217,15 @@ export default function Account() {
     ? `${profile.first_name} ${profile.last_name || ''}`.trim()
     : user.email?.split('@')[0] || 'User';
 
-  const isTestAdmin = user.email === TEST_ADMIN;
+  const isTestAdmin = user.email === ADMIN_EMAIL;
+  const isTestCustomer = user.email === TEST_CUSTOMER_EMAIL;
+
+  // Select profile-specific data
+  const testOrders = isTestAdmin ? adminOrders : isTestCustomer ? customerOrders : [];
+  const wishlistItems = isTestAdmin ? adminWishlist : isTestCustomer ? customerWishlist : [];
+  const activity = isTestAdmin ? adminActivity : isTestCustomer ? customerActivity : { lastPurchase: '—', ordersThisYear: '0', returnRate: '0%', consultations: '0' };
+  const loyalty = isTestAdmin ? adminLoyalty : isTestCustomer ? customerLoyalty : { tier: 'Spark', points: 0, toNext: 500, nextTier: 'Volt', progress: 0 };
+  const referralCode = isTestAdmin ? adminReferralCode : isTestCustomer ? customerReferralCode : 'WYW-XXXX';
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'overview', label: 'Overview', icon: User },
