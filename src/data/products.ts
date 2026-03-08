@@ -216,6 +216,8 @@ export const products: Product[] = [
   {
     id: 'at1', name: 'Flowing Midi Dress', brand: 'ArcThread', price: 425,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Terracotta','Black'],
+    colorImages: { 'Terracotta': productAt1, 'Black': productAt6 },
+    material: 'Organic Cotton',
     image: productAt1, loyaltyPoints: 425, inStock: true, isTrending: true,
     description: 'Midi dress with an asymmetric hem and gathered waist. Organic cotton with a soft hand feel.',
     storeAvailability: defaultStores, occasion: ['casual','evening'],
@@ -223,6 +225,8 @@ export const products: Product[] = [
   {
     id: 'at2', name: 'Curved Wrap Top', brand: 'ArcThread', price: 165,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['Oat','Forest','Black'],
+    colorImages: { 'Oat': productAt2, 'Forest': productAt4, 'Black': productAt8 },
+    material: 'Linen Blend',
     image: productAt2, loyaltyPoints: 165, inStock: true, isNew: true,
     description: 'Wrap top with curved seaming detail. Linen-blend fabric with a natural texture.',
     storeAvailability: storeVariant(true,true,false), occasion: ['casual','workwear'],
@@ -230,6 +234,8 @@ export const products: Product[] = [
   {
     id: 'at3', name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245,
     category: 'bottoms', sizes: ['XS','S','M','L'], colors: ['Cream','Navy','Sage'],
+    colorImages: { 'Cream': productAt3, 'Navy': productAt5, 'Sage': productAt2 },
+    material: 'Viscose Twill',
     image: productAt3, loyaltyPoints: 245, inStock: true,
     description: 'Knife-pleat midi skirt with an elasticated waist. Moves beautifully when walking.',
     storeAvailability: defaultStores, occasion: ['workwear'],
@@ -237,6 +243,8 @@ export const products: Product[] = [
   {
     id: 'at4', name: 'Thread Linen Shirt', brand: 'ArcThread', price: 135,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['White','Sky','Natural'],
+    colorImages: { 'White': productAt4, 'Sky': productAt3, 'Natural': productAt2 },
+    material: 'Pure Linen',
     image: productAt4, loyaltyPoints: 135, inStock: true, isNew: true,
     description: 'Relaxed-fit linen shirt with mother-of-pearl buttons. Garment-washed for softness.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -244,6 +252,8 @@ export const products: Product[] = [
   {
     id: 'at5', name: 'Contour Crop Jacket', brand: 'ArcThread', price: 385,
     category: 'outerwear', sizes: ['XS','S','M','L'], colors: ['Black','Camel'],
+    colorImages: { 'Black': productAt5, 'Camel': productAt7 },
+    material: 'Structured Cotton Canvas',
     image: productAt5, loyaltyPoints: 385, inStock: true,
     description: 'Cropped jacket with contoured seaming and a collarless neckline. Structured yet feminine.',
     storeAvailability: storeVariant(true,false,true), occasion: ['workwear'],
@@ -251,6 +261,8 @@ export const products: Product[] = [
   {
     id: 'at6', name: 'Wave Hem Maxi', brand: 'ArcThread', price: 510,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Midnight','Rust'],
+    colorImages: { 'Midnight': productAt6, 'Rust': productAt1 },
+    material: 'Organic Cotton Voile',
     image: productAt6, loyaltyPoints: 510, inStock: true, isTrending: true,
     description: 'Maxi dress with a sculptural wave hem. Tiered construction creates movement and volume.',
     storeAvailability: defaultStores, occasion: ['evening'],
@@ -258,6 +270,8 @@ export const products: Product[] = [
   {
     id: 'at7', name: 'Seam-Detail Coat', brand: 'ArcThread', price: 695,
     category: 'outerwear', sizes: ['XS','S','M','L','XL'], colors: ['Black','Grey'],
+    colorImages: { 'Black': productAt7, 'Grey': productAt5 },
+    material: 'Heavy Wool Blend',
     image: productAt7, loyaltyPoints: 695, inStock: true, isNew: true,
     description: 'Architectural coat with exposed seam detailing. Heavy wool blend for warmth and structure.',
     storeAvailability: storeVariant(true,true,true), occasion: ['outerwear'],
@@ -265,6 +279,8 @@ export const products: Product[] = [
   {
     id: 'at8', name: 'Arc Logo Tee', brand: 'ArcThread', price: 95,
     category: 'tops', sizes: ['XS','S','M','L','XL','XXL'], colors: ['White','Black'],
+    colorImages: { 'White': productAt8, 'Black': productAt2 },
+    material: 'Organic Cotton Jersey',
     image: productAt8, loyaltyPoints: 95, inStock: true,
     description: 'Classic crew neck tee with embroidered Arc logo. Organic cotton, relaxed unisex fit.',
     storeAvailability: defaultStores, occasion: ['casual'],
