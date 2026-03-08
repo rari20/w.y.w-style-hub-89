@@ -24,7 +24,7 @@ const campaigns = [
     name: 'Volt Tier Progression Nudge',
     status: 'ACTIVE',
     statusColor: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
-    target: '5 Volt tier customers',
+    target: '10 Volt tier customers',
     preview: "You're [X] points away from Surge tier — shop now to unlock free express delivery.",
     sent: 5, opened: 4, clicked: 3, converted: 2,
     hasWhatsApp: false,
