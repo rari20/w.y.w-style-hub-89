@@ -63,6 +63,8 @@ function AnimatedRoutes() {
       <Route path="/accessibility" element={<AccessibilityPage />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/admin/dataset" element={<AdminDataset />} />
+      <Route path="/churn-predictor" element={<ChurnPredictor />} />
+      <Route path="/retention-dashboard" element={<RetentionDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

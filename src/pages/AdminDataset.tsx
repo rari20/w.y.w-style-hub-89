@@ -164,6 +164,18 @@ export default function AdminDataset() {
             </p>
           </div>
         </Reveal>
+
+        {/* Navigation */}
+        <Reveal>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <Link to="/churn-predictor">
+              <Button><BarChart2 className="h-4 w-4 mr-2" /> Test Model with New Customer</Button>
+            </Link>
+            <Link to="/retention-dashboard">
+              <Button variant="outline">View Retention Actions</Button>
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </Layout>
   );
