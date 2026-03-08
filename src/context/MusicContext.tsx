@@ -21,7 +21,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = 0;
     audio.preload = 'auto';
-    audio.crossOrigin = 'anonymous';
+    audio.src = AUDIO_URL;
     audio.src = AUDIO_URL;
     document.body.appendChild(audio);
     audioRef.current = audio;

@@ -67,43 +67,14 @@ export default function Account() {
   const handleOAuth = async (provider: 'google' | 'apple') => {
     setAuthLoading(true);
     setAuthError('');
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          skipBrowserRedirect: true,
-          redirectTo: window.location.origin + '/account',
-        },
-      });
-      if (error) {
-        setAuthError(error.message);
-        toast.error(error.message);
-        setAuthLoading(false);
-        return;
-      }
-      if (data?.url) {
-        const popup = window.open(data.url, 'oauth', 'width=500,height=600');
-        if (!popup) {
-          toast.error('Please allow popups for this site to sign in.');
-          setAuthLoading(false);
-          return;
-        }
-        const checkClosed = setInterval(async () => {
-          if (popup.closed) {
-            clearInterval(checkClosed);
-            const { data: sessionData } = await supabase.auth.getSession();
-            if (sessionData.session) {
-              window.location.reload();
-            }
-            setAuthLoading(false);
-          }
-        }, 500);
-      }
-    } catch (err: any) {
-      setAuthError(err.message || 'OAuth failed');
-      toast.error(err.message || 'OAuth failed');
-      setAuthLoading(false);
+    const result = await lovable.auth.signInWithOAuth(provider, {
+      redirect_uri: window.location.origin + '/account',
+    });
+    if (result.error) {
+      setAuthError(result.error.message);
+      toast.error(result.error.message);
     }
+    setAuthLoading(false);
   };
 
   const handleSignOut = async () => {
