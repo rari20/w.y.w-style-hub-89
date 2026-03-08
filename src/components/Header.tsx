@@ -150,7 +150,8 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 top-[68px] bg-background z-50 px-8 py-12 space-y-8 overflow-y-auto"
+            className="md:hidden fixed left-0 right-0 bottom-0 top-[68px] bg-background z-50 px-8 py-12 space-y-8 overflow-y-auto"
+            style={{ height: 'calc(100dvh - 68px)' }}
           >
             {navLinks.map((link, i) => (
               <motion.div
