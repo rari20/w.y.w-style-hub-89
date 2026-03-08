@@ -3,8 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ADMIN_EMAIL } from '@/data/adminData';
 import {
-  LayoutDashboard, BarChart2, Users, AlertTriangle, Mail, ShoppingBag, Package,
-  Tag, Send, Share2, ClipboardList, RotateCcw, Brain, TrendingUp, Database,
+  LayoutDashboard, BarChart2, Users, AlertTriangle, Mail,
+  Tag, Send, Share2, Brain, TrendingUp, Database,
   Menu, X, LogOut,
 } from 'lucide-react';
 
