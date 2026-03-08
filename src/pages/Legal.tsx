@@ -147,11 +147,7 @@ export function AccessibilityPage() {
       </div>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">3. Known Limitations</h2>
-      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-3">We are aware of the following areas currently being improved:</p>
-      <ul className="list-disc pl-6 mb-5 space-y-2">
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Some older PDF documents may not be fully accessible to screen readers</li>
-        <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Live chat functionality has limited screen reader support</li>
-      </ul>
+      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">We are aware of the following areas currently being improved: some older PDF documents may not be fully accessible to screen readers, and live chat functionality has limited screen reader support.</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">4. Feedback & Contact</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">If you experience any accessibility barriers on our site, please contact us at accessibility@wyw.com. We aim to respond within 5 working days and take all feedback seriously.</p>

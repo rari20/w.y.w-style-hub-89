@@ -31,11 +31,11 @@ export default function Returns() {
 
           <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">4. How to Return</h2>
           <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-3">Returns can be made via three methods:</p>
-          <ul className="list-disc pl-6 mb-5 space-y-2">
-            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">W.Y.W Locker — drop your return at any in-store W.Y.W locker using the return code sent to your email</li>
-            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">In-store — visit the Customer Service desk at any W.Y.W store with your order reference</li>
-            <li className="text-[0.9rem] leading-[1.85] text-muted-foreground">Post — download a prepaid returns label from your account portal and drop at any Royal Mail post office</li>
-          </ul>
+          <div className="pl-6 mb-5">
+            <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">1. W.Y.W Locker — drop your return at any in-store W.Y.W locker using the return code sent to your email</p>
+            <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">2. In-store — visit the Customer Service desk at any W.Y.W store with your order reference</p>
+            <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-[0.4rem]">3. Post — download a prepaid returns label from your account portal and drop at any Royal Mail post office</p>
+          </div>
 
           <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">5. Refunds</h2>
           <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Refunds are processed within 5–7 working days of us receiving and inspecting your return. Refunds are issued to the original payment method. If the original method is unavailable, store credit will be offered.</p>
