@@ -104,6 +104,8 @@ export const products: Product[] = [
   {
     id: 'lw5', name: 'Backless Evening Gown', brand: 'Lumenwear', price: 680,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Black','Midnight Blue'],
+    colorImages: { 'Black': productLw5, 'Midnight Blue': productLw4 },
+    material: 'Silk Crepe',
     image: productLw5, loyaltyPoints: 680, inStock: true, isTrending: true,
     description: 'Floor-length gown with a dramatic open back and concealed zipper. Silk crepe falls in a fluid column.',
     storeAvailability: storeVariant(true,false,true), occasion: ['evening'],
