@@ -1,4 +1,6 @@
 import Layout from '@/components/Layout';
+import Breadcrumb from '@/components/Breadcrumb';
+import Reveal from '@/components/Reveal';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Video, Scissors, Check } from 'lucide-react';
 import { useState } from 'react';
