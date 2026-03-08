@@ -107,7 +107,7 @@ export default function Account() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-16">
             {/* Sign In */}
             <div>
-              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 italic text-foreground">Sign In</h2>
+              <h2 className="font-display text-xl md:text-2xl mb-5 md:mb-6 text-foreground">Sign In</h2>
               <form onSubmit={handleSignIn} className="space-y-5">
                 <div>
                   <label className="font-body text-[0.625rem] uppercase tracking-[0.15em] text-muted-foreground mb-1 block">Email</label>
