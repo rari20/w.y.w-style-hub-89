@@ -39,6 +39,8 @@ export type Product = {
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
   sizes: string[];
   colors: string[];
+  colorImages?: Record<string, string>;
+  material?: string;
   image: string;
   loyaltyPoints: number;
   inStock: boolean;
@@ -66,6 +68,8 @@ export const products: Product[] = [
   {
     id: 'lw1', name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245,
     category: 'tops', sizes: ['XS','S','M','L'], colors: ['Ivory','Blush'],
+    colorImages: { 'Ivory': productLw1, 'Blush': productLw3 },
+    material: '100% Mulberry Silk',
     image: productLw1, loyaltyPoints: 245, inStock: true, isNew: true,
     description: 'Delicate silk blouse with a fluid drape and hidden button placket. Luminous sheen catches light beautifully.',
     storeAvailability: defaultStores, occasion: ['workwear','evening'],
@@ -73,6 +77,8 @@ export const products: Product[] = [
   {
     id: 'lw2', name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Champagne','Black'],
+    colorImages: { 'Champagne': productLw2, 'Black': productLw5 },
+    material: 'Silk Georgette',
     image: productLw2, loyaltyPoints: 385, inStock: true, isTrending: true,
     description: 'Lightweight wrap dress in gossamer-weight silk georgette. Self-tie waist creates an effortless silhouette.',
     storeAvailability: storeVariant(true,false,true), occasion: ['evening','casual'],
@@ -80,6 +86,8 @@ export const products: Product[] = [
   {
     id: 'lw3', name: 'Sheer Organza Top', brand: 'Lumenwear', price: 195,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['White','Nude'],
+    colorImages: { 'White': productLw3, 'Nude': productLw8 },
+    material: 'Organza',
     image: productLw3, loyaltyPoints: 195, inStock: true,
     description: 'Sheer organza shell top with a structured shoulder and relaxed body. Layer over a silk camisole.',
     storeAvailability: storeVariant(true,true,false), occasion: ['evening'],
@@ -87,6 +95,8 @@ export const products: Product[] = [
   {
     id: 'lw4', name: 'Lumen Slip Dress', brand: 'Lumenwear', price: 320,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Gold','Black','Silver'],
+    colorImages: { 'Gold': productLw4, 'Black': productLw5, 'Silver': productLw2 },
+    material: 'Liquid Satin',
     image: productLw4, loyaltyPoints: 320, inStock: true, isNew: true,
     description: 'Bias-cut slip dress in liquid satin. Adjustable straps and a cowl neckline for eveningwear elegance.',
     storeAvailability: defaultStores, occasion: ['evening'],
@@ -94,6 +104,8 @@ export const products: Product[] = [
   {
     id: 'lw5', name: 'Backless Evening Gown', brand: 'Lumenwear', price: 680,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Black','Midnight Blue'],
+    colorImages: { 'Black': productLw5, 'Midnight Blue': productLw4 },
+    material: 'Silk Crepe',
     image: productLw5, loyaltyPoints: 680, inStock: true, isTrending: true,
     description: 'Floor-length gown with a dramatic open back and concealed zipper. Silk crepe falls in a fluid column.',
     storeAvailability: storeVariant(true,false,true), occasion: ['evening'],
@@ -101,6 +113,8 @@ export const products: Product[] = [
   {
     id: 'lw6', name: 'Structured Wool Blazer', brand: 'Lumenwear', price: 495,
     category: 'outerwear', sizes: ['XS','S','M','L','XL'], colors: ['Camel','Black'],
+    colorImages: { 'Camel': productLw6, 'Black': productLw7 },
+    material: 'Italian Wool',
     image: productLw6, loyaltyPoints: 495, inStock: true, isNew: true,
     description: 'Impeccably tailored single-breasted blazer in Italian wool. Peak lapel and structured shoulder.',
     storeAvailability: defaultStores, occasion: ['workwear'],
@@ -108,6 +122,8 @@ export const products: Product[] = [
   {
     id: 'lw7', name: 'Satin Wide-Leg Trousers', brand: 'Lumenwear', price: 285,
     category: 'bottoms', sizes: ['XS','S','M','L'], colors: ['Cream','Black'],
+    colorImages: { 'Cream': productLw7, 'Black': productLw6 },
+    material: 'Heavy Satin',
     image: productLw7, loyaltyPoints: 285, inStock: true,
     description: 'High-waisted wide-leg trousers in heavy satin. Pressed crease and side zip for a sleek finish.',
     storeAvailability: storeVariant(true,true,true), occasion: ['workwear','evening'],
@@ -115,6 +131,8 @@ export const products: Product[] = [
   {
     id: 'lw8', name: 'Draped Cowl Neck Top', brand: 'Lumenwear', price: 175,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['Stone','Black','White'],
+    colorImages: { 'Stone': productLw8, 'Black': productLw1, 'White': productLw3 },
+    material: 'Jersey',
     image: productLw8, loyaltyPoints: 175, inStock: true, isTrending: true,
     description: 'Jersey cowl neck top with a draped front and fitted body. Pairs perfectly with tailored trousers.',
     storeAvailability: defaultStores, occasion: ['workwear','casual'],
@@ -124,6 +142,8 @@ export const products: Product[] = [
   {
     id: 'vs1', name: 'Powerline Structured Blazer', brand: 'Voltex Studio', price: 495,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Navy'],
+    colorImages: { 'Black': productVs1, 'Navy': productVs2 },
+    material: 'Technical Wool Blend',
     image: productVs1, loyaltyPoints: 495, inStock: true, isTrending: true, isNew: true,
     description: 'Technical blazer with internal taping and a sharp shoulder. Minimalist design, maximum impact.',
     storeAvailability: defaultStores, occasion: ['workwear'],
@@ -131,6 +151,8 @@ export const products: Product[] = [
   {
     id: 'vs2', name: 'Circuit Tailored Trousers', brand: 'Voltex Studio', price: 275,
     category: 'bottoms', sizes: ['28','30','32','34','36'], colors: ['Charcoal','Black','Navy'],
+    colorImages: { 'Charcoal': productVs2, 'Black': productVs1, 'Navy': productVs8 },
+    material: 'Stretch Wool Blend',
     image: productVs2, loyaltyPoints: 275, inStock: true,
     description: 'Slim tailored trousers with a modern taper. Stretch wool blend for all-day comfort.',
     storeAvailability: storeVariant(true,true,false), occasion: ['workwear'],
@@ -138,6 +160,8 @@ export const products: Product[] = [
   {
     id: 'vs3', name: 'Current Minimal Tee', brand: 'Voltex Studio', price: 85,
     category: 'tops', sizes: ['XS','S','M','L','XL','XXL'], colors: ['White','Black','Grey'],
+    colorImages: { 'White': productVs3, 'Black': productVs4, 'Grey': productVs6 },
+    material: 'Heavyweight Organic Cotton',
     image: productVs3, loyaltyPoints: 85, inStock: true, isNew: true,
     description: 'Heavyweight organic cotton tee with a boxy cut. Ribbed crew neck and rolled hem.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -145,6 +169,8 @@ export const products: Product[] = [
   {
     id: 'vs4', name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Olive'],
+    colorImages: { 'Black': productVs4, 'Olive': productVs7 },
+    material: 'Technical Nylon',
     image: productVs4, loyaltyPoints: 345, inStock: true, isTrending: true,
     description: 'Performance-inspired track jacket in technical nylon. Contrast zip and standing collar.',
     storeAvailability: storeVariant(true,false,true), occasion: ['casual'],
@@ -152,13 +178,17 @@ export const products: Product[] = [
   {
     id: 'vs5', name: 'Grid-Stitch Hoodie', brand: 'Voltex Studio', price: 225,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Grey Marl','Black'],
-    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80&fit=crop&crop=center', loyaltyPoints: 225, inStock: true,
+    colorImages: { 'Grey Marl': productVs5, 'Black': productVs4 },
+    material: 'Heavy Loopback Cotton',
+    image: productVs5, loyaltyPoints: 225, inStock: true,
     description: 'Heavyweight hoodie with a distinctive grid-stitch texture. Kangaroo pocket and drawstring hood.',
     storeAvailability: defaultStores, occasion: ['casual'],
   },
   {
     id: 'vs6', name: 'Arc Zip Gilet', brand: 'Voltex Studio', price: 310,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Stone'],
+    colorImages: { 'Black': productVs6, 'Stone': productVs8 },
+    material: 'Quilted Nylon',
     image: productVs6, loyaltyPoints: 310, inStock: true, isNew: true,
     description: 'Quilted gilet with concealed zip and high collar. Lightweight insulation for transitional weather.',
     storeAvailability: storeVariant(true,true,true), occasion: ['casual','outerwear'],
@@ -166,6 +196,8 @@ export const products: Product[] = [
   {
     id: 'vs7', name: 'Flux Bomber Jacket', brand: 'Voltex Studio', price: 465,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Khaki'],
+    colorImages: { 'Black': productVs7, 'Khaki': productVs4 },
+    material: 'Water-Resistant Nylon',
     image: productVs7, loyaltyPoints: 465, inStock: true, isTrending: true,
     description: 'MA-1 inspired bomber in water-resistant nylon. Ribbed cuffs and hem, internal zip pocket.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -173,6 +205,8 @@ export const products: Product[] = [
   {
     id: 'vs8', name: 'Charged Slim Chinos', brand: 'Voltex Studio', price: 195,
     category: 'bottoms', sizes: ['28','30','32','34','36'], colors: ['Sand','Black','Navy'],
+    colorImages: { 'Sand': productVs8, 'Black': productVs2, 'Navy': productVs1 },
+    material: 'Brushed Stretch Cotton',
     image: productVs8, loyaltyPoints: 195, inStock: true,
     description: 'Slim-fit chinos in brushed stretch cotton. Flat front with side entry pockets.',
     storeAvailability: storeVariant(true,true,true), occasion: ['workwear','casual'],
@@ -182,6 +216,8 @@ export const products: Product[] = [
   {
     id: 'at1', name: 'Flowing Midi Dress', brand: 'ArcThread', price: 425,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Terracotta','Black'],
+    colorImages: { 'Terracotta': productAt1, 'Black': productAt6 },
+    material: 'Organic Cotton',
     image: productAt1, loyaltyPoints: 425, inStock: true, isTrending: true,
     description: 'Midi dress with an asymmetric hem and gathered waist. Organic cotton with a soft hand feel.',
     storeAvailability: defaultStores, occasion: ['casual','evening'],
@@ -189,6 +225,8 @@ export const products: Product[] = [
   {
     id: 'at2', name: 'Curved Wrap Top', brand: 'ArcThread', price: 165,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['Oat','Forest','Black'],
+    colorImages: { 'Oat': productAt2, 'Forest': productAt4, 'Black': productAt8 },
+    material: 'Linen Blend',
     image: productAt2, loyaltyPoints: 165, inStock: true, isNew: true,
     description: 'Wrap top with curved seaming detail. Linen-blend fabric with a natural texture.',
     storeAvailability: storeVariant(true,true,false), occasion: ['casual','workwear'],
@@ -196,6 +234,8 @@ export const products: Product[] = [
   {
     id: 'at3', name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245,
     category: 'bottoms', sizes: ['XS','S','M','L'], colors: ['Cream','Navy','Sage'],
+    colorImages: { 'Cream': productAt3, 'Navy': productAt5, 'Sage': productAt2 },
+    material: 'Viscose Twill',
     image: productAt3, loyaltyPoints: 245, inStock: true,
     description: 'Knife-pleat midi skirt with an elasticated waist. Moves beautifully when walking.',
     storeAvailability: defaultStores, occasion: ['workwear'],
@@ -203,6 +243,8 @@ export const products: Product[] = [
   {
     id: 'at4', name: 'Thread Linen Shirt', brand: 'ArcThread', price: 135,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['White','Sky','Natural'],
+    colorImages: { 'White': productAt4, 'Sky': productAt3, 'Natural': productAt2 },
+    material: 'Pure Linen',
     image: productAt4, loyaltyPoints: 135, inStock: true, isNew: true,
     description: 'Relaxed-fit linen shirt with mother-of-pearl buttons. Garment-washed for softness.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -210,6 +252,8 @@ export const products: Product[] = [
   {
     id: 'at5', name: 'Contour Crop Jacket', brand: 'ArcThread', price: 385,
     category: 'outerwear', sizes: ['XS','S','M','L'], colors: ['Black','Camel'],
+    colorImages: { 'Black': productAt5, 'Camel': productAt7 },
+    material: 'Structured Cotton Canvas',
     image: productAt5, loyaltyPoints: 385, inStock: true,
     description: 'Cropped jacket with contoured seaming and a collarless neckline. Structured yet feminine.',
     storeAvailability: storeVariant(true,false,true), occasion: ['workwear'],
@@ -217,6 +261,8 @@ export const products: Product[] = [
   {
     id: 'at6', name: 'Wave Hem Maxi', brand: 'ArcThread', price: 510,
     category: 'dresses', sizes: ['XS','S','M','L'], colors: ['Midnight','Rust'],
+    colorImages: { 'Midnight': productAt6, 'Rust': productAt1 },
+    material: 'Organic Cotton Voile',
     image: productAt6, loyaltyPoints: 510, inStock: true, isTrending: true,
     description: 'Maxi dress with a sculptural wave hem. Tiered construction creates movement and volume.',
     storeAvailability: defaultStores, occasion: ['evening'],
@@ -224,6 +270,8 @@ export const products: Product[] = [
   {
     id: 'at7', name: 'Seam-Detail Coat', brand: 'ArcThread', price: 695,
     category: 'outerwear', sizes: ['XS','S','M','L','XL'], colors: ['Black','Grey'],
+    colorImages: { 'Black': productAt7, 'Grey': productAt5 },
+    material: 'Heavy Wool Blend',
     image: productAt7, loyaltyPoints: 695, inStock: true, isNew: true,
     description: 'Architectural coat with exposed seam detailing. Heavy wool blend for warmth and structure.',
     storeAvailability: storeVariant(true,true,true), occasion: ['outerwear'],
@@ -231,6 +279,8 @@ export const products: Product[] = [
   {
     id: 'at8', name: 'Arc Logo Tee', brand: 'ArcThread', price: 95,
     category: 'tops', sizes: ['XS','S','M','L','XL','XXL'], colors: ['White','Black'],
+    colorImages: { 'White': productAt8, 'Black': productAt2 },
+    material: 'Organic Cotton Jersey',
     image: productAt8, loyaltyPoints: 95, inStock: true,
     description: 'Classic crew neck tee with embroidered Arc logo. Organic cotton, relaxed unisex fit.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -240,6 +290,8 @@ export const products: Product[] = [
   {
     id: 'kk1', name: 'Weighted Silk Scarf', brand: 'KiloKouture', price: 245,
     category: 'accessories', sizes: ['One Size'], colors: ['Burgundy','Gold','Black'],
+    colorImages: { 'Burgundy': productKk1, 'Gold': productKk4, 'Black': productKk5 },
+    material: 'Silk Twill',
     image: productKk1, loyaltyPoints: 245, inStock: true, isNew: true,
     description: 'Oversized silk twill scarf with hand-rolled edges. Heavy weight for luxurious drape.',
     storeAvailability: defaultStores,
@@ -247,6 +299,8 @@ export const products: Product[] = [
   {
     id: 'kk2', name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Charcoal','Camel'],
+    colorImages: { 'Charcoal': productKk2, 'Camel': productKk7 },
+    material: 'Heavyweight Italian Wool',
     image: productKk2, loyaltyPoints: 895, inStock: true, isTrending: true,
     description: 'Double-breasted overcoat in heavyweight Italian wool. Peak lapel and deep pockets.',
     storeAvailability: storeVariant(true,false,true), occasion: ['outerwear'],
@@ -254,6 +308,8 @@ export const products: Product[] = [
   {
     id: 'kk3', name: 'Dense Knit Cardigan', brand: 'KiloKouture', price: 545,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Oatmeal','Charcoal'],
+    colorImages: { 'Oatmeal': productKk3, 'Charcoal': productKk6 },
+    material: 'Merino Wool Blend',
     image: productKk3, loyaltyPoints: 545, inStock: true, isNew: true,
     description: 'Chunky rib-knit cardigan in merino wool blend. Oversized fit with horn buttons.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -261,6 +317,8 @@ export const products: Product[] = [
   {
     id: 'kk4', name: 'Kilo Leather Belt', brand: 'KiloKouture', price: 185,
     category: 'accessories', sizes: ['S','M','L'], colors: ['Black','Tan'],
+    colorImages: { 'Black': productKk4, 'Tan': productKk1 },
+    material: 'Full-Grain Italian Leather',
     image: productKk4, loyaltyPoints: 185, inStock: true,
     description: 'Wide leather belt with a substantial brass buckle. Full-grain Italian leather.',
     storeAvailability: storeVariant(true,true,true),
@@ -268,6 +326,8 @@ export const products: Product[] = [
   {
     id: 'kk5', name: 'Substantial Tote Bag', brand: 'KiloKouture', price: 465,
     category: 'accessories', sizes: ['One Size'], colors: ['Black','Cognac'],
+    colorImages: { 'Black': productKk5, 'Cognac': productKk4 },
+    material: 'Pebbled Leather',
     image: productKk5, loyaltyPoints: 465, inStock: true, isTrending: true,
     description: 'Large structured tote in pebbled leather. Internal zip pocket and magnetic snap closure.',
     storeAvailability: defaultStores,
@@ -275,6 +335,8 @@ export const products: Product[] = [
   {
     id: 'kk6', name: 'Thick Rib Polo', brand: 'KiloKouture', price: 215,
     category: 'knitwear', sizes: ['S','M','L','XL'], colors: ['Navy','Cream','Black'],
+    colorImages: { 'Navy': productKk6, 'Cream': productKk3, 'Black': productKk8 },
+    material: 'Heavy Rib Knit Cotton',
     image: productKk6, loyaltyPoints: 215, inStock: true,
     description: 'Heavy rib-knit polo shirt with a Johnny collar. Substantial weight for a premium feel.',
     storeAvailability: storeVariant(true,true,false), occasion: ['casual','workwear'],
@@ -282,6 +344,8 @@ export const products: Product[] = [
   {
     id: 'kk7', name: 'Mass Denim Jacket', brand: 'KiloKouture', price: 395,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Indigo','Black'],
+    colorImages: { 'Indigo': productKk7, 'Black': productKk2 },
+    material: '16oz Japanese Selvedge Denim',
     image: productKk7, loyaltyPoints: 395, inStock: true, isNew: true,
     description: 'Heavyweight 16oz Japanese selvedge denim jacket. Relaxed fit with contrast stitching.',
     storeAvailability: defaultStores, occasion: ['casual'],
@@ -289,6 +353,8 @@ export const products: Product[] = [
   {
     id: 'kk8', name: 'Volume Puffer Coat', brand: 'KiloKouture', price: 785,
     category: 'outerwear', sizes: ['S','M','L','XL'], colors: ['Black','Olive'],
+    colorImages: { 'Black': productKk8, 'Olive': productKk7 },
+    material: 'Recycled Nylon with Down Fill',
     image: productKk8, loyaltyPoints: 785, inStock: true, isTrending: true,
     description: 'Oversized puffer coat with responsibly sourced down fill. Dramatic volume, lightweight warmth.',
     storeAvailability: storeVariant(true,true,true), occasion: ['outerwear','casual'],
