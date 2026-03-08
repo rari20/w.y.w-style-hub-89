@@ -58,13 +58,18 @@ export default function ProductDetail() {
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
           {/* Image */}
-          <div className="aspect-[3/4] bg-muted rounded-sm overflow-hidden">
+          <div className="aspect-[3/4] bg-muted rounded-sm overflow-hidden relative">
             <img
               src={displayImage}
               alt={`${product.name}${selectedColor ? ` in ${selectedColor}` : ''}`}
               className="w-full h-full object-cover transition-opacity duration-500"
               key={displayImage}
             />
+            {selectedColor && (
+              <div className="absolute bottom-3 left-3 bg-background/90 backdrop-blur-sm px-3 py-1.5 text-[0.7rem] font-body text-foreground uppercase tracking-wider">
+                Showing: {selectedColor}
+              </div>
+            )}
           </div>
 
           {/* Details */}
