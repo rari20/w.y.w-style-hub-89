@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, BarChart2, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';

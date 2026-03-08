@@ -34,6 +34,7 @@ const campaigns = [
 ];
 
 export default function Home() {
+  usePageTitle('Home');
   return (
     <Layout>
       {/* Campaign Tiles — 50/50 split */}
