@@ -25,25 +25,11 @@ const sections = [
     ],
   },
   {
-    label: 'PRODUCTS',
-    links: [
-      { label: 'Product Catalogue', icon: ShoppingBag, to: '/admin/products' },
-      { label: 'Inventory', icon: Package, to: '/admin/inventory' },
-    ],
-  },
-  {
     label: 'MARKETING',
     links: [
       { label: 'Discounts & Coupons', icon: Tag, to: '/admin/discounts' },
       { label: 'Email Campaigns', icon: Send, to: '/admin/email-campaigns' },
       { label: 'Social Media', icon: Share2, to: '/admin/social' },
-    ],
-  },
-  {
-    label: 'ORDERS',
-    links: [
-      { label: 'All Orders', icon: ClipboardList, to: '/admin/orders' },
-      { label: 'Returns', icon: RotateCcw, to: '/admin/returns' },
     ],
   },
   {
