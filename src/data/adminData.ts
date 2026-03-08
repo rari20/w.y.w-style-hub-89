@@ -1,5 +1,5 @@
 // ─── Admin Portal Static Dataset ───
-// All 15 customers matching the CART churn prediction model
+// Representative sample of 15 named customers from the 50-record CART churn prediction dataset
 
 export const ADMIN_EMAIL = 'admin@wyw-demo.com';
 
