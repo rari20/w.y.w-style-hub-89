@@ -37,15 +37,15 @@ export default function AdminAnalytics() {
           <CardContent>
             <div className="flex items-center gap-8">
               <div className="text-center">
-                <p className="text-4xl font-display text-green-600">67%</p>
+                <p className="text-4xl font-display text-green-600">50%</p>
                 <p className="text-xs text-muted-foreground font-body">Retained</p>
               </div>
               <div className="text-center">
-                <p className="text-4xl font-display text-red-500">33%</p>
+                <p className="text-4xl font-display text-red-500">50%</p>
                 <p className="text-xs text-muted-foreground font-body">Churn Risk</p>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground font-body mt-3 font-mono">CC = e/t = 5/15 = 0.33 (33%)</p>
+            <p className="text-xs text-muted-foreground font-body mt-3 font-mono">CC = e/t = 25/50 = 0.50 (50%)</p>
           </CardContent>
         </Card>
 
