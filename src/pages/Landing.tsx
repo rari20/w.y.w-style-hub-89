@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import Header from '@/components/Header';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Landing() {
   return (
