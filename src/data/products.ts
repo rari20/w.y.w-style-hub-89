@@ -131,6 +131,8 @@ export const products: Product[] = [
   {
     id: 'lw8', name: 'Draped Cowl Neck Top', brand: 'Lumenwear', price: 175,
     category: 'tops', sizes: ['XS','S','M','L','XL'], colors: ['Stone','Black','White'],
+    colorImages: { 'Stone': productLw8, 'Black': productLw1, 'White': productLw3 },
+    material: 'Jersey',
     image: productLw8, loyaltyPoints: 175, inStock: true, isTrending: true,
     description: 'Jersey cowl neck top with a draped front and fitted body. Pairs perfectly with tailored trousers.',
     storeAvailability: defaultStores, occasion: ['workwear','casual'],
