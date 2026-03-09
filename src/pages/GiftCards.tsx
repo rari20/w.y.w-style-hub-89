@@ -11,7 +11,7 @@ export default function GiftCards() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8 max-w-2xl">
+      <div className="wyw-container pt-24 pb-8 max-w-2xl">
         <Gift className="h-8 w-8 text-accent mb-4" strokeWidth={1.5} />
         <h1 className="text-4xl md:text-5xl font-display mb-4 italic text-foreground">Gift Cards</h1>
         <p className="text-muted-foreground mb-10 font-body font-light leading-relaxed">
