@@ -46,7 +46,7 @@ export default function Cart() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
+      <div className="wyw-container pt-24 pb-8">
         <h1 className="text-4xl md:text-5xl font-display mb-8 italic text-foreground">Your Basket</h1>
 
         <div className="grid lg:grid-cols-3 gap-8">

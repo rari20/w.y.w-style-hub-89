@@ -51,7 +51,7 @@ export default function ProductDetail() {
 
   return (
     <Layout>
-      <div className="wyw-container py-8">
+      <div className="wyw-container pt-24 pb-8">
         <Link to="/shop" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
           <ArrowLeft className="h-4 w-4" /> Back to Shop
         </Link>
