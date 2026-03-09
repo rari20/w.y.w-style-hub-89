@@ -46,7 +46,7 @@ const footerSocials = socialPlatforms.filter(p => p.name !== 'WhatsApp Business'
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-foreground text-background pb-32 sm:pb-0">
       <div className="wyw-container py-20">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
           <div className="col-span-2 md:col-span-1">
