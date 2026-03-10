@@ -283,6 +283,9 @@ export default function Account() {
             {/* ═══════ TAB 1: OVERVIEW ═══════ */}
             {tab === 'overview' && (
               <div className="space-y-6">
+                {/* Quick Access Cards */}
+                <AccountQuickLinks onTabChange={(t) => setTab(t as Tab)} />
+
                 {/* Section A: Loyalty Tier Widget */}
                 <div className="bg-secondary text-secondary-foreground p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4">

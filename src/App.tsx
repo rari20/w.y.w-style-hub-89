@@ -93,6 +93,8 @@ const App = () => (
               <Sonner />
               <BrowserRouter>
                 <AnimatedRoutes />
+                <FloatingQuickAccess />
+                <ChatBubble />
                 <CookieBanner />
               </BrowserRouter>
             </TooltipProvider>
