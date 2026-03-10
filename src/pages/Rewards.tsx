@@ -17,6 +17,7 @@ const tiers = [
 
 export default function Rewards() {
   usePageTitle('Rewards');
+  const { user } = useAuth();
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
 
   return (
