@@ -11,14 +11,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { products } from '@/data/products';
 import { ADMIN_EMAIL } from '@/data/adminData';
-import { useCart } from '@/context/CartContext';
-import { supabase } from '@/integrations/supabase/client';
-import { lovable } from '@/integrations/lovable';
-import { products } from '@/data/products';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
-const ADMIN_EMAIL = 'admin@wyw-demo.com';
 const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 
 // ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
