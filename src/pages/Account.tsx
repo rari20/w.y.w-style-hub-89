@@ -1,6 +1,8 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import AccountQuickLinks from '@/components/AccountQuickLinks';
+import AccountFeedback from '@/components/AccountFeedback';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -281,6 +283,9 @@ export default function Account() {
             {/* ═══════ TAB 1: OVERVIEW ═══════ */}
             {tab === 'overview' && (
               <div className="space-y-6">
+                {/* Quick Access Cards */}
+                <AccountQuickLinks onTabChange={(t) => setTab(t as Tab)} />
+
                 {/* Section A: Loyalty Tier Widget */}
                 <div className="bg-secondary text-secondary-foreground p-4 md:p-6">
                   <div className="flex items-center justify-between mb-4">
@@ -347,6 +352,9 @@ export default function Account() {
                     </div>
                   ))}
                 </div>
+
+                {/* Feedback Section */}
+                <AccountFeedback lastOrderId={testOrders[0]?.id} />
               </div>
             )}
 

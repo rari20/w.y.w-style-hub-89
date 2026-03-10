@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle, Star } from 'lucide-react';
 import { stores } from '@/data/products';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -633,6 +633,21 @@ export default function Checkout() {
                 <Zap className="h-4 w-4 text-accent" strokeWidth={1.5} />
                 {savedPoints || Math.floor(savedTotal)} points have been added to your W.Y.W Rewards account. New balance: {847 + (savedPoints || Math.floor(savedTotal))} points.
               </p>
+            </motion.div>
+
+            {/* Post-purchase feedback prompt */}
+            <motion.div className="mt-8 p-6 text-left" style={{ backgroundColor: 'hsl(37 52% 58% / 0.08)' }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}>
+              <div className="flex items-start gap-3">
+                <Star className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />
+                <div>
+                  <h3 className="font-body text-[0.9rem] font-semibold text-foreground mb-1">Enjoying W.Y.W so far?</h3>
+                  <p className="text-[0.8rem] text-muted-foreground font-body mb-3">Let us know how your experience has been — it takes 30 seconds and helps us serve you better.</p>
+                  <Button variant="default" size="sm" asChild>
+                    <Link to={user ? '/account#feedback' : '/feedback'}>Share Feedback</Link>
+                  </Button>
+                </div>
+              </div>
             </motion.div>
 
             {/* Guest claim points */}

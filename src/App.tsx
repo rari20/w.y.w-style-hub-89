@@ -9,6 +9,8 @@ import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
 import CookieBanner from "@/components/CookieBanner";
+import FloatingQuickAccess from "@/components/FloatingQuickAccess";
+import ChatBubble from "@/components/ChatBubble";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -93,6 +95,8 @@ const App = () => (
               <Sonner />
               <BrowserRouter>
                 <AnimatedRoutes />
+                <FloatingQuickAccess />
+                <ChatBubble />
                 <CookieBanner />
               </BrowserRouter>
             </TooltipProvider>
