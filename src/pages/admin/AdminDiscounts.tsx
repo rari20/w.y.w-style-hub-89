@@ -11,7 +11,6 @@ import { discountCodes } from '@/data/adminData';
 
 const statusColors: Record<string, string> = {
   Active: 'bg-green-500/20 text-green-700 dark:text-green-400',
-  'Active (Retention)': 'bg-red-500/20 text-red-700 dark:text-red-400',
   Expired: 'bg-muted text-muted-foreground',
 };
 
@@ -88,7 +87,7 @@ export default function AdminDiscounts() {
               <SelectContent>
                 <SelectItem value="all">All customers</SelectItem>
                 <SelectItem value="spark">Spark tier only</SelectItem>
-                <SelectItem value="churn">Churn risk customers only</SelectItem>
+                <SelectItem value="volt">Volt tier only</SelectItem>
                 <SelectItem value="specific">Specific customer IDs</SelectItem>
               </SelectContent>
             </Select>

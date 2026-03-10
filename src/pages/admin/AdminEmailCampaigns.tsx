@@ -6,23 +6,21 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Pause, Eye, Send } from 'lucide-react';
+import { Pause, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { customers } from '@/data/adminData';
 
-const churnCount = customers.filter(c => c.churnRisk === 'High').length;
 const voltCount = customers.filter(c => c.loyaltyTier === 'Volt').length;
 
 const campaigns = [
   {
-    name: 'Churn Re-engagement Campaign',
+    name: 'New Season Arrivals — Spring 2026',
     status: 'ACTIVE',
-    statusColor: 'bg-red-500/20 text-red-700 dark:text-red-400',
-    target: `${churnCount} at-risk customers (Segment D)`,
-    preview: "We miss you — here's 20% off your next W.Y.W order. Use code COMEBACK20.",
-    sent: churnCount, opened: 10, clicked: 5, converted: 0,
-    hasWhatsApp: true,
+    statusColor: 'bg-green-500/20 text-green-700 dark:text-green-400',
+    target: `All customers (${customers.length})`,
+    preview: "The Spring 2026 edit has arrived at W.Y.W. Discover new pieces from Lumenwear, Voltex Studio, ArcThread and KiloKouture.",
+    sent: 50, opened: 32, clicked: 18, converted: 9,
   },
   {
     name: 'Volt Tier Progression Nudge',
@@ -31,7 +29,6 @@ const campaigns = [
     target: `${voltCount} Volt tier customers`,
     preview: "You're close to Surge tier — shop now to unlock free express delivery.",
     sent: voltCount, opened: 8, clicked: 6, converted: 4,
-    hasWhatsApp: false,
   },
 ];
 
@@ -85,11 +82,6 @@ export default function AdminEmailCampaigns() {
                     <Button size="sm" variant="outline" className="text-xs gap-1.5">
                       <Eye className="h-3.5 w-3.5" /> View Details
                     </Button>
-                    {c.hasWhatsApp && (
-                      <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => toast.success('WhatsApp follow-up sent.')}>
-                        <Send className="h-3.5 w-3.5" /> Send WhatsApp Follow-up
-                      </Button>
-                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -118,7 +110,6 @@ export default function AdminEmailCampaigns() {
               <SelectContent>
                 <SelectItem value="all">All customers ({customers.length})</SelectItem>
                 <SelectItem value="tier">By tier</SelectItem>
-                <SelectItem value="churn">Churn risk only ({churnCount})</SelectItem>
                 <SelectItem value="custom">Custom segment</SelectItem>
               </SelectContent>
             </Select>
@@ -130,16 +121,9 @@ export default function AdminEmailCampaigns() {
             <Select>
               <SelectTrigger className="text-sm"><SelectValue placeholder="Attach discount code (optional)" /></SelectTrigger>
               <SelectContent>
-                {['WELCOME10', 'SPARK20', 'COMEBACK20', 'FREESHIP30', 'VOLT15'].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                {['WELCOME10', 'SPARK20', 'FREESHIP30', 'VOLT15', 'SPRING25'].map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
             </Select>
-            <div className="flex gap-4">
-              {['Email', 'WhatsApp'].map(ch => (
-                <label key={ch} className="flex items-center gap-2 text-xs font-body">
-                  <input type="checkbox" defaultChecked={ch === 'Email'} className="accent-primary" /> {ch}
-                </label>
-              ))}
-            </div>
             <Select defaultValue="now">
               <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
