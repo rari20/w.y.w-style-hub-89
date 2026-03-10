@@ -63,12 +63,13 @@ export default function Footer() {
             <div key={group.title}>
               <h4 className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-background/40 mb-5">{group.title}</h4>
               <ul className="space-y-2.5">
-                {group.links.map(link => (
-                  <li key={link.label}>
+                {group.links.map((link: any) => (
+                  <li key={link.label} className={link.highlight ? 'border-t border-amber-500/30 pt-2' : ''}>
                     <Link
                       to={link.to}
-                      className="font-body text-[0.8125rem] font-light text-background/70 hover:text-background transition-colors"
+                      className={`font-body text-[0.8125rem] font-light text-background/70 hover:text-background transition-colors flex items-center gap-1.5`}
                     >
+                      {link.highlight && <Star className="h-3 w-3 text-amber-500" strokeWidth={1.5} />}
                       {link.label}
                     </Link>
                   </li>

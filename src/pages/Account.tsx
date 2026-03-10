@@ -352,6 +352,9 @@ export default function Account() {
                     </div>
                   ))}
                 </div>
+
+                {/* Feedback Section */}
+                <AccountFeedback lastOrderId={testOrders[0]?.id} />
               </div>
             )}
 
