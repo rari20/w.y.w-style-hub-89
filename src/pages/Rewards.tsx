@@ -70,20 +70,22 @@ export default function Rewards() {
           })}
         </div>
 
-        {/* Churn-prevention tier warning */}
-        <Reveal>
-          <div className="bg-accent/10 border border-accent/30 p-4 md:p-5 mb-16 flex items-start gap-3">
-            <Zap className="h-5 w-5 text-accent shrink-0 mt-0.5" strokeWidth={1.5} />
-            <div>
-              <p className="font-body text-[0.85rem] font-medium text-foreground">
-                You're 153 points away from maintaining your Volt status.
-              </p>
-              <p className="font-body text-[0.78rem] text-muted-foreground mt-1">
-                Shop before 8 April 2026 to keep your benefits. Dropping a tier means losing access to 10% consultation discounts, early sale access, and free standard delivery.
-              </p>
+        {/* Tier warning — only for logged-in users */}
+        {user && (
+          <Reveal>
+            <div className="bg-accent/10 border border-accent/30 p-4 md:p-5 mb-16 flex items-start gap-3">
+              <Zap className="h-5 w-5 text-accent shrink-0 mt-0.5" strokeWidth={1.5} />
+              <div>
+                <p className="font-body text-[0.85rem] font-medium text-foreground">
+                  You're 153 points away from maintaining your Volt status.
+                </p>
+                <p className="font-body text-[0.78rem] text-muted-foreground mt-1">
+                  Shop before 8 April 2026 to keep your benefits. Dropping a tier means losing access to 10% consultation discounts, early sale access, and free standard delivery.
+                </p>
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        )}
 
         {/* How it works */}
         <Reveal>
