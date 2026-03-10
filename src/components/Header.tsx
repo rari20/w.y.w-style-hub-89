@@ -79,14 +79,13 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
-            <Link
-              to="/home"
-              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.5} />
-              <span className="nav-label text-[0.7rem]">View Website</span>
-            </Link>
             <button
+              onClick={() => navigate('/admin')}
+              className="p-2 transition-opacity hover:opacity-55 text-muted-foreground hover:text-foreground"
+            >
+              <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
+            </button>
+          </div>
               onClick={() => navigate('/admin')}
               className="p-2 transition-opacity hover:opacity-55 text-muted-foreground hover:text-foreground"
             >
