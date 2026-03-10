@@ -58,7 +58,7 @@ export default function Landing() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              What Do
+              What do
             </motion.span>
             <motion.span
               className="block italic"

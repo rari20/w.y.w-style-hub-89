@@ -3,8 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
 import { ADMIN_EMAIL } from '@/data/adminData';
 import {
-  LayoutDashboard, BarChart2, AlertTriangle, Mail,
-  Tag, Send, Share2, Brain, TrendingUp, Database,
+  LayoutDashboard, ShoppingBag, Plus, Package,
+  ClipboardList, RotateCcw, Users, Tag, Send, Share2,
   Menu, X, LogOut,
 } from 'lucide-react';
 
@@ -13,14 +13,27 @@ const sections = [
     label: 'OVERVIEW',
     links: [
       { label: 'Dashboard', icon: LayoutDashboard, to: '/admin' },
-      { label: 'Analytics', icon: BarChart2, to: '/admin/analytics' },
+    ],
+  },
+  {
+    label: 'PRODUCTS',
+    links: [
+      { label: 'All Products', icon: ShoppingBag, to: '/admin/products' },
+      { label: 'Add New Product', icon: Plus, to: '/admin/products/new' },
+      { label: 'Inventory', icon: Package, to: '/admin/inventory' },
+    ],
+  },
+  {
+    label: 'ORDERS',
+    links: [
+      { label: 'All Orders', icon: ClipboardList, to: '/admin/orders' },
+      { label: 'Returns', icon: RotateCcw, to: '/admin/returns' },
     ],
   },
   {
     label: 'CUSTOMERS',
     links: [
-      { label: 'Churn Risk', icon: AlertTriangle, to: '/admin/churn-risk', badge: '25' },
-      { label: 'Retention Campaigns', icon: Mail, to: '/admin/retention' },
+      { label: 'All Customers', icon: Users, to: '/admin/customers' },
     ],
   },
   {
@@ -29,14 +42,6 @@ const sections = [
       { label: 'Discounts & Coupons', icon: Tag, to: '/admin/discounts' },
       { label: 'Email Campaigns', icon: Send, to: '/admin/email-campaigns' },
       { label: 'Social Media', icon: Share2, to: '/admin/social' },
-    ],
-  },
-  {
-    label: 'TOOLS',
-    links: [
-      { label: 'Churn Predictor', icon: Brain, to: '/churn-predictor' },
-      { label: 'Retention Dashboard', icon: TrendingUp, to: '/retention-dashboard' },
-      { label: 'Dataset', icon: Database, to: '/admin/dataset' },
     ],
   },
 ];
@@ -94,11 +99,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               >
                 <link.icon className="h-4 w-4 shrink-0" strokeWidth={1.5} />
                 <span className="flex-1">{link.label}</span>
-                {link.badge && (
-                  <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
-                    {link.badge}
-                  </span>
-                )}
               </Link>
             ))}
           </div>

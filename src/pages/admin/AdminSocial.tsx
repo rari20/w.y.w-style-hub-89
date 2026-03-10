@@ -1,7 +1,8 @@
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Copy } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Copy } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { socialPlatforms, socialPostTemplates } from '@/data/adminData';
@@ -9,6 +10,9 @@ import { socialPlatforms, socialPostTemplates } from '@/data/adminData';
 export default function AdminSocial() {
   const [toggles, setToggles] = useState<Record<string, boolean>>(
     Object.fromEntries(socialPlatforms.map(p => [p.name, true]))
+  );
+  const [handles, setHandles] = useState<Record<string, string>>(
+    Object.fromEntries(socialPlatforms.map(p => [p.name, p.handle]))
   );
 
   const copyToClipboard = (text: string) => {
@@ -35,19 +39,19 @@ export default function AdminSocial() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-body font-medium">{p.name}</p>
-                    <p className="text-xs text-muted-foreground truncate">{p.handle}</p>
                   </div>
                 </div>
                 {p.followers && <p className="text-xs text-muted-foreground">{p.followers} followers</p>}
+                <Input
+                  value={handles[p.name]}
+                  onChange={e => setHandles(prev => ({ ...prev, [p.name]: e.target.value }))}
+                  className="text-xs h-8"
+                  onBlur={() => toast.success(`${p.name} handle updated.`)}
+                />
                 <p className="text-[10px] text-muted-foreground truncate">{p.link}</p>
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline" className="text-xs gap-1.5 flex-1" onClick={() => window.open(p.link, '_blank')}>
-                    <ExternalLink className="h-3 w-3" /> {p.name === 'WhatsApp Business' ? 'Open Chat' : 'Open Profile'}
-                  </Button>
-                  <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => copyToClipboard(p.link)}>
-                    <Copy className="h-3 w-3" /> Copy
-                  </Button>
-                </div>
+                <Button size="sm" variant="outline" className="text-xs gap-1.5 w-full" onClick={() => copyToClipboard(p.link)}>
+                  <Copy className="h-3 w-3" /> Copy Link
+                </Button>
               </CardContent>
             </Card>
           ))}

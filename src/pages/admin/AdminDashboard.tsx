@@ -1,20 +1,17 @@
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
 import { Link } from 'react-router-dom';
 import {
-  Users, Activity, AlertTriangle, Star, Send, Tag, Bell, Zap, Check,
+  Users, ShoppingBag, Send, Tag, Bell, Check, ClipboardList, Plus,
 } from 'lucide-react';
 import { adminNotifications, datasetTotals, type AdminNotification } from '@/data/adminData';
 import { useState } from 'react';
 
 const kpis = [
-  { label: 'Total Customers', value: `${datasetTotals.totalCustomers}`, icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-  { label: 'Retained', value: `${datasetTotals.retainedCount}`, icon: Activity, color: 'text-green-500', bg: 'bg-green-500/10' },
-  { label: 'Churn Risk', value: `${datasetTotals.churnCount}`, icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/10', link: '/admin/churn-risk' },
+  { label: 'Total Customers', value: '50', icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { label: 'Total Orders', value: '128', icon: ClipboardList, color: 'text-green-500', bg: 'bg-green-500/10' },
   { label: 'Total Revenue 6M', value: `£${datasetTotals.totalRevenue.toLocaleString()}`, icon: () => <span className="text-lg font-display">£</span>, color: 'text-amber-600', bg: 'bg-amber-500/10' },
-  { label: 'Avg Satisfaction', value: `${datasetTotals.avgSatisfaction}/5`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
   { label: 'Active Campaigns', value: '3', icon: Send, color: 'text-purple-500', bg: 'bg-purple-500/10' },
 ];
 
@@ -27,13 +24,13 @@ const tiers = [
 ];
 
 const notifIcons: Record<string, React.ElementType> = {
-  churn: AlertTriangle,
+  order: ShoppingBag,
   campaign: Send,
-  system: Zap,
+  system: Bell,
 };
 
 const notifColors: Record<string, string> = {
-  churn: 'text-red-500 bg-red-500/10',
+  order: 'text-green-500 bg-green-500/10',
   campaign: 'text-purple-500 bg-purple-500/10',
   system: 'text-muted-foreground bg-muted',
 };
@@ -118,11 +115,11 @@ export default function AdminDashboard() {
         </div>
 
         {/* KPI Row */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {kpis.map(kpi => {
             const Icon = kpi.icon;
-            const inner = (
-              <Card key={kpi.label} className={`${kpi.link ? 'cursor-pointer hover:border-foreground/20 transition-colors' : ''}`}>
+            return (
+              <Card key={kpi.label}>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg ${kpi.bg} flex items-center justify-center`}>
@@ -136,30 +133,12 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             );
-            return kpi.link ? <Link key={kpi.label} to={kpi.link}>{inner}</Link> : <div key={kpi.label}>{inner}</div>;
           })}
         </div>
 
         {/* Two columns */}
         <div className="grid lg:grid-cols-5 gap-6">
           <div className="lg:col-span-3 space-y-6">
-            <Card className="border-l-4 border-l-red-500">
-              <CardContent className="p-5">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-body font-medium">Churn Risk Alert</p>
-                    <p className="text-xs text-muted-foreground mt-1">25 customers have been identified as high churn risk by the CART model. All are Spark tier with Total Spend &lt; £500.</p>
-                    <Link to="/admin/churn-risk">
-                      <Button variant="outline" size="sm" className="mt-3">View At-Risk Customers</Button>
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-2 space-y-6">
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base font-body font-medium">Revenue by Loyalty Tier</CardTitle>
@@ -178,7 +157,9 @@ export default function AdminDashboard() {
                 ))}
               </CardContent>
             </Card>
+          </div>
 
+          <div className="lg:col-span-2 space-y-6">
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base font-body font-medium">Quick Actions</CardTitle>
@@ -186,10 +167,10 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-2">
                   {[
+                    { label: 'Add Product', icon: Plus, to: '/admin/products/new' },
                     { label: 'Create Discount', icon: Tag, to: '/admin/discounts' },
                     { label: 'Send Campaign', icon: Send, to: '/admin/email-campaigns' },
-                    { label: 'View Churn Risk', icon: AlertTriangle, to: '/admin/churn-risk' },
-                    { label: 'Social Media', icon: () => <span className="text-xs">📱</span>, to: '/admin/social' },
+                    { label: 'View Orders', icon: ClipboardList, to: '/admin/orders' },
                   ].map(a => (
                     <Link key={a.label} to={a.to}>
                       <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs h-10">
