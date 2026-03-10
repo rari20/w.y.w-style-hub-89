@@ -5,7 +5,7 @@ import { ADMIN_EMAIL } from '@/data/adminData';
 import {
   LayoutDashboard, ShoppingBag, Plus, Package,
   ClipboardList, RotateCcw, Users, Tag, Send, Share2,
-  Menu, X, LogOut,
+  Menu, X, LogOut, ExternalLink, ChevronUp,
 } from 'lucide-react';
 
 const sections = [
@@ -51,10 +51,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [exitMenuOpen, setExitMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && (!user || user.email !== ADMIN_EMAIL)) {
-      navigate('/home');
+      navigate('/account');
     }
   }, [user, loading, navigate]);
 
@@ -71,6 +72,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isActive = (path: string) => {
     if (path === '/admin') return location.pathname === '/admin';
     return location.pathname.startsWith(path);
+  };
+
+  const handleReturnToWebsite = () => {
+    setExitMenuOpen(false);
+    navigate('/home');
+  };
+
+  const handleSignOut = async () => {
+    setExitMenuOpen(false);
+    await signOut();
+    navigate('/');
   };
 
   const sidebar = (
@@ -105,17 +117,58 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         ))}
       </nav>
 
-      <div className="px-4 py-4 border-t border-white/10 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white text-xs font-body font-medium">A</div>
-        <div className="flex-1 min-w-0">
-          <p className="text-white text-xs font-body truncate">Admin Account</p>
-          <span className="inline-block bg-red-500/20 text-red-400 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded font-body">
-            ADMIN
-          </span>
-        </div>
-        <button onClick={signOut} className="text-white/40 hover:text-white/80 transition-colors" title="Sign out">
-          <LogOut className="h-4 w-4" strokeWidth={1.5} />
+      {/* Bottom: Admin account with exit menu */}
+      <div className="relative px-4 py-4 border-t border-white/10">
+        <button
+          onClick={() => setExitMenuOpen(!exitMenuOpen)}
+          className="w-full flex items-center gap-3 hover:bg-white/5 rounded p-1 transition-colors"
+        >
+          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white text-xs font-body font-medium">A</div>
+          <div className="flex-1 min-w-0 text-left">
+            <p className="text-white text-xs font-body truncate">Admin Account</p>
+            <span className="inline-block bg-red-500/20 text-red-400 text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded font-body">
+              ADMIN
+            </span>
+          </div>
+          <ChevronUp className={`h-4 w-4 text-white/40 transition-transform ${exitMenuOpen ? '' : 'rotate-180'}`} strokeWidth={1.5} />
         </button>
+
+        {/* Exit popover */}
+        {exitMenuOpen && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setExitMenuOpen(false)} />
+            <div className="absolute bottom-full left-4 right-4 mb-2 rounded-lg border border-white/10 z-50 overflow-hidden" style={{ background: '#161B22' }}>
+              <button
+                onClick={handleReturnToWebsite}
+                className="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
+              >
+                <ExternalLink className="h-4 w-4 text-white/60 mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <p className="text-white text-[13px] font-body">Return to Website</p>
+                  <p className="text-white/40 text-[11px] font-body">Go back to the W.Y.W public site without signing out</p>
+                </div>
+              </button>
+              <div className="border-t border-white/10" />
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
+              >
+                <LogOut className="h-4 w-4 text-red-400 mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <p className="text-red-400 text-[13px] font-body">Sign Out</p>
+                  <p className="text-white/40 text-[11px] font-body">Sign out of the admin account</p>
+                </div>
+              </button>
+              <div className="border-t border-white/10" />
+              <button
+                onClick={() => setExitMenuOpen(false)}
+                className="w-full px-4 py-2.5 text-center text-white/40 text-[12px] font-body hover:bg-white/5 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

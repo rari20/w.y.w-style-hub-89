@@ -75,7 +75,7 @@ export default function Account() {
   usePageTitle('My Account');
   const { user, profile, loading, signOut } = useAuth();
   const { addItem } = useCart();
-  const [tab, setTab] = useState<Tab>('overview');
+  const navigate = (await import('react-router-dom')).useNavigate ? undefined : undefined;
   const [copied, setCopied] = useState(false);
   const [promoEmails, setPromoEmails] = useState(true);
   const [stylingEmails, setStylingEmails] = useState(true);
