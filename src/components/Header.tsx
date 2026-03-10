@@ -1,5 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX, Shield } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Search, User, Menu, X, Moon, Sun, ShoppingBag, Volume2, VolumeX, Shield, ExternalLink } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useMusic } from '@/context/MusicContext';
@@ -25,6 +25,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const isAdmin = user?.email === ADMIN_EMAIL;
 
   const isLanding = location.pathname === '/';
@@ -61,6 +62,43 @@ export default function Header() {
   const activeLink = (path: string) =>
     location.pathname === path ? 'border-b border-current pb-px' : '';
 
+  // ─── ADMIN HEADER ───
+  if (isAdmin) {
+    return (
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        } backdrop-blur-xl bg-background/85 border-b border-border`}
+      >
+        <div className="wyw-container flex items-center justify-between h-[68px]">
+          {/* Logo → /admin */}
+          <Link to="/admin" className="flex items-center gap-2">
+            <span className="font-display text-[1.6rem] tracking-[0.04em] text-foreground">W.Y.W</span>
+            <span className="text-[0.55rem] uppercase tracking-[0.2em] text-muted-foreground font-body mt-1">Admin Portal</span>
+          </Link>
+
+          {/* Right actions */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/home"
+              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.5} />
+              <span className="nav-label text-[0.7rem]">View Website</span>
+            </Link>
+            <button
+              onClick={() => navigate('/admin')}
+              className="p-2 transition-opacity hover:opacity-55 text-muted-foreground hover:text-foreground"
+            >
+              <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
+            </button>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // ─── REGULAR CUSTOMER HEADER ───
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -82,7 +120,7 @@ export default function Header() {
           W.Y.W
         </Link>
 
-        {/* Desktop Nav — clean, minimal */}
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-[clamp(1.5rem,3vw,3rem)]">
           {navLinks.map(link => (
             <Link
@@ -122,13 +160,6 @@ export default function Header() {
               {theme === 'light' ? <Moon className="h-3.5 w-3.5" strokeWidth={1.5} /> : <Sun className="h-3.5 w-3.5" strokeWidth={1.5} />}
             </motion.div>
           </button>
-          {isAdmin && (
-            <Link to="/admin">
-              <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`} title="Admin Portal">
-                <Shield className="h-[18px] w-[18px]" strokeWidth={1.5} />
-              </button>
-            </Link>
-          )}
           <Link to="/account">
             <button className={`p-2 transition-opacity hover:opacity-55 ${linkColor}`}>
               <User className="h-[18px] w-[18px]" strokeWidth={1.5} />

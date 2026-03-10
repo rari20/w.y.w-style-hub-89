@@ -1,19 +1,19 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, BarChart2, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { products } from '@/data/products';
+import { ADMIN_EMAIL } from '@/data/adminData';
 
 type Tab = 'overview' | 'orders' | 'returns' | 'wishlist' | 'rewards' | 'consultations' | 'referral' | 'settings';
 
-const ADMIN_EMAIL = 'admin@wyw-demo.com';
 const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 
 // ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
@@ -75,6 +75,7 @@ export default function Account() {
   usePageTitle('My Account');
   const { user, profile, loading, signOut } = useAuth();
   const { addItem } = useCart();
+  const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>('overview');
   const [copied, setCopied] = useState(false);
   const [promoEmails, setPromoEmails] = useState(true);
@@ -91,6 +92,13 @@ export default function Account() {
   const [lastName, setLastName] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
+
+  // Redirect admin to /admin immediately
+  useEffect(() => {
+    if (!loading && user?.email === ADMIN_EMAIL) {
+      navigate('/admin', { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const copyCode = (code: string) => {
     navigator.clipboard.writeText(code);
@@ -260,13 +268,6 @@ export default function Account() {
                   {t.label}
                 </button>
               ))}
-              {isTestAdmin && (
-                <Link to="/admin"
-                  className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 hover:bg-muted text-foreground lg:w-full border-t border-border">
-                  <BarChart2 className="h-4 w-4" strokeWidth={1.5} />
-                  Admin Portal
-                </Link>
-              )}
               <button onClick={handleSignOut}
                 className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted whitespace-nowrap shrink-0 lg:w-full lg:mt-2 lg:border-t border-border lg:pt-4">
                 Sign Out
