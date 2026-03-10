@@ -635,6 +635,21 @@ export default function Checkout() {
               </p>
             </motion.div>
 
+            {/* Post-purchase feedback prompt */}
+            <motion.div className="mt-8 p-6 text-left" style={{ backgroundColor: 'hsl(37 52% 58% / 0.08)' }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}>
+              <div className="flex items-start gap-3">
+                <Star className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />
+                <div>
+                  <h3 className="font-body text-[0.9rem] font-semibold text-foreground mb-1">Enjoying W.Y.W so far?</h3>
+                  <p className="text-[0.8rem] text-muted-foreground font-body mb-3">Let us know how your experience has been — it takes 30 seconds and helps us serve you better.</p>
+                  <Button variant="default" size="sm" asChild>
+                    <Link to={user ? '/account#feedback' : '/feedback'}>Share Feedback</Link>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Guest claim points */}
             {!user && (
               <motion.div className="mt-6 border border-border p-6 text-left"
