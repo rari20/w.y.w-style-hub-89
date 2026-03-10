@@ -1,6 +1,8 @@
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { User, Package, Heart, Calendar, Zap, Gift, MapPin, Bell, CreditCard, Share2, Copy, Check, Lock, ChevronDown, ChevronUp } from 'lucide-react';
+import AccountQuickLinks from '@/components/AccountQuickLinks';
+import AccountFeedback from '@/components/AccountFeedback';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
