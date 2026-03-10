@@ -93,7 +93,13 @@ export default function Account() {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
 
-  const copyCode = (code: string) => {
+  // Redirect admin to /admin immediately
+  useEffect(() => {
+    if (!loading && user?.email === ADMIN_EMAIL) {
+      navigate('/admin', { replace: true });
+    }
+  }, [user, loading, navigate]);
+
     navigator.clipboard.writeText(code);
     setCopied(true);
     toast.success('Referral code copied!');
