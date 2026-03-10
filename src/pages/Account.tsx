@@ -261,13 +261,6 @@ export default function Account() {
                   {t.label}
                 </button>
               ))}
-              {isTestAdmin && (
-                <Link to="/admin"
-                  className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body transition-colors whitespace-nowrap shrink-0 hover:bg-muted text-foreground lg:w-full border-t border-border">
-                  <BarChart2 className="h-4 w-4" strokeWidth={1.5} />
-                  Admin Portal
-                </Link>
-              )}
               <button onClick={handleSignOut}
                 className="flex items-center gap-3 px-4 py-3 text-[0.8125rem] font-body text-destructive hover:bg-muted whitespace-nowrap shrink-0 lg:w-full lg:mt-2 lg:border-t border-border lg:pt-4">
                 Sign Out
