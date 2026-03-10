@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useAuth } from '@/context/AuthContext';
 
 const tiers = [
   { icon: Zap, name: 'Spark', range: '0–499 points', benefits: ['1 point per £1 spent', 'Birthday coupon', 'Standard support'] },
