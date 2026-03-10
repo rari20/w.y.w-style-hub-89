@@ -2,9 +2,10 @@ import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { MessageCircle, Mail, Phone, HelpCircle, Users, ChevronDown, Star, Check } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const WHATSAPP_URL = 'https://wa.me/447700000001?text=' + encodeURIComponent('Hi, I need help with my W.Y.W order.');
 const EMAIL_URL = 'mailto:hello@wyw.com?subject=Customer%20Enquiry';
@@ -79,7 +80,6 @@ function FeedbackForm() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (sat === 0 || like === 0) { toast.error('Please rate both questions.'); return; }
-    console.log('CS Feedback:', { sat, like, comment });
     setDone(true);
     toast.success('Thank you for your feedback!');
   };
@@ -103,13 +103,43 @@ function FeedbackForm() {
 
 export default function CustomerService() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+  const [showJumpBtn, setShowJumpBtn] = useState(false);
 
   const toggle = (key: string) => {
     setOpenItems(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Count opened FAQs to trigger sticky button
+  useEffect(() => {
+    const opened = Object.values(openItems).filter(Boolean).length;
+    setShowJumpBtn(opened >= 3);
+  }, [openItems]);
+
+  const scrollToContact = () => {
+    document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <Layout>
+      {/* Sticky jump-to-contact button */}
+      <AnimatePresence>
+        {showJumpBtn && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-[68px] left-0 right-0 z-40 flex justify-center py-2 pointer-events-none"
+          >
+            <button
+              onClick={scrollToContact}
+              className="pointer-events-auto bg-accent text-accent-foreground px-5 py-2 rounded-full font-body text-[0.75rem] font-medium shadow-md hover:shadow-lg transition-shadow"
+            >
+              Still need help? Contact us →
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="wyw-container pt-24 pb-16">
         <Breadcrumb crumbs={[{ label: 'Home', to: '/home' }, { label: 'Customer Service' }]} />
 
@@ -120,8 +150,64 @@ export default function CustomerService() {
           </p>
         </Reveal>
 
-        {/* Contact Methods — all functional links */}
-        <div className="grid md:grid-cols-2 gap-px bg-border border border-border mb-16 relative z-[1]">
+        {/* FAQ — now PRIMARY content */}
+        <Reveal>
+          <div id="faq" className="max-w-2xl mb-16">
+            <div className="flex flex-col items-start gap-3 mb-2">
+              <HelpCircle className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
+              <h2 className="font-display italic text-foreground" style={{ fontSize: '1.75rem', lineHeight: 1.2 }}>
+                Frequently Asked Questions
+              </h2>
+            </div>
+            <p className="text-muted-foreground font-body text-[0.85rem] font-light mb-8">
+              Everything you need to know about shopping, returns, rewards, and consultations.
+            </p>
+
+            {faqData.map((cat, catIdx) => (
+              <div key={cat.category} className="mb-6">
+                <p className="font-body text-[0.62rem] tracking-[0.18em] uppercase text-accent mb-3 pb-2 border-b border-border">
+                  {cat.category}
+                </p>
+                {cat.items.map((item, itemIdx) => {
+                  const key = `${catIdx}-${itemIdx}`;
+                  const isOpen = !!openItems[key];
+                  return (
+                    <div key={key} className="border-b border-border">
+                      <button
+                        onClick={() => toggle(key)}
+                        className="w-full flex items-center justify-between gap-4 py-4 text-left"
+                        aria-expanded={isOpen}
+                      >
+                        <span className="font-body text-[0.9rem] font-medium text-foreground leading-snug">{item.q}</span>
+                        <ChevronDown
+                          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                          strokeWidth={1.5}
+                        />
+                      </button>
+                      <div
+                        className={`overflow-hidden transition-all duration-[400ms] ${isOpen ? 'max-h-[600px] pb-4' : 'max-h-0'}`}
+                      >
+                        <p className="font-body text-[0.85rem] text-muted-foreground font-light leading-[1.85]">{item.a}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Divider */}
+        <div className="max-w-2xl mb-8">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-px bg-border" />
+            <span className="font-body text-[0.7rem] uppercase tracking-[0.15em] text-muted-foreground whitespace-nowrap">Still need help? Our team is here.</span>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+        </div>
+
+        {/* Contact Methods */}
+        <div id="contact-section" className="grid md:grid-cols-2 gap-px bg-border border border-border mb-16 relative z-[1]">
           <Reveal>
             <button
               type="button"
@@ -182,53 +268,6 @@ export default function CustomerService() {
           </Reveal>
         </div>
 
-        {/* FAQ */}
-        <Reveal>
-          <div className="max-w-2xl">
-            <div className="flex flex-col items-start gap-3 mb-2">
-              <HelpCircle className="h-5 w-5 text-accent shrink-0" strokeWidth={1.5} />
-              <h2 className="font-display italic text-foreground" style={{ fontSize: '1.75rem', lineHeight: 1.2 }}>
-                Frequently Asked Questions
-              </h2>
-            </div>
-            <p className="text-muted-foreground font-body text-[0.85rem] font-light mb-8">
-              Everything you need to know about shopping, returns, rewards, and consultations.
-            </p>
-
-            {faqData.map((cat, catIdx) => (
-              <div key={cat.category} className="mb-6">
-                <p className="font-body text-[0.62rem] tracking-[0.18em] uppercase text-accent mb-3 pb-2 border-b border-border">
-                  {cat.category}
-                </p>
-                {cat.items.map((item, itemIdx) => {
-                  const key = `${catIdx}-${itemIdx}`;
-                  const isOpen = !!openItems[key];
-                  return (
-                    <div key={key} className="border-b border-border">
-                      <button
-                        onClick={() => toggle(key)}
-                        className="w-full flex items-center justify-between gap-4 py-4 text-left"
-                        aria-expanded={isOpen}
-                      >
-                        <span className="font-body text-[0.9rem] font-medium text-foreground leading-snug">{item.q}</span>
-                        <ChevronDown
-                          className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                          strokeWidth={1.5}
-                        />
-                      </button>
-                      <div
-                        className={`overflow-hidden transition-all duration-[400ms] ${isOpen ? 'max-h-[600px] pb-4' : 'max-h-0'}`}
-                      >
-                        <p className="font-body text-[0.85rem] text-muted-foreground font-light leading-[1.85]">{item.a}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
         {/* Human Support Note */}
         <Reveal delay={100}>
           <div className="mt-16 bg-muted p-6 flex items-start gap-4">
@@ -242,7 +281,7 @@ export default function CustomerService() {
           </div>
         </Reveal>
 
-        {/* Feedback Survey — churn signal collection */}
+        {/* Feedback Survey */}
         <Reveal delay={150}>
           <div className="mt-16 border border-border p-6 md:p-8">
             <div className="flex items-center gap-3 mb-2">
