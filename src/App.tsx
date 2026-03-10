@@ -3,12 +3,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { MusicProvider } from "@/context/MusicContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
-import { AnimatePresence, motion } from "framer-motion";
 import CookieBanner from "@/components/CookieBanner";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
@@ -26,18 +25,16 @@ import CustomerService from "./pages/CustomerService";
 import GiftCards from "./pages/GiftCards";
 import { TermsPage, PrivacyPage, CookiePage, AccessibilityPage } from "./pages/Legal";
 import Feedback from "./pages/Feedback";
-import AdminDataset from "./pages/AdminDataset";
-import ChurnPredictor from "./pages/ChurnPredictor";
-import RetentionDashboard from "./pages/RetentionDashboard";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-
-import AdminChurnRisk from "./pages/admin/AdminChurnRisk";
-import AdminRetention from "./pages/admin/AdminRetention";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminInventory from "./pages/admin/AdminInventory";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminReturns from "./pages/admin/AdminReturns";
+import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminDiscounts from "./pages/admin/AdminDiscounts";
 import AdminEmailCampaigns from "./pages/admin/AdminEmailCampaigns";
 import AdminSocial from "./pages/admin/AdminSocial";
-import AdminAnalytics from "./pages/admin/AdminAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -71,16 +68,15 @@ function AnimatedRoutes() {
       <Route path="/accessibility" element={<AccessibilityPage />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/admin/analytics" element={<AdminAnalytics />} />
-      
-      <Route path="/admin/churn-risk" element={<AdminChurnRisk />} />
-      <Route path="/admin/retention" element={<AdminRetention />} />
+      <Route path="/admin/products" element={<AdminProducts />} />
+      <Route path="/admin/products/new" element={<AdminProducts />} />
+      <Route path="/admin/inventory" element={<AdminInventory />} />
+      <Route path="/admin/orders" element={<AdminOrders />} />
+      <Route path="/admin/returns" element={<AdminReturns />} />
+      <Route path="/admin/customers" element={<AdminCustomers />} />
       <Route path="/admin/discounts" element={<AdminDiscounts />} />
       <Route path="/admin/email-campaigns" element={<AdminEmailCampaigns />} />
       <Route path="/admin/social" element={<AdminSocial />} />
-      <Route path="/admin/dataset" element={<AdminDataset />} />
-      <Route path="/churn-predictor" element={<ChurnPredictor />} />
-      <Route path="/retention-dashboard" element={<RetentionDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
