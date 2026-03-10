@@ -86,12 +86,6 @@ export default function Header() {
               <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
             </button>
           </div>
-              onClick={() => navigate('/admin')}
-              className="p-2 transition-opacity hover:opacity-55 text-muted-foreground hover:text-foreground"
-            >
-              <User className="h-[18px] w-[18px]" strokeWidth={1.5} />
-            </button>
-          </div>
         </div>
       </header>
     );
