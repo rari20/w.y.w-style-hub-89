@@ -100,6 +100,7 @@ export default function Account() {
     }
   }, [user, loading, navigate]);
 
+  const copyCode = (code: string) => {
     navigator.clipboard.writeText(code);
     setCopied(true);
     toast.success('Referral code copied!');
