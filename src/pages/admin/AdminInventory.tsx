@@ -74,7 +74,7 @@ export default function AdminInventory() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  {['Product Name', 'Brand', 'SKU', 'Stock Count', 'Status', 'Actions'].map(h => (
+                  {['Product Name', 'Collection', 'SKU', 'Stock Count', 'Status', 'Actions'].map(h => (
                     <TableHead key={h} className="text-xs">{h}</TableHead>
                   ))}
                 </TableRow>
