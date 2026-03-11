@@ -537,7 +537,7 @@ export default function Checkout() {
                 <div key={item.product.id} className="flex gap-4 py-3">
                   <img src={item.product.image} alt={item.product.name} className="w-16 h-20 object-cover" />
                   <div className="flex-1">
-                    <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.brand}</p>
+                    <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.collection}</p>
                     <p className="font-body text-[0.85rem] text-foreground">{item.product.name}</p>
                     <p className="font-body text-[0.75rem] text-muted-foreground">Size: {item.selectedSize} · {item.selectedColor} · Qty {item.quantity}</p>
                   </div>

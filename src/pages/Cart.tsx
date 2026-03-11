@@ -58,7 +58,7 @@ export default function Cart() {
                 <div className="flex-1">
                   <div className="flex justify-between">
                     <div>
-                      <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.brand}</p>
+                      <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.collection}</p>
                       <h3 className="font-body font-medium text-[0.9375rem] text-foreground">{item.product.name}</h3>
                       <p className="text-[0.75rem] text-muted-foreground mt-1 font-body">Size: {item.selectedSize}</p>
                     </div>
