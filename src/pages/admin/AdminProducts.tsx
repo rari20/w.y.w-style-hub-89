@@ -95,7 +95,7 @@ export default function AdminProducts() {
                 {filtered.map(p => (
                   <TableRow key={p.name}>
                     <TableCell className="text-xs font-medium">{p.name}</TableCell>
-                    <TableCell className="text-xs">{p.brand}</TableCell>
+                    <TableCell className="text-xs">{p.collection}</TableCell>
                     <TableCell className="text-xs">£{p.price}</TableCell>
                     <TableCell className="text-xs">{p.category}</TableCell>
                     <TableCell>
