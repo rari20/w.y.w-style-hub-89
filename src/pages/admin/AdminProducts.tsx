@@ -67,9 +67,9 @@ export default function AdminProducts() {
 
         <div className="flex flex-wrap gap-3">
           <Input placeholder="Search products..." className="text-sm w-full sm:w-56" value={search} onChange={e => setSearch(e.target.value)} />
-          <Select value={brandFilter} onValueChange={setBrandFilter}>
+          <Select value={collectionFilter} onValueChange={setCollectionFilter}>
             <SelectTrigger className="text-sm w-40"><SelectValue /></SelectTrigger>
-            <SelectContent>{allBrands.map(b => <SelectItem key={b} value={b}>{b === 'All' ? 'All Brands' : b}</SelectItem>)}</SelectContent>
+            <SelectContent>{allCollections.map(b => <SelectItem key={b} value={b}>{b === 'All' ? 'All Collections' : b}</SelectItem>)}</SelectContent>
           </Select>
           <Select value={catFilter} onValueChange={setCatFilter}>
             <SelectTrigger className="text-sm w-40"><SelectValue /></SelectTrigger>
