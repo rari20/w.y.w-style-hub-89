@@ -81,6 +81,11 @@ export default function StoreLocator() {
                       <Clock className="h-4 w-4 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
                       <span className="text-foreground">{store.hours}</span>
                     </div>
+                    <p className="font-body text-[0.75rem] text-muted-foreground ml-7 -mt-1">Click & Collect orders ready within 2 hours. Pay online, collect in store.</p>
+                    <div className="flex items-center gap-2 ml-7 -mt-1">
+                      <CheckCircle className="h-3.5 w-3.5 text-green-600 dark:text-green-400" strokeWidth={1.5} />
+                      <span className="text-[0.75rem] font-body text-green-700 dark:text-green-400">Click & Collect available</span>
+                    </div>
                   </div>
                   <div className="mt-6 pt-6 border-t border-border">
                     <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground mb-3">Services</p>

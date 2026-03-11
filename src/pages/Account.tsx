@@ -380,6 +380,12 @@ export default function Account() {
                       </button>
                       {expandedOrder === o.id && (
                         <div className="border-t border-border px-4 pb-4">
+                          {o.fulfilment === 'collect' && o.collectStore && (
+                            <div className="flex items-center gap-2 py-3 border-b border-border">
+                              <MapPin className="h-3.5 w-3.5 text-amber-500" strokeWidth={1.5} />
+                              <p className="text-[0.8rem] font-body text-foreground">Collection store: {o.collectStore}</p>
+                            </div>
+                          )}
                           {o.products.map((p, i) => (
                             <div key={i} className="flex justify-between items-center py-2 border-b border-border last:border-0">
                               <div>

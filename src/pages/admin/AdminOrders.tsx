@@ -75,6 +75,13 @@ export default function AdminOrders() {
                     <TableCell className="text-xs">{o.customer}</TableCell>
                     <TableCell className="text-xs text-muted-foreground">{o.date}</TableCell>
                     <TableCell className="text-xs">{o.items}</TableCell>
+                    <TableCell>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                        o.fulfilment === 'Click & Collect'
+                          ? 'bg-blue-500/20 text-blue-700 dark:text-blue-400'
+                          : 'bg-muted text-muted-foreground'
+                      }`}>{o.fulfilment}</span>
+                    </TableCell>
                     <TableCell className="text-xs font-medium">{o.total}</TableCell>
                     <TableCell>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColor[o.status]}`}>{o.status}</span>
