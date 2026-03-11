@@ -25,7 +25,7 @@ const adminOrders = [
     { name: 'Charged Slim Chinos', collection: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
   ]},
   { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Edinburgh — 14 George Street, EH2 2PF', products: [
-    { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
+    { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
   ]},
   { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
     { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
