@@ -22,16 +22,16 @@ const getStatus = (stock: number): 'In Stock' | 'Low Stock' | 'Out of Stock' => 
 };
 
 const initialInventory: InventoryItem[] = [
-  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', sku: 'LMW-001', stock: 18, status: 'In Stock' },
-  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', sku: 'LMW-002', stock: 12, status: 'In Stock' },
-  { name: 'Powerline Structured Blazer', brand: 'Voltex Studio', sku: 'VTX-001', stock: 9, status: 'In Stock' },
-  { name: 'Circuit Tailored Trousers', brand: 'Voltex Studio', sku: 'VTX-002', stock: 3, status: 'Low Stock' },
-  { name: 'Flowing Midi Dress', brand: 'ArcThread', sku: 'ARC-001', stock: 7, status: 'In Stock' },
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', sku: 'KLK-001', stock: 5, status: 'In Stock' },
-  { name: 'Arc Pleat Skirt', brand: 'ArcThread', sku: 'ARC-002', stock: 14, status: 'In Stock' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', sku: 'VTX-003', stock: 0, status: 'Out of Stock' },
-  { name: 'Dense Knit Cardigan', brand: 'KiloKouture', sku: 'KLK-002', stock: 6, status: 'In Stock' },
-  { name: 'Weighted Silk Scarf', brand: 'KiloKouture', sku: 'KLK-003', stock: 11, status: 'In Stock' },
+  { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', sku: 'LMW-001', stock: 18, status: 'In Stock' },
+  { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', sku: 'LMW-002', stock: 12, status: 'In Stock' },
+  { name: 'Powerline Structured Blazer', collection: 'Voltex Studio', sku: 'VTX-001', stock: 9, status: 'In Stock' },
+  { name: 'Circuit Tailored Trousers', collection: 'Voltex Studio', sku: 'VTX-002', stock: 3, status: 'Low Stock' },
+  { name: 'Flowing Midi Dress', collection: 'ArcThread', sku: 'ARC-001', stock: 7, status: 'In Stock' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', sku: 'KLK-001', stock: 5, status: 'In Stock' },
+  { name: 'Arc Pleat Skirt', collection: 'ArcThread', sku: 'ARC-002', stock: 14, status: 'In Stock' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', sku: 'VTX-003', stock: 0, status: 'Out of Stock' },
+  { name: 'Dense Knit Cardigan', collection: 'KiloKouture', sku: 'KLK-002', stock: 6, status: 'In Stock' },
+  { name: 'Weighted Silk Scarf', collection: 'KiloKouture', sku: 'KLK-003', stock: 11, status: 'In Stock' },
 ];
 
 const statusColor: Record<string, string> = {
