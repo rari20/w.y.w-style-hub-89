@@ -38,7 +38,7 @@ export default function Index() {
               WATT YOU WANT?
             </h1>
             <p className="text-secondary-foreground/70 text-lg mb-8 font-body max-w-md">
-              Multi-brand fashion destination. Curated collections, expert styling, and a rewards programme that gives back.
+              Four collections, one vision. Expert styling, and a rewards programme that gives back.
             </p>
             <div className="flex gap-4">
               <Button variant="hero" size="lg" asChild>
