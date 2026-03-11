@@ -184,24 +184,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Partner Brands */}
+      {/* The Collections */}
       <section className="wyw-section pt-0 border-b border-border">
         <div className="wyw-container">
           <div className="text-center mb-14">
             <p className="font-body text-[0.625rem] tracking-[0.2em] uppercase text-muted-foreground mb-3">
-              Our Partners
+              Four Directions
             </p>
-            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">The Brands</h2>
+            <h2 className="font-display text-[2.5rem] md:text-[3rem] italic text-foreground">The Collections</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
-            {brands.map((brand) => (
+            {collections.map((col) => (
               <Link
-                key={brand.id}
-                to={`/brands/${brand.id}`}
+                key={col.id}
+                to={`/collections/${col.id}`}
                 className="bg-background text-center group py-12 hover:bg-muted transition-colors duration-500"
               >
                 <h3 className="font-display text-[1.5rem] tracking-[0.02em] italic group-hover:text-primary transition-colors duration-500 text-foreground">
-                  {brand.name}
+                  {col.name}
                 </h3>
               </Link>
             ))}

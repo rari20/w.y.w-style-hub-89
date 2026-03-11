@@ -129,7 +129,7 @@ export default function AdminProducts() {
             <Select defaultValue="Lumenwear">
               <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
-                {allBrands.filter(b => b !== 'All').map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}
+                {allCollections.filter(b => b !== 'All').map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}
               </SelectContent>
             </Select>
             <Input placeholder="Price (£)" type="number" className="text-sm" />

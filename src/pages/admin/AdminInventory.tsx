@@ -83,7 +83,7 @@ export default function AdminInventory() {
                 {inventory.map(item => (
                   <TableRow key={item.sku}>
                     <TableCell className="text-xs font-medium">{item.name}</TableCell>
-                    <TableCell className="text-xs">{item.brand}</TableCell>
+                    <TableCell className="text-xs">{item.collection}</TableCell>
                     <TableCell className="text-xs font-mono">{item.sku}</TableCell>
                     <TableCell className="text-xs">{item.stock}</TableCell>
                     <TableCell>

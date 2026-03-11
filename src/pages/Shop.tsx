@@ -109,14 +109,14 @@ export default function Shop() {
               </div>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Brand</label>
+              <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Collection</label>
               <div className="flex flex-wrap gap-2">
-                {brandNames.map(b => (
+                {collectionNames.map(b => (
                   <button
                     key={b}
-                    onClick={() => setBrand(b)}
+                    onClick={() => setCollection(b)}
                     className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
-                      brand === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
+                      collection === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
                     {b}
