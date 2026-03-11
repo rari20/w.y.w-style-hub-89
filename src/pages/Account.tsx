@@ -57,9 +57,9 @@ const customerOrders = [
 ];
 
 const customerWishlist = [
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
-  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
+  { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
 ];
 
 const customerActivity = { lastPurchase: '78 days ago', ordersThisYear: '2', returnRate: '28%', consultations: '0' };
