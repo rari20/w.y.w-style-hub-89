@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 export default function Landing() {
-  usePageTitle('Multi-Brand Fashion Destination');
+  usePageTitle('Contemporary Fashion Destination');
   return (
     <div className="relative w-full" style={{ backgroundColor: '#0a0a08' }}>
       {/* Hero Section — Full viewport */}
