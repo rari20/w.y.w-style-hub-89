@@ -35,10 +35,10 @@ const adminOrders = [
 ];
 
 const adminWishlist = [
-  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
-  { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
+  { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
+  { name: 'Arc Pleat Skirt', collection: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
 ];
 
 const adminActivity = { lastPurchase: '14 days ago', ordersThisYear: '3', returnRate: '0%', consultations: '1' };
