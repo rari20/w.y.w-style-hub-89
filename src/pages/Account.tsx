@@ -48,10 +48,10 @@ const adminReferralCode = 'WYW-JD2024';
 // ─── Test customer profile data (Sam Riley — Spark tier, 310 pts, at-risk) ───
 // This mirrors dataset row C013 on the admin dashboard
 const customerOrders = [
-  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Glasgow — 55 Buchanan Street, G1 3HL', products: [
     { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
   ]},
-  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
     { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
   ]},
 ];
