@@ -15,7 +15,7 @@ const stepLabels = ['Bag', 'Details', 'Delivery', 'Payment', 'Review', 'Confirme
 const deliveryOptions = [
   { id: 'standard', label: 'Standard Delivery', detail: 'Royal Mail tracked', time: '3–5 working days', price: 0, priceFull: 3.95, freeOver100: true },
   { id: 'express', label: 'Express Delivery', detail: 'DPD tracked', time: 'Next working day (order before 2pm)', price: 8.95, priceFull: 8.95, freeOver100: false },
-  { id: 'collect', label: 'Click & Collect', detail: 'Collect from your chosen W.Y.W store', time: 'FREE', price: 0, priceFull: 0, freeOver100: false },
+  { id: 'collect', label: 'Click & Collect', detail: 'Pay now online and collect from your chosen W.Y.W store. Ready within 2 hours of order confirmation. Present your order reference or account details in store.', time: 'FREE', price: 0, priceFull: 0, freeOver100: false },
 ];
 
 function StepIndicator({ currentStep }: { currentStep: Step }) {
