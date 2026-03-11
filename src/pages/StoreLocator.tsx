@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { stores } from '@/data/products';
-import { MapPin, Phone, Clock, Package, QrCode, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Clock, Package, QrCode, ExternalLink, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
