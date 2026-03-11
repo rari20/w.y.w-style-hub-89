@@ -37,7 +37,7 @@ const statusColor: Record<string, string> = {
   'Out of Stock': 'bg-red-500/20 text-red-700 dark:text-red-400',
 };
 
-const allBrands = ['All', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
+const allCollections = ['All', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const allCategories = ['All', 'Tops', 'Dresses', 'Outerwear', 'Trousers', 'Skirts', 'Knitwear', 'Accessories'];
 const allStatuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
 
