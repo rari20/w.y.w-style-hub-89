@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 
 interface Product {
   name: string;
-  brand: string;
+  collection: string;
   price: number;
   category: string;
   stock: number;
@@ -19,16 +19,16 @@ interface Product {
 }
 
 const initialProducts: Product[] = [
-  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, category: 'Tops', stock: 18, status: 'In Stock' },
-  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, category: 'Dresses', stock: 12, status: 'In Stock' },
-  { name: 'Powerline Structured Blazer', brand: 'Voltex Studio', price: 495, category: 'Outerwear', stock: 9, status: 'In Stock' },
-  { name: 'Circuit Tailored Trousers', brand: 'Voltex Studio', price: 275, category: 'Trousers', stock: 3, status: 'Low Stock' },
-  { name: 'Flowing Midi Dress', brand: 'ArcThread', price: 425, category: 'Dresses', stock: 7, status: 'In Stock' },
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, category: 'Outerwear', stock: 5, status: 'In Stock' },
-  { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, category: 'Skirts', stock: 14, status: 'In Stock' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, category: 'Outerwear', stock: 0, status: 'Out of Stock' },
-  { name: 'Dense Knit Cardigan', brand: 'KiloKouture', price: 545, category: 'Knitwear', stock: 6, status: 'In Stock' },
-  { name: 'Weighted Silk Scarf', brand: 'KiloKouture', price: 245, category: 'Accessories', stock: 11, status: 'In Stock' },
+  { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', price: 245, category: 'Tops', stock: 18, status: 'In Stock' },
+  { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', price: 385, category: 'Dresses', stock: 12, status: 'In Stock' },
+  { name: 'Powerline Structured Blazer', collection: 'Voltex Studio', price: 495, category: 'Outerwear', stock: 9, status: 'In Stock' },
+  { name: 'Circuit Tailored Trousers', collection: 'Voltex Studio', price: 275, category: 'Trousers', stock: 3, status: 'Low Stock' },
+  { name: 'Flowing Midi Dress', collection: 'ArcThread', price: 425, category: 'Dresses', stock: 7, status: 'In Stock' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, category: 'Outerwear', stock: 5, status: 'In Stock' },
+  { name: 'Arc Pleat Skirt', collection: 'ArcThread', price: 245, category: 'Skirts', stock: 14, status: 'In Stock' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, category: 'Outerwear', stock: 0, status: 'Out of Stock' },
+  { name: 'Dense Knit Cardigan', collection: 'KiloKouture', price: 545, category: 'Knitwear', stock: 6, status: 'In Stock' },
+  { name: 'Weighted Silk Scarf', collection: 'KiloKouture', price: 245, category: 'Accessories', stock: 11, status: 'In Stock' },
 ];
 
 const statusColor: Record<string, string> = {
@@ -37,21 +37,21 @@ const statusColor: Record<string, string> = {
   'Out of Stock': 'bg-red-500/20 text-red-700 dark:text-red-400',
 };
 
-const allBrands = ['All', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
+const allCollections = ['All', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const allCategories = ['All', 'Tops', 'Dresses', 'Outerwear', 'Trousers', 'Skirts', 'Knitwear', 'Accessories'];
 const allStatuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
 
 export default function AdminProducts() {
   const [products, setProducts] = useState(initialProducts);
   const [search, setSearch] = useState('');
-  const [brandFilter, setBrandFilter] = useState('All');
+  const [collectionFilter, setCollectionFilter] = useState('All');
   const [catFilter, setCatFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showCreate, setShowCreate] = useState(false);
 
   const filtered = products.filter(p => {
     if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if (brandFilter !== 'All' && p.brand !== brandFilter) return false;
+    if (collectionFilter !== 'All' && p.collection !== collectionFilter) return false;
     if (catFilter !== 'All' && p.category !== catFilter) return false;
     if (statusFilter !== 'All' && p.status !== statusFilter) return false;
     return true;
@@ -67,9 +67,9 @@ export default function AdminProducts() {
 
         <div className="flex flex-wrap gap-3">
           <Input placeholder="Search products..." className="text-sm w-full sm:w-56" value={search} onChange={e => setSearch(e.target.value)} />
-          <Select value={brandFilter} onValueChange={setBrandFilter}>
+          <Select value={collectionFilter} onValueChange={setCollectionFilter}>
             <SelectTrigger className="text-sm w-40"><SelectValue /></SelectTrigger>
-            <SelectContent>{allBrands.map(b => <SelectItem key={b} value={b}>{b === 'All' ? 'All Brands' : b}</SelectItem>)}</SelectContent>
+            <SelectContent>{allCollections.map(b => <SelectItem key={b} value={b}>{b === 'All' ? 'All Collections' : b}</SelectItem>)}</SelectContent>
           </Select>
           <Select value={catFilter} onValueChange={setCatFilter}>
             <SelectTrigger className="text-sm w-40"><SelectValue /></SelectTrigger>
@@ -86,7 +86,7 @@ export default function AdminProducts() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  {['Product Name', 'Brand', 'Price', 'Category', 'Stock Status', 'Actions'].map(h => (
+                  {['Product Name', 'Collection', 'Price', 'Category', 'Stock Status', 'Actions'].map(h => (
                     <TableHead key={h} className="text-xs">{h}</TableHead>
                   ))}
                 </TableRow>
@@ -95,7 +95,7 @@ export default function AdminProducts() {
                 {filtered.map(p => (
                   <TableRow key={p.name}>
                     <TableCell className="text-xs font-medium">{p.name}</TableCell>
-                    <TableCell className="text-xs">{p.brand}</TableCell>
+                    <TableCell className="text-xs">{p.collection}</TableCell>
                     <TableCell className="text-xs">£{p.price}</TableCell>
                     <TableCell className="text-xs">{p.category}</TableCell>
                     <TableCell>
@@ -129,7 +129,7 @@ export default function AdminProducts() {
             <Select defaultValue="Lumenwear">
               <SelectTrigger className="text-sm"><SelectValue /></SelectTrigger>
               <SelectContent>
-                {allBrands.filter(b => b !== 'All').map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}
+                {allCollections.filter(b => b !== 'All').map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}
               </SelectContent>
             </Select>
             <Input placeholder="Price (£)" type="number" className="text-sm" />

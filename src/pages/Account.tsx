@@ -21,24 +21,24 @@ const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 // ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
 const adminOrders = [
   { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
-    { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
+    { name: 'Current Minimal Tee', collection: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
+    { name: 'Charged Slim Chinos', collection: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
   ]},
   { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Edinburgh — 14 George Street, EH2 2PF', products: [
-    { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
+    { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
   ]},
   { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
-    { name: 'Arc Pleat Skirt', brand: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
-    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
+    { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
+    { name: 'Arc Pleat Skirt', collection: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
+    { name: 'Thread Linen Shirt', collection: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
   ]},
 ];
 
 const adminWishlist = [
-  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
-  { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
+  { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', price: 245, savedDays: 34, productId: 'lw1' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, savedDays: 12, productId: 'kk2' },
+  { name: 'Arc Pleat Skirt', collection: 'ArcThread', price: 245, savedDays: 41, productId: 'at3' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, savedDays: 8, productId: 'vs4' },
 ];
 
 const adminActivity = { lastPurchase: '14 days ago', ordersThisYear: '3', returnRate: '0%', consultations: '1' };
@@ -49,17 +49,17 @@ const adminReferralCode = 'WYW-JD2024';
 // This mirrors dataset row C013 on the admin dashboard
 const customerOrders = [
   { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Glasgow — 55 Buchanan Street, G1 3HL', products: [
-    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
+    { name: 'Thread Linen Shirt', collection: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
   ]},
   { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
+    { name: 'Current Minimal Tee', collection: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
   ]},
 ];
 
 const customerWishlist = [
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
-  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, savedDays: 52, productId: 'kk2' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, savedDays: 45, productId: 'vs4' },
+  { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', price: 385, savedDays: 38, productId: 'lw3' },
 ];
 
 const customerActivity = { lastPurchase: '78 days ago', ordersThisYear: '2', returnRate: '28%', consultations: '0' };
@@ -70,7 +70,7 @@ const tiers = [
   { name: 'Spark', range: '0–499 pts', color: 'border-muted', benefits: ['Early access to sales', 'Birthday discount 10%'] },
   { name: 'Volt', range: '500–1,499 pts', color: 'border-amber-400 dark:border-amber-500', benefits: ['All Spark benefits', 'Free standard delivery', '15% birthday discount'] },
   { name: 'Surge', range: '1,500–3,999 pts', color: 'border-blue-400 dark:border-blue-500', benefits: ['All Volt benefits', 'Free express delivery', 'Priority customer service', '20% birthday discount'] },
-  { name: 'Watt', range: '4,000+ pts', color: 'border-yellow-500 dark:border-yellow-400', benefits: ['All Surge benefits', 'Personal stylist', 'Exclusive brand previews', '25% birthday discount'] },
+  { name: 'Watt', range: '4,000+ pts', color: 'border-yellow-500 dark:border-yellow-400', benefits: ['All Surge benefits', 'Personal stylist', 'Exclusive collection previews', '25% birthday discount'] },
 ];
 
 export default function Account() {
@@ -390,7 +390,7 @@ export default function Account() {
                             <div key={i} className="flex justify-between items-center py-2 border-b border-border last:border-0">
                               <div>
                                 <p className="text-[0.8rem] font-body text-foreground">{p.name}</p>
-                                <p className="text-[0.7rem] text-muted-foreground font-body">{p.brand} · {p.size} · {p.color} · Qty {p.qty}</p>
+                                <p className="text-[0.7rem] text-muted-foreground font-body">{p.collection} · {p.size} · {p.color} · Qty {p.qty}</p>
                               </div>
                               <p className="text-[0.8rem] font-body text-foreground">£{p.price.toFixed(2)}</p>
                             </div>
@@ -458,7 +458,7 @@ export default function Account() {
                       <div key={item.productId} className="border border-border overflow-hidden">
                         {product && <img src={product.image} alt={item.name} className="w-full h-48 object-cover" />}
                         <div className="p-4">
-                          <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.brand}</p>
+                          <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.collection}</p>
                           <p className="font-body text-[0.9rem] font-medium text-foreground">{item.name}</p>
                           <p className="font-body text-[0.85rem] text-foreground mt-1">£{item.price.toFixed(2)}</p>
                           {showNudge && (

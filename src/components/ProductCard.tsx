@@ -75,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
         {/* Only 3 lines: brand, name, price — clean and minimal */}
         <div className="pt-3 pb-1">
-          <p className="font-body text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground mb-1">{product.brand}</p>
+          <p className="font-body text-[0.6rem] uppercase tracking-[0.14em] text-muted-foreground mb-1">{product.collection}</p>
           <h3 className="font-display text-[0.95rem] font-normal leading-[1.3] text-foreground">{product.name}</h3>
           <p className="font-body text-[0.82rem] font-light mt-1 text-foreground">£{product.price.toFixed(2)}</p>
           {/* Points — visible on hover only */}

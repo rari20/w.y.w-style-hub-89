@@ -16,7 +16,7 @@ import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
-import { BrandsPage, BrandDetail } from "./pages/Brands";
+import { CollectionsPage, CollectionDetail } from "./pages/Collections";
 import Consultation from "./pages/Consultation";
 import Rewards from "./pages/Rewards";
 import StoreLocator from "./pages/StoreLocator";
@@ -54,8 +54,11 @@ function AnimatedRoutes() {
       <Route path="/shop" element={<Shop />} />
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/brands" element={<BrandsPage />} />
-      <Route path="/brands/:id" element={<BrandDetail />} />
+      <Route path="/collections" element={<CollectionsPage />} />
+      <Route path="/collections/:id" element={<CollectionDetail />} />
+      {/* Legacy redirects */}
+      <Route path="/brands" element={<CollectionsPage />} />
+      <Route path="/brands/:id" element={<CollectionDetail />} />
       <Route path="/consultation" element={<Consultation />} />
       <Route path="/rewards" element={<Rewards />} />
       <Route path="/stores" element={<StoreLocator />} />

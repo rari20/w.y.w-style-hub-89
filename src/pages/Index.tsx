@@ -4,7 +4,7 @@ import { Zap, Calendar, MapPin, Package, Users, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
-import { products, brands } from '@/data/products';
+import { products, collections } from '@/data/products';
 import heroImage from '@/assets/hero-main.jpg';
 
 const newIn = products.filter(p => p.isNew);
@@ -38,7 +38,7 @@ export default function Index() {
               WATT YOU WANT?
             </h1>
             <p className="text-secondary-foreground/70 text-lg mb-8 font-body max-w-md">
-              Multi-brand fashion destination. Curated collections, expert styling, and a rewards programme that gives back.
+              Four collections, one vision. Expert styling, and a rewards programme that gives back.
             </p>
             <div className="flex gap-4">
               <Button variant="hero" size="lg" asChild>
@@ -69,24 +69,24 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Partner Brands */}
+      {/* The Collections */}
       <section className="wyw-section border-b border-border">
         <div className="wyw-container">
           <div className="text-center mb-12">
-            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">Our Partners</p>
-            <h2 className="text-4xl md:text-5xl font-display">THE BRANDS</h2>
+            <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2">Four Directions</p>
+            <h2 className="text-4xl md:text-5xl font-display">THE COLLECTIONS</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {brands.map(brand => (
+            {collections.map(col => (
               <Link
-                key={brand.id}
-                to={`/brands/${brand.id}`}
+                key={col.id}
+                to={`/collections/${col.id}`}
                 className="text-center group py-8 border border-border rounded-sm hover:border-accent transition-colors"
               >
                 <h3 className="font-display text-2xl tracking-wider group-hover:text-accent transition-colors">
-                  {brand.name.toUpperCase()}
+                  {col.name.toUpperCase()}
                 </h3>
-                <p className="text-xs text-muted-foreground mt-1">{brand.tagline}</p>
+                <p className="text-xs text-muted-foreground mt-1">{col.tagline}</p>
               </Link>
             ))}
           </div>

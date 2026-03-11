@@ -9,7 +9,7 @@ import { X } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories'] as const;
-const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
+const collectionNames = ['All Collections', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
   { label: 'Under £100', min: 0, max: 100 },
@@ -26,7 +26,7 @@ export default function Shop() {
   const brandParam = searchParams.get('brand');
 
   const [category, setCategory] = useState<string>(categoryParam || 'all');
-  const [brand, setBrand] = useState(brandParam || 'All Brands');
+  const [collection, setCollection] = useState(brandParam || 'All Collections');
   const [priceRange, setPriceRange] = useState(0);
   const [search, setSearch] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -43,17 +43,17 @@ export default function Shop() {
     if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear');
 
     if (category !== 'all') result = result.filter(p => p.category === category);
-    if (brand !== 'All Brands') result = result.filter(p => p.brand === brand);
+    if (collection !== 'All Collections') result = result.filter(p => p.collection === collection);
 
     const range = priceRanges[priceRange];
     result = result.filter(p => p.price >= range.min && p.price < range.max);
 
     if (search) {
       const q = search.toLowerCase();
-      result = result.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+      result = result.filter(p => p.name.toLowerCase().includes(q) || p.collection.toLowerCase().includes(q));
     }
     return result;
-  }, [category, brand, priceRange, search, filterParam]);
+  }, [category, collection, priceRange, search, filterParam]);
 
   const getTitle = () => {
     if (filterParam === 'new') return 'NEW IN';
@@ -109,14 +109,14 @@ export default function Shop() {
               </div>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Brand</label>
+              <label className="text-xs uppercase tracking-widest text-muted-foreground mb-2 block">Collection</label>
               <div className="flex flex-wrap gap-2">
-                {brandNames.map(b => (
+                {collectionNames.map(b => (
                   <button
                     key={b}
-                    onClick={() => setBrand(b)}
+                    onClick={() => setCollection(b)}
                     className={`px-3 py-1.5 text-xs uppercase tracking-wide rounded-sm transition-colors ${
-                      brand === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
+                      collection === b ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-border'
                     }`}
                   >
                     {b}

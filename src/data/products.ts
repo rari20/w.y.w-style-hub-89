@@ -34,6 +34,9 @@ import productKk8 from '@/assets/product-kk8.jpg';
 export type Product = {
   id: string;
   name: string;
+  /** The W.Y.W collection this product belongs to */
+  collection: string;
+  /** @deprecated Alias for collection */
   brand: string;
   price: number;
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
@@ -63,7 +66,8 @@ const storeVariant = (a: boolean, b: boolean, c: boolean) => [
   { store: 'London', available: c },
 ];
 
-export const products: Product[] = [
+// Raw product data uses `brand` key; we map to add `collection` alias
+const rawProducts = [
   // ─── LUMENWEAR ───
   {
     id: 'lw1', name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245,
@@ -361,36 +365,41 @@ export const products: Product[] = [
   },
 ];
 
-export const brands = [
+export const products: Product[] = rawProducts.map(p => ({ ...p, collection: p.brand })) as Product[];
+
+export const collections = [
   {
     id: 'lumenwear',
     name: 'Lumenwear',
     tagline: 'Illuminate your wardrobe',
     description: 'Effortless femininity through elevated fabric and fluid form.',
-    fullDescription: 'Born from the intersection of light and fabric, Lumenwear creates pieces that glow with understated elegance. Specialising in everyday essentials elevated through premium materials and considered design.',
+    fullDescription: 'Lumenwear is a W.Y.W collection defined by understated elegance. Specialising in everyday essentials elevated through premium materials and considered design, each piece glows with a luminous quality.',
   },
   {
     id: 'voltex-studio',
     name: 'Voltex Studio',
     tagline: 'Charged with creativity',
     description: 'Technical precision meets contemporary street culture.',
-    fullDescription: 'Voltex Studio fuses artisanal craftsmanship with bold, forward-thinking design. From leather goods to footwear, every piece carries an electric energy that sets it apart.',
+    fullDescription: 'Voltex Studio is a W.Y.W collection that fuses artisanal craftsmanship with bold, forward-thinking design. From leather goods to footwear, every piece carries an electric energy that sets it apart.',
   },
   {
     id: 'arcthread',
     name: 'ArcThread',
     tagline: 'Weaving the future',
     description: 'Organic shapes and honest materials for the considered dresser.',
-    fullDescription: 'ArcThread is where architectural precision meets textile innovation. Known for structural silhouettes and luxurious fabrics, the brand redefines modern tailoring for the next generation.',
+    fullDescription: 'ArcThread is a W.Y.W collection where architectural precision meets textile innovation. Known for structural silhouettes and luxurious fabrics, it redefines modern tailoring for the next generation.',
   },
   {
     id: 'kilokouture',
     name: 'KiloKouture',
     tagline: 'Heavy on style',
     description: 'Weight, texture, and substance — fashion with a physical presence.',
-    fullDescription: 'KiloKouture brings bold graphics and streetwear energy to the W.Y.W universe. Unapologetically loud, sustainably made, and always limited edition.',
+    fullDescription: 'KiloKouture is a W.Y.W collection that brings bold graphics and streetwear energy to life. Unapologetically loud, sustainably made, and always limited edition.',
   },
 ];
+
+// Backwards compatibility alias
+export const brands = collections;
 
 export const stores = [
   {

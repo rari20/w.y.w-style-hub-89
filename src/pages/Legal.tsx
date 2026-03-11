@@ -19,7 +19,7 @@ export function TermsPage() {
       <p className="text-[0.78rem] text-muted-foreground tracking-[0.08em] mb-8 pb-6 border-b border-border">Last updated: 1 March 2026</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">1. About W.Y.W</h2>
-      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Watt You Want? (W.Y.W) is a multi-brand fashion retailer operating physical stores and an online platform. These terms govern your use of our website and services.</p>
+      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Watt You Want? (W.Y.W) is a contemporary fashion label operating physical stores and an online platform. These terms govern your use of our website and services.</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">2. Orders & Acceptance</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">Placing an order constitutes an offer to purchase. W.Y.W reserves the right to decline any order. You will receive an order confirmation email; your order is only accepted once your payment is processed and a dispatch confirmation is sent.</p>
@@ -34,7 +34,7 @@ export function TermsPage() {
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">You have the right to return most items within 28 days of receipt. Items must be unworn, unwashed, and in original condition with tags attached. See our Returns Policy for full details.</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">6. Intellectual Property</h2>
-      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">All content on this website — including images, text, logos, and brand assets — is the property of W.Y.W or its partner brands and is protected by copyright law. You may not reproduce or distribute any content without written permission.</p>
+      <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">All content on this website — including images, text, logos, and design assets — is the property of W.Y.W and is protected by copyright law. You may not reproduce or distribute any content without written permission.</p>
 
       <h2 className="font-body text-[1rem] font-semibold uppercase tracking-[0.08em] text-foreground mt-8 mb-3">7. Limitation of Liability</h2>
       <p className="text-[0.9rem] leading-[1.85] text-muted-foreground mb-5">W.Y.W's liability to you in connection with any order will not exceed the total price charged for the relevant items. We are not liable for indirect or consequential losses.</p>
