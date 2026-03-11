@@ -63,7 +63,7 @@ export default function AdminOrders() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  {['Order ID', 'Customer', 'Date', 'Items', 'Total', 'Status', 'Actions'].map(h => (
+                  {['Order ID', 'Customer', 'Date', 'Items', 'Fulfilment', 'Total', 'Status', 'Actions'].map(h => (
                     <TableHead key={h} className="text-xs">{h}</TableHead>
                   ))}
                 </TableRow>
