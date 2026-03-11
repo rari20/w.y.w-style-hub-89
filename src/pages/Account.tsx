@@ -52,7 +52,7 @@ const customerOrders = [
     { name: 'Thread Linen Shirt', collection: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
   ]},
   { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
+    { name: 'Current Minimal Tee', collection: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
   ]},
 ];
 
