@@ -450,7 +450,6 @@ export default function Checkout() {
                   { id: 'card' as const, label: 'Card', icon: CreditCard },
                   { id: 'bank' as const, label: 'Bank Transfer', icon: Landmark },
                   { id: 'gift' as const, label: 'Gift Card', icon: Gift },
-                  ...(delivery === 'collect' ? [{ id: 'collection' as const, label: 'Pay at Collection', icon: Truck }] : []),
                 ]).map(tab => (
                   <button key={tab.id} onClick={() => setPaymentMethod(tab.id)}
                     className={`px-4 py-3 font-body text-[0.75rem] transition-colors border-b-2 -mb-px flex items-center gap-1.5 whitespace-nowrap ${
