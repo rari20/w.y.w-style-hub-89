@@ -132,7 +132,7 @@ export default function Checkout() {
   const [country, setCountry] = useState('United Kingdom');
   const [saveAddress, setSaveAddress] = useState(false);
 
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank' | 'gift' | 'collection'>('card');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank' | 'gift'>('card');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
