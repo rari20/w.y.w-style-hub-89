@@ -244,7 +244,7 @@ export default function Checkout() {
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.brand}</p>
+                          <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground">{item.product.collection}</p>
                           <h3 className="font-display text-[1rem] leading-tight mt-0.5 text-foreground">{item.product.name}</h3>
                           <p className="font-body text-[0.75rem] text-muted-foreground mt-1">Size: {item.selectedSize} · {item.selectedColor}</p>
                         </div>
