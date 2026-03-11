@@ -13,17 +13,18 @@ interface Order {
   items: string;
   total: string;
   status: 'Processing' | 'Dispatched' | 'Delivered';
+  fulfilment: 'Delivery' | 'Click & Collect';
 }
 
 const initialOrders: Order[] = [
-  { id: 'WYW-2026-0089', customer: 'C012', date: '10 Mar 2026', items: '1 item', total: '£245', status: 'Processing' },
-  { id: 'WYW-2026-0088', customer: 'C031', date: '09 Mar 2026', items: '2 items', total: '£630', status: 'Dispatched' },
-  { id: 'WYW-2026-0087', customer: 'C007', date: '09 Mar 2026', items: '1 item', total: '£385', status: 'Dispatched' },
-  { id: 'WYW-2026-0086', customer: 'C044', date: '08 Mar 2026', items: '3 items', total: '£1,240', status: 'Delivered' },
-  { id: 'WYW-2026-0085', customer: 'C019', date: '08 Mar 2026', items: '1 item', total: '£495', status: 'Delivered' },
-  { id: 'WYW-2026-0084', customer: 'C003', date: '07 Mar 2026', items: '2 items', total: '£520', status: 'Delivered' },
-  { id: 'WYW-2026-0083', customer: 'C028', date: '06 Mar 2026', items: '1 item', total: '£895', status: 'Delivered' },
-  { id: 'WYW-2026-0082', customer: 'C011', date: '05 Mar 2026', items: '4 items', total: '£1,710', status: 'Delivered' },
+  { id: 'WYW-2026-0089', customer: 'C012', date: '10 Mar 2026', items: '1 item', total: '£245', status: 'Processing', fulfilment: 'Delivery' },
+  { id: 'WYW-2026-0088', customer: 'C031', date: '09 Mar 2026', items: '2 items', total: '£630', status: 'Dispatched', fulfilment: 'Click & Collect' },
+  { id: 'WYW-2026-0087', customer: 'C007', date: '09 Mar 2026', items: '1 item', total: '£385', status: 'Dispatched', fulfilment: 'Delivery' },
+  { id: 'WYW-2026-0086', customer: 'C044', date: '08 Mar 2026', items: '3 items', total: '£1,240', status: 'Delivered', fulfilment: 'Click & Collect' },
+  { id: 'WYW-2026-0085', customer: 'C019', date: '08 Mar 2026', items: '1 item', total: '£495', status: 'Delivered', fulfilment: 'Delivery' },
+  { id: 'WYW-2026-0084', customer: 'C003', date: '07 Mar 2026', items: '2 items', total: '£520', status: 'Delivered', fulfilment: 'Delivery' },
+  { id: 'WYW-2026-0083', customer: 'C028', date: '06 Mar 2026', items: '1 item', total: '£895', status: 'Delivered', fulfilment: 'Click & Collect' },
+  { id: 'WYW-2026-0082', customer: 'C011', date: '05 Mar 2026', items: '4 items', total: '£1,710', status: 'Delivered', fulfilment: 'Delivery' },
 ];
 
 const statusColor: Record<string, string> = {
