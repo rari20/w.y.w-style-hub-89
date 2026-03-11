@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 interface InventoryItem {
   name: string;
-  brand: string;
+  collection: string;
   sku: string;
   stock: number;
   status: 'In Stock' | 'Low Stock' | 'Out of Stock';
