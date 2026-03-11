@@ -35,6 +35,8 @@ export type Product = {
   id: string;
   name: string;
   collection: string;
+  /** @deprecated Use collection instead */
+  brand: string;
   price: number;
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
   sizes: string[];
