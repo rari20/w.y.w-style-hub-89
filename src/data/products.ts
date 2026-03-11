@@ -36,7 +36,7 @@ export type Product = {
   name: string;
   /** The W.Y.W collection this product belongs to */
   collection: string;
-  /** @deprecated Alias for collection — kept for backwards compatibility */
+  /** @deprecated Alias for collection */
   brand: string;
   price: number;
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
@@ -66,7 +66,8 @@ const storeVariant = (a: boolean, b: boolean, c: boolean) => [
   { store: 'London', available: c },
 ];
 
-export const products: Product[] = [
+// Raw product data uses `brand` key; we map to add `collection` alias
+const rawProducts = [
   // ─── LUMENWEAR ───
   {
     id: 'lw1', name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245,
