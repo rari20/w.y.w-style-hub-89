@@ -50,7 +50,7 @@ export default function Shop() {
 
     if (search) {
       const q = search.toLowerCase();
-      result = result.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+      result = result.filter(p => p.name.toLowerCase().includes(q) || p.collection.toLowerCase().includes(q));
     }
     return result;
   }, [category, brand, priceRange, search, filterParam]);
