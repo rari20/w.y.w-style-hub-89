@@ -607,7 +607,12 @@ export default function Checkout() {
         )}
 
         {/* ═══ Step 6: Confirmation ═══ */}
-        {step === 6 && (
+        {step === 6 && (() => {
+          const isCollect = delivery === 'collect';
+          const collectStoreData = stores.find(s => s.id === collectStore);
+          const collectStoreName = collectStoreData?.name || 'your chosen W.Y.W store';
+          const collectStoreAddress = collectStoreData?.address || '';
+          return (
           <div className="max-w-[700px] mx-auto text-center pt-12">
             <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" strokeWidth={1.5} />
@@ -619,15 +624,54 @@ export default function Checkout() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }}>
               <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground mt-6 mb-1">Order Number</p>
               <p className="font-display text-[1.5rem] text-foreground">{orderRef}</p>
-              <p className="text-muted-foreground font-body font-light mt-3 mb-2">
-                Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is on its way.
+
+              {/* Email confirmation notice */}
+              <p className="text-[0.75rem] text-muted-foreground font-body mt-2 flex items-center justify-center gap-1.5">
+                <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
+                {isCollect
+                  ? `A confirmation and collection instructions have been sent to ${detailsEmail || 'your email address'}.`
+                  : `A confirmation has been sent to ${detailsEmail || 'your email address'}.`
+                }
               </p>
-              <p className="text-[0.8rem] text-muted-foreground font-body">Estimated delivery: {getEstimatedDate()}</p>
-              {address1 && (
-                <p className="text-[0.8rem] text-muted-foreground font-body mt-1">{address1}, {city} {postcode}</p>
+
+              {isCollect ? (
+                <>
+                  <p className="text-muted-foreground font-body font-light mt-3 mb-2">
+                    Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is being prepared for collection.
+                  </p>
+                  <p className="text-[0.8rem] text-muted-foreground font-body">Ready to collect from: {collectStoreName}{collectStoreAddress ? `, ${collectStoreAddress}` : ''}</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-muted-foreground font-body font-light mt-3 mb-2">
+                    Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is on its way.
+                  </p>
+                  <p className="text-[0.8rem] text-muted-foreground font-body">Estimated delivery: {getEstimatedDate()}</p>
+                  {address1 && (
+                    <p className="text-[0.8rem] text-muted-foreground font-body mt-1">{address1}, {city} {postcode}</p>
+                  )}
+                </>
               )}
-              {detailsEmail && <p className="font-body text-[0.8rem] text-muted-foreground mt-2">Confirmation sent to {detailsEmail}</p>}
             </motion.div>
+
+            {/* Click & Collect collection instructions */}
+            {isCollect && (
+              <motion.div className="mt-8 border border-border p-6 text-left"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }}>
+                <div className="flex items-start gap-4">
+                  <MapPin className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <div>
+                    <h3 className="font-body text-[0.9rem] font-semibold text-foreground mb-3">How to collect your order</h3>
+                    <ul className="space-y-2 text-[0.8rem] text-muted-foreground font-body">
+                      <li>Your order will be ready within 2 hours of this confirmation.</li>
+                      <li>Visit {collectStoreName} at {collectStoreAddress} during opening hours.</li>
+                      <li>Present your order reference <span className="font-medium text-foreground">{orderRef}</span> or log in to your W.Y.W account at the till.</li>
+                      <li>Opening hours: Mon–Sat 10am–7pm, Sun 11am–5pm.</li>
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
             {/* Points earned */}
             <motion.div className="mt-8 bg-muted/50 border-l-4 border-primary p-6 text-left"
