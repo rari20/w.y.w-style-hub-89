@@ -16,7 +16,7 @@ import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
-import { BrandsPage, BrandDetail } from "./pages/Brands";
+import { CollectionsPage, CollectionDetail } from "./pages/Collections";
 import Consultation from "./pages/Consultation";
 import Rewards from "./pages/Rewards";
 import StoreLocator from "./pages/StoreLocator";
