@@ -363,7 +363,9 @@ const rawProducts = [
     description: 'Oversized puffer coat with responsibly sourced down fill. Dramatic volume, lightweight warmth.',
     storeAvailability: storeVariant(true,true,true), occasion: ['outerwear','casual'],
   },
-];
+] as const;
+
+export const products: Product[] = rawProducts.map(p => ({ ...p, collection: p.brand }));
 
 export const collections = [
   {
