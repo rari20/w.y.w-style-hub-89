@@ -34,7 +34,7 @@ import productKk8 from '@/assets/product-kk8.jpg';
 export type Product = {
   id: string;
   name: string;
-  brand: string;
+  collection: string;
   price: number;
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
   sizes: string[];
