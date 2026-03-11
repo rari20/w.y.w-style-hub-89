@@ -87,7 +87,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
-            Curated collections from the world's most exciting contemporary brands, with expert styling consultations in-store and online.
+            Four distinct design collections under one label, with expert styling consultations in-store and online.
           </motion.p>
 
           <motion.div

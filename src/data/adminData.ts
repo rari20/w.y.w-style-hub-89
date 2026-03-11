@@ -104,7 +104,7 @@ export const socialPlatforms = [
 export const socialPostTemplates = [
   "New season, new silhouettes. Discover the Spring 2026 edit from Lumenwear, Voltex Studio, ArcThread & KiloKouture. Shop now at W.Y.W. #PowerYourStyle #NewIn #WYW [link]",
   "W.Y.W Rewards members get more. From free delivery at Volt tier to your own personal stylist at Watt — every purchase powers your next level. Join free at [link] #WYWRewards #LoyaltyPerks",
-  "Four brands. One destination. Shop the edit now at W.Y.W. #PowerYourStyle #WYW [link]",
+  "Four collections. One vision. Shop the edit now at W.Y.W. #PowerYourStyle #WYW [link]",
 ];
 
 // ─── Admin Notifications ───

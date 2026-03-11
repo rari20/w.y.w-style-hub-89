@@ -10,7 +10,7 @@ import { ADMIN_EMAIL } from '@/data/adminData';
 
 const navLinks = [
   { label: 'Shop', to: '/shop' },
-  { label: 'Brands', to: '/brands' },
+  { label: 'Collections', to: '/collections' },
   { label: 'Consultation', to: '/consultation' },
   { label: 'Stores', to: '/stores' },
 ];

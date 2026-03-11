@@ -25,7 +25,7 @@ const footerLinks = [
   {
     title: 'Company',
     links: [
-      { label: 'Our Brands', to: '/brands' },
+      { label: 'Our Collections', to: '/collections' },
       { label: 'Store Locator', to: '/stores' },
       { label: 'W.Y.W Rewards', to: '/rewards' },
       { label: 'Consultations', to: '/consultation' },
