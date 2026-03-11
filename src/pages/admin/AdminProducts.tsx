@@ -44,7 +44,7 @@ const allStatuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
 export default function AdminProducts() {
   const [products, setProducts] = useState(initialProducts);
   const [search, setSearch] = useState('');
-  const [brandFilter, setBrandFilter] = useState('All');
+  const [collectionFilter, setCollectionFilter] = useState('All');
   const [catFilter, setCatFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showCreate, setShowCreate] = useState(false);
