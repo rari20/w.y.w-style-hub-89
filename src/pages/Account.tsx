@@ -370,6 +370,9 @@ export default function Account() {
                           <div className="flex items-center gap-3 flex-wrap">
                             <p className="text-[0.85rem] font-body font-medium text-foreground">{o.id}</p>
                             <span className={`text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] ${o.statusColor}`}>{o.status}</span>
+                            {o.fulfilment === 'collect' && (
+                              <span className="text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Click & Collect</span>
+                            )}
                           </div>
                           <p className="text-[0.75rem] text-muted-foreground font-body mt-1">{o.date} · {o.items} item{o.items > 1 ? 's' : ''} · {o.total}</p>
                         </div>
