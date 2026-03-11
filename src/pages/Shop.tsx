@@ -9,7 +9,7 @@ import { X } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 
 const categories = ['all', 'tops', 'bottoms', 'dresses', 'outerwear', 'knitwear', 'accessories'] as const;
-const brandNames = ['All Brands', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
+const collectionNames = ['All Collections', 'Lumenwear', 'Voltex Studio', 'ArcThread', 'KiloKouture'];
 const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
   { label: 'Under £100', min: 0, max: 100 },
