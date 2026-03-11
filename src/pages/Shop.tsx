@@ -26,7 +26,7 @@ export default function Shop() {
   const brandParam = searchParams.get('brand');
 
   const [category, setCategory] = useState<string>(categoryParam || 'all');
-  const [brand, setBrand] = useState(brandParam || 'All Brands');
+  const [collection, setCollection] = useState(brandParam || 'All Collections');
   const [priceRange, setPriceRange] = useState(0);
   const [search, setSearch] = useState('');
   const [showFilters, setShowFilters] = useState(false);
