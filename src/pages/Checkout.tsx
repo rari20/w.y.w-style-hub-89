@@ -412,9 +412,19 @@ export default function Checkout() {
           <div className="grid lg:grid-cols-5 gap-12">
             <div className="lg:col-span-3">
               <h1 className="font-display text-[2rem] italic mb-2 text-foreground">Payment</h1>
-              <p className="font-body text-[0.75rem] text-muted-foreground flex items-center gap-1.5 mb-8">
+              <p className="font-body text-[0.75rem] text-muted-foreground flex items-center gap-1.5 mb-4">
                 <Lock className="h-3 w-3" strokeWidth={1.5} /> Your payment information is encrypted and secure.
               </p>
+
+              {/* Click & Collect info banner */}
+              {delivery === 'collect' && (
+                <div className="flex items-start gap-3 p-4 mb-8 border border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
+                  <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <p className="font-body text-[0.8rem] text-blue-800 dark:text-blue-300 leading-relaxed">
+                    You have selected Click &amp; Collect. Payment is taken now — you will collect your order in store by showing your order reference or logging into your account at the till.
+                  </p>
+                </div>
+              )}
 
               {/* Apple Pay */}
               <div className="mb-8">
