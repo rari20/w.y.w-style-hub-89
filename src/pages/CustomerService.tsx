@@ -18,7 +18,7 @@ const faqData = [
       { q: 'How long does standard delivery take?', a: 'Standard delivery takes 3–5 working days. Express next-day delivery is available if ordered before 2pm. You will receive a dispatch email with tracking information once your order leaves our warehouse.' },
       { q: 'Can I change or cancel my order after placing it?', a: 'Orders can be amended or cancelled within 1 hour of placement. After this window, the order will have entered fulfilment and cannot be changed. Please contact our team immediately via the live chat if you need to make a change.' },
       { q: 'Do you deliver internationally?', a: 'Currently W.Y.W delivers within the United Kingdom only. International delivery is planned for a future phase of the business.' },
-      { q: 'What is Click & Collect?', a: 'Click & Collect lets you order online and collect from your nearest W.Y.W store, either from the Customer Service desk or from a W.Y.W smart locker. Your order is typically ready within 2 hours during store hours.' },
+      { q: 'What is Click & Collect?', a: 'Click & Collect orders are paid for online at the time of ordering, exactly like a standard delivery order. Once your payment is confirmed, your order will be prepared at your chosen store within 2 hours. Simply visit the store during opening hours and present your order reference number — found in your confirmation email and your account order history — or log in to your W.Y.W account at the till. No additional payment is required in store.' },
     ],
   },
   {

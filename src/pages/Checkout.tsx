@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle, Star } from 'lucide-react';
+import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle, Star, Info, Mail } from 'lucide-react';
 import { stores } from '@/data/products';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,7 +15,7 @@ const stepLabels = ['Bag', 'Details', 'Delivery', 'Payment', 'Review', 'Confirme
 const deliveryOptions = [
   { id: 'standard', label: 'Standard Delivery', detail: 'Royal Mail tracked', time: '3–5 working days', price: 0, priceFull: 3.95, freeOver100: true },
   { id: 'express', label: 'Express Delivery', detail: 'DPD tracked', time: 'Next working day (order before 2pm)', price: 8.95, priceFull: 8.95, freeOver100: false },
-  { id: 'collect', label: 'Click & Collect', detail: 'Collect from your chosen W.Y.W store', time: 'FREE', price: 0, priceFull: 0, freeOver100: false },
+  { id: 'collect', label: 'Click & Collect', detail: 'Pay now online and collect from your chosen W.Y.W store. Ready within 2 hours of order confirmation. Present your order reference or account details in store.', time: 'FREE', price: 0, priceFull: 0, freeOver100: false },
 ];
 
 function StepIndicator({ currentStep }: { currentStep: Step }) {
@@ -132,7 +132,7 @@ export default function Checkout() {
   const [country, setCountry] = useState('United Kingdom');
   const [saveAddress, setSaveAddress] = useState(false);
 
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank' | 'gift' | 'collection'>('card');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank' | 'gift'>('card');
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCvv, setCardCvv] = useState('');
@@ -412,9 +412,19 @@ export default function Checkout() {
           <div className="grid lg:grid-cols-5 gap-12">
             <div className="lg:col-span-3">
               <h1 className="font-display text-[2rem] italic mb-2 text-foreground">Payment</h1>
-              <p className="font-body text-[0.75rem] text-muted-foreground flex items-center gap-1.5 mb-8">
+              <p className="font-body text-[0.75rem] text-muted-foreground flex items-center gap-1.5 mb-4">
                 <Lock className="h-3 w-3" strokeWidth={1.5} /> Your payment information is encrypted and secure.
               </p>
+
+              {/* Click & Collect info banner */}
+              {delivery === 'collect' && (
+                <div className="flex items-start gap-3 p-4 mb-8 border border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30">
+                  <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <p className="font-body text-[0.8rem] text-blue-800 dark:text-blue-300 leading-relaxed">
+                    You have selected Click &amp; Collect. Payment is taken now — you will collect your order in store by showing your order reference or logging into your account at the till.
+                  </p>
+                </div>
+              )}
 
               {/* Apple Pay */}
               <div className="mb-8">
@@ -440,7 +450,6 @@ export default function Checkout() {
                   { id: 'card' as const, label: 'Card', icon: CreditCard },
                   { id: 'bank' as const, label: 'Bank Transfer', icon: Landmark },
                   { id: 'gift' as const, label: 'Gift Card', icon: Gift },
-                  ...(delivery === 'collect' ? [{ id: 'collection' as const, label: 'Pay at Collection', icon: Truck }] : []),
                 ]).map(tab => (
                   <button key={tab.id} onClick={() => setPaymentMethod(tab.id)}
                     className={`px-4 py-3 font-body text-[0.75rem] transition-colors border-b-2 -mb-px flex items-center gap-1.5 whitespace-nowrap ${
@@ -492,11 +501,6 @@ export default function Checkout() {
                 </div>
               )}
 
-              {paymentMethod === 'collection' && (
-                <div>
-                  <p className="font-body text-[0.85rem] mb-4 text-foreground">Pay in cash or by card when you collect your order from your chosen W.Y.W store. Your order will be held for 5 days.</p>
-                </div>
-              )}
 
               <div className="flex items-center justify-between mt-10">
                 <button onClick={() => setStep(3)} className="font-body text-[0.75rem] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
@@ -570,7 +574,6 @@ export default function Checkout() {
                 <p className="font-body text-[0.85rem] text-foreground">
                   {paymentMethod === 'card' && `Card ending ${cardNumber.slice(-4) || '····'}`}
                   {paymentMethod === 'bank' && 'Bank Transfer'}
-                  {paymentMethod === 'collection' && 'Pay at Collection'}
                   {paymentMethod === 'gift' && 'Gift Card'}
                 </p>
               </div>
@@ -604,7 +607,12 @@ export default function Checkout() {
         )}
 
         {/* ═══ Step 6: Confirmation ═══ */}
-        {step === 6 && (
+        {step === 6 && (() => {
+          const isCollect = delivery === 'collect';
+          const collectStoreData = stores.find(s => s.id === collectStore);
+          const collectStoreName = collectStoreData?.name || 'your chosen W.Y.W store';
+          const collectStoreAddress = collectStoreData?.address || '';
+          return (
           <div className="max-w-[700px] mx-auto text-center pt-12">
             <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" strokeWidth={1.5} />
@@ -616,15 +624,54 @@ export default function Checkout() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }}>
               <p className="font-body text-[0.625rem] uppercase tracking-[0.18em] text-muted-foreground mt-6 mb-1">Order Number</p>
               <p className="font-display text-[1.5rem] text-foreground">{orderRef}</p>
-              <p className="text-muted-foreground font-body font-light mt-3 mb-2">
-                Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is on its way.
+
+              {/* Email confirmation notice */}
+              <p className="text-[0.75rem] text-muted-foreground font-body mt-2 flex items-center justify-center gap-1.5">
+                <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
+                {isCollect
+                  ? `A confirmation and collection instructions have been sent to ${detailsEmail || 'your email address'}.`
+                  : `A confirmation has been sent to ${detailsEmail || 'your email address'}.`
+                }
               </p>
-              <p className="text-[0.8rem] text-muted-foreground font-body">Estimated delivery: {getEstimatedDate()}</p>
-              {address1 && (
-                <p className="text-[0.8rem] text-muted-foreground font-body mt-1">{address1}, {city} {postcode}</p>
+
+              {isCollect ? (
+                <>
+                  <p className="text-muted-foreground font-body font-light mt-3 mb-2">
+                    Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is being prepared for collection.
+                  </p>
+                  <p className="text-[0.8rem] text-muted-foreground font-body">Ready to collect from: {collectStoreName}{collectStoreAddress ? `, ${collectStoreAddress}` : ''}</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-muted-foreground font-body font-light mt-3 mb-2">
+                    Thank you{detailsFirstName ? `, ${detailsFirstName}` : ''}. Your order is on its way.
+                  </p>
+                  <p className="text-[0.8rem] text-muted-foreground font-body">Estimated delivery: {getEstimatedDate()}</p>
+                  {address1 && (
+                    <p className="text-[0.8rem] text-muted-foreground font-body mt-1">{address1}, {city} {postcode}</p>
+                  )}
+                </>
               )}
-              {detailsEmail && <p className="font-body text-[0.8rem] text-muted-foreground mt-2">Confirmation sent to {detailsEmail}</p>}
             </motion.div>
+
+            {/* Click & Collect collection instructions */}
+            {isCollect && (
+              <motion.div className="mt-8 border border-border p-6 text-left"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }}>
+                <div className="flex items-start gap-4">
+                  <MapPin className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={1.5} />
+                  <div>
+                    <h3 className="font-body text-[0.9rem] font-semibold text-foreground mb-3">How to collect your order</h3>
+                    <ul className="space-y-2 text-[0.8rem] text-muted-foreground font-body">
+                      <li>Your order will be ready within 2 hours of this confirmation.</li>
+                      <li>Visit {collectStoreName} at {collectStoreAddress} during opening hours.</li>
+                      <li>Present your order reference <span className="font-medium text-foreground">{orderRef}</span> or log in to your W.Y.W account at the till.</li>
+                      <li>Opening hours: Mon–Sat 10am–7pm, Sun 11am–5pm.</li>
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            )}
 
             {/* Points earned */}
             <motion.div className="mt-8 bg-muted/50 border-l-4 border-primary p-6 text-left"
@@ -677,7 +724,8 @@ export default function Checkout() {
               </Link>
             </motion.div>
           </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );

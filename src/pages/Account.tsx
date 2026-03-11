@@ -20,14 +20,14 @@ const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 
 // ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
 const adminOrders = [
-  { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
     { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
     { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
   ]},
-  { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Edinburgh — 14 George Street, EH2 2PF', products: [
     { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
   ]},
-  { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
     { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
     { name: 'Arc Pleat Skirt', brand: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
     { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
@@ -48,10 +48,10 @@ const adminReferralCode = 'WYW-JD2024';
 // ─── Test customer profile data (Sam Riley — Spark tier, 310 pts, at-risk) ───
 // This mirrors dataset row C013 on the admin dashboard
 const customerOrders = [
-  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2026-0029', date: '22 Dec 2025', items: 1, total: '£175.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Glasgow — 55 Buchanan Street, G1 3HL', products: [
     { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'M', color: 'Sand', qty: 1, price: 175 },
   ]},
-  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', products: [
+  { id: 'WYW-2025-0088', date: '10 Sep 2025', items: 1, total: '£135.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
     { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'L', color: 'Black', qty: 1, price: 135 },
   ]},
 ];
@@ -370,6 +370,9 @@ export default function Account() {
                           <div className="flex items-center gap-3 flex-wrap">
                             <p className="text-[0.85rem] font-body font-medium text-foreground">{o.id}</p>
                             <span className={`text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] ${o.statusColor}`}>{o.status}</span>
+                            {o.fulfilment === 'collect' && (
+                              <span className="text-[0.6rem] px-2 py-0.5 font-body uppercase tracking-[0.1em] bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">Click & Collect</span>
+                            )}
                           </div>
                           <p className="text-[0.75rem] text-muted-foreground font-body mt-1">{o.date} · {o.items} item{o.items > 1 ? 's' : ''} · {o.total}</p>
                         </div>
@@ -377,6 +380,12 @@ export default function Account() {
                       </button>
                       {expandedOrder === o.id && (
                         <div className="border-t border-border px-4 pb-4">
+                          {o.fulfilment === 'collect' && o.collectStore && (
+                            <div className="flex items-center gap-2 py-3 border-b border-border">
+                              <MapPin className="h-3.5 w-3.5 text-amber-500" strokeWidth={1.5} />
+                              <p className="text-[0.8rem] font-body text-foreground">Collection store: {o.collectStore}</p>
+                            </div>
+                          )}
                           {o.products.map((p, i) => (
                             <div key={i} className="flex justify-between items-center py-2 border-b border-border last:border-0">
                               <div>
