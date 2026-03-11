@@ -4,7 +4,7 @@ import { Zap, Calendar, MapPin, Package, Users, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/Layout';
 import ProductCard from '@/components/ProductCard';
-import { products, brands } from '@/data/products';
+import { products, collections } from '@/data/products';
 import heroImage from '@/assets/hero-main.jpg';
 
 const newIn = products.filter(p => p.isNew);
