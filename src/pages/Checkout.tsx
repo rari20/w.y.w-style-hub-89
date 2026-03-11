@@ -501,11 +501,6 @@ export default function Checkout() {
                 </div>
               )}
 
-              {paymentMethod === 'collection' && (
-                <div>
-                  <p className="font-body text-[0.85rem] mb-4 text-foreground">Pay in cash or by card when you collect your order from your chosen W.Y.W store. Your order will be held for 5 days.</p>
-                </div>
-              )}
 
               <div className="flex items-center justify-between mt-10">
                 <button onClick={() => setStep(3)} className="font-body text-[0.75rem] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
