@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle, Star } from 'lucide-react';
+import { Check, Lock, MessageCircle, Minus, Plus, X, ChevronDown, ChevronUp, CreditCard, Landmark, Gift, Truck, Package, MapPin, Zap, ArrowLeft, CheckCircle, Star, Info, Mail } from 'lucide-react';
 import { stores } from '@/data/products';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
