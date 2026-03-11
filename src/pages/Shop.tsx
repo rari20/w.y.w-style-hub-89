@@ -43,7 +43,7 @@ export default function Shop() {
     if (filterParam === 'outerwear') result = result.filter(p => p.category === 'outerwear');
 
     if (category !== 'all') result = result.filter(p => p.category === category);
-    if (brand !== 'All Brands') result = result.filter(p => p.brand === brand);
+    if (collection !== 'All Collections') result = result.filter(p => p.collection === collection);
 
     const range = priceRanges[priceRange];
     result = result.filter(p => p.price >= range.min && p.price < range.max);
