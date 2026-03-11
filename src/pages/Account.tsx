@@ -28,9 +28,9 @@ const adminOrders = [
     { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
   ]},
   { id: 'WYW-2026-0018', date: '03 Dec 2025', items: 3, total: '£647.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
-    { name: 'Arc Pleat Skirt', brand: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
-    { name: 'Thread Linen Shirt', brand: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
+    { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', size: 'S', color: 'Ivory', qty: 1, price: 245 },
+    { name: 'Arc Pleat Skirt', collection: 'ArcThread', size: 'M', color: 'Cream', qty: 1, price: 245 },
+    { name: 'Thread Linen Shirt', collection: 'ArcThread', size: 'S', color: 'White', qty: 1, price: 135 },
   ]},
 ];
 
