@@ -53,7 +53,7 @@ export default function Shop() {
       result = result.filter(p => p.name.toLowerCase().includes(q) || p.collection.toLowerCase().includes(q));
     }
     return result;
-  }, [category, brand, priceRange, search, filterParam]);
+  }, [category, collection, priceRange, search, filterParam]);
 
   const getTitle = () => {
     if (filterParam === 'new') return 'NEW IN';
