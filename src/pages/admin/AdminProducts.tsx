@@ -19,16 +19,16 @@ interface Product {
 }
 
 const initialProducts: Product[] = [
-  { name: 'Ethereal Silk Blouse', brand: 'Lumenwear', price: 245, category: 'Tops', stock: 18, status: 'In Stock' },
-  { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', price: 385, category: 'Dresses', stock: 12, status: 'In Stock' },
-  { name: 'Powerline Structured Blazer', brand: 'Voltex Studio', price: 495, category: 'Outerwear', stock: 9, status: 'In Stock' },
-  { name: 'Circuit Tailored Trousers', brand: 'Voltex Studio', price: 275, category: 'Trousers', stock: 3, status: 'Low Stock' },
-  { name: 'Flowing Midi Dress', brand: 'ArcThread', price: 425, category: 'Dresses', stock: 7, status: 'In Stock' },
-  { name: 'Heavy Wool Overcoat', brand: 'KiloKouture', price: 895, category: 'Outerwear', stock: 5, status: 'In Stock' },
-  { name: 'Arc Pleat Skirt', brand: 'ArcThread', price: 245, category: 'Skirts', stock: 14, status: 'In Stock' },
-  { name: 'Voltage Track Jacket', brand: 'Voltex Studio', price: 345, category: 'Outerwear', stock: 0, status: 'Out of Stock' },
-  { name: 'Dense Knit Cardigan', brand: 'KiloKouture', price: 545, category: 'Knitwear', stock: 6, status: 'In Stock' },
-  { name: 'Weighted Silk Scarf', brand: 'KiloKouture', price: 245, category: 'Accessories', stock: 11, status: 'In Stock' },
+  { name: 'Ethereal Silk Blouse', collection: 'Lumenwear', price: 245, category: 'Tops', stock: 18, status: 'In Stock' },
+  { name: 'Gossamer Wrap Dress', collection: 'Lumenwear', price: 385, category: 'Dresses', stock: 12, status: 'In Stock' },
+  { name: 'Powerline Structured Blazer', collection: 'Voltex Studio', price: 495, category: 'Outerwear', stock: 9, status: 'In Stock' },
+  { name: 'Circuit Tailored Trousers', collection: 'Voltex Studio', price: 275, category: 'Trousers', stock: 3, status: 'Low Stock' },
+  { name: 'Flowing Midi Dress', collection: 'ArcThread', price: 425, category: 'Dresses', stock: 7, status: 'In Stock' },
+  { name: 'Heavy Wool Overcoat', collection: 'KiloKouture', price: 895, category: 'Outerwear', stock: 5, status: 'In Stock' },
+  { name: 'Arc Pleat Skirt', collection: 'ArcThread', price: 245, category: 'Skirts', stock: 14, status: 'In Stock' },
+  { name: 'Voltage Track Jacket', collection: 'Voltex Studio', price: 345, category: 'Outerwear', stock: 0, status: 'Out of Stock' },
+  { name: 'Dense Knit Cardigan', collection: 'KiloKouture', price: 545, category: 'Knitwear', stock: 6, status: 'In Stock' },
+  { name: 'Weighted Silk Scarf', collection: 'KiloKouture', price: 245, category: 'Accessories', stock: 11, status: 'In Stock' },
 ];
 
 const statusColor: Record<string, string> = {
