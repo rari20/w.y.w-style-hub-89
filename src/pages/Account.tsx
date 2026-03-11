@@ -21,8 +21,8 @@ const TEST_CUSTOMER_EMAIL = 'test.customer@wyw-demo.com';
 // ─── Admin profile data (Jamie Davidson — Volt tier, 847 pts) ───
 const adminOrders = [
   { id: 'WYW-2026-0042', date: '28 Feb 2026', items: 2, total: '£214.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'delivery' as const, collectStore: '', products: [
-    { name: 'Current Minimal Tee', brand: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
-    { name: 'Charged Slim Chinos', brand: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
+    { name: 'Current Minimal Tee', collection: 'Voltex Studio', size: 'M', color: 'White', qty: 1, price: 85 },
+    { name: 'Charged Slim Chinos', collection: 'Voltex Studio', size: '32', color: 'Sand', qty: 1, price: 129 },
   ]},
   { id: 'WYW-2026-0031', date: '14 Jan 2026', items: 1, total: '£385.00', status: 'DELIVERED', statusColor: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300', fulfilment: 'collect' as const, collectStore: 'Edinburgh — 14 George Street, EH2 2PF', products: [
     { name: 'Gossamer Wrap Dress', brand: 'Lumenwear', size: 'S', color: 'Champagne', qty: 1, price: 385 },
