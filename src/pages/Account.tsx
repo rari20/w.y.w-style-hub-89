@@ -390,7 +390,7 @@ export default function Account() {
                             <div key={i} className="flex justify-between items-center py-2 border-b border-border last:border-0">
                               <div>
                                 <p className="text-[0.8rem] font-body text-foreground">{p.name}</p>
-                                <p className="text-[0.7rem] text-muted-foreground font-body">{p.brand} · {p.size} · {p.color} · Qty {p.qty}</p>
+                                <p className="text-[0.7rem] text-muted-foreground font-body">{p.collection} · {p.size} · {p.color} · Qty {p.qty}</p>
                               </div>
                               <p className="text-[0.8rem] font-body text-foreground">£{p.price.toFixed(2)}</p>
                             </div>
