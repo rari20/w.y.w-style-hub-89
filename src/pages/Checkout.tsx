@@ -574,7 +574,6 @@ export default function Checkout() {
                 <p className="font-body text-[0.85rem] text-foreground">
                   {paymentMethod === 'card' && `Card ending ${cardNumber.slice(-4) || '····'}`}
                   {paymentMethod === 'bank' && 'Bank Transfer'}
-                  {paymentMethod === 'collection' && 'Pay at Collection'}
                   {paymentMethod === 'gift' && 'Gift Card'}
                 </p>
               </div>
