@@ -51,7 +51,7 @@ export default function AdminProducts() {
 
   const filtered = products.filter(p => {
     if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
-    if (brandFilter !== 'All' && p.brand !== brandFilter) return false;
+    if (collectionFilter !== 'All' && p.collection !== collectionFilter) return false;
     if (catFilter !== 'All' && p.category !== catFilter) return false;
     if (statusFilter !== 'All' && p.status !== statusFilter) return false;
     return true;
