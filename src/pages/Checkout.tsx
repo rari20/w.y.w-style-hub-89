@@ -724,7 +724,8 @@ export default function Checkout() {
               </Link>
             </motion.div>
           </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
