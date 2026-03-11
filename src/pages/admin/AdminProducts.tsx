@@ -86,7 +86,7 @@ export default function AdminProducts() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  {['Product Name', 'Brand', 'Price', 'Category', 'Stock Status', 'Actions'].map(h => (
+                  {['Product Name', 'Collection', 'Price', 'Category', 'Stock Status', 'Actions'].map(h => (
                     <TableHead key={h} className="text-xs">{h}</TableHead>
                   ))}
                 </TableRow>
