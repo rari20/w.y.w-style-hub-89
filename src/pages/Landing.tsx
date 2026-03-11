@@ -134,10 +134,10 @@ export default function Landing() {
       {/* Below-fold content */}
       <section className="relative z-10 bg-background">
         <div className="wyw-container py-24 text-center">
-          <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-muted-foreground mb-4">Curated Excellence</p>
-          <h2 className="font-display text-[2.5rem] md:text-[3.5rem] italic text-foreground mb-6">Four Brands. One Vision.</h2>
+          <p className="font-body text-[0.625rem] tracking-[0.25em] uppercase text-muted-foreground mb-4">Design Directions</p>
+          <h2 className="font-display text-[2.5rem] md:text-[3.5rem] italic text-foreground mb-6">Four Collections. One Vision.</h2>
           <p className="text-muted-foreground font-body font-light max-w-[55ch] mx-auto leading-[1.85] mb-12">
-            Each W.Y.W partner brand brings a distinct aesthetic to our curation. From effortless femininity to urban precision, organic warmth to deliberate weight.
+            Each W.Y.W collection brings a distinct aesthetic direction. From effortless femininity to urban precision, organic warmth to deliberate weight.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
             {[
@@ -145,14 +145,14 @@ export default function Landing() {
               { name: 'Voltex Studio', desc: 'Technical precision' },
               { name: 'ArcThread', desc: 'Organic & considered' },
               { name: 'KiloKouture', desc: 'Weight & substance' },
-            ].map(brand => (
+            ].map(col => (
               <Link
-                key={brand.name}
-                to={`/shop?brand=${encodeURIComponent(brand.name)}`}
+                key={col.name}
+                to={`/collections/${col.name.toLowerCase().replace(' ', '-')}`}
                 className="bg-background py-16 text-center group hover:bg-muted transition-colors duration-500"
               >
-                <h3 className="font-display text-[1.5rem] italic group-hover:text-primary transition-colors duration-500 text-foreground">{brand.name}</h3>
-                <p className="font-body text-[0.7rem] text-muted-foreground mt-2 tracking-wide">{brand.desc}</p>
+                <h3 className="font-display text-[1.5rem] italic group-hover:text-primary transition-colors duration-500 text-foreground">{col.name}</h3>
+                <p className="font-body text-[0.7rem] text-muted-foreground mt-2 tracking-wide">{col.desc}</p>
               </Link>
             ))}
           </div>
