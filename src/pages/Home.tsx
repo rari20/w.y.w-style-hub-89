@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import { products, brands } from "@/data/products";
+import { products, collections } from "@/data/products";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
 const newIn = products.filter((p) => p.isNew).slice(0, 8);
