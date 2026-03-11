@@ -34,9 +34,9 @@ import productKk8 from '@/assets/product-kk8.jpg';
 export type Product = {
   id: string;
   name: string;
-  collection: string;
-  /** @deprecated Use collection instead */
   brand: string;
+  /** Alias for brand — represents the W.Y.W collection name */
+  collection: string;
   price: number;
   category: 'tops' | 'bottoms' | 'outerwear' | 'accessories' | 'footwear' | 'dresses' | 'knitwear';
   sizes: string[];
