@@ -77,7 +77,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            Multi-Brand Fashion Destination
+            Four Collections. One Vision.
           </motion.p>
 
           <motion.p
