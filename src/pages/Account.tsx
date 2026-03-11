@@ -70,7 +70,7 @@ const tiers = [
   { name: 'Spark', range: '0–499 pts', color: 'border-muted', benefits: ['Early access to sales', 'Birthday discount 10%'] },
   { name: 'Volt', range: '500–1,499 pts', color: 'border-amber-400 dark:border-amber-500', benefits: ['All Spark benefits', 'Free standard delivery', '15% birthday discount'] },
   { name: 'Surge', range: '1,500–3,999 pts', color: 'border-blue-400 dark:border-blue-500', benefits: ['All Volt benefits', 'Free express delivery', 'Priority customer service', '20% birthday discount'] },
-  { name: 'Watt', range: '4,000+ pts', color: 'border-yellow-500 dark:border-yellow-400', benefits: ['All Surge benefits', 'Personal stylist', 'Exclusive brand previews', '25% birthday discount'] },
+  { name: 'Watt', range: '4,000+ pts', color: 'border-yellow-500 dark:border-yellow-400', benefits: ['All Surge benefits', 'Personal stylist', 'Exclusive collection previews', '25% birthday discount'] },
 ];
 
 export default function Account() {
