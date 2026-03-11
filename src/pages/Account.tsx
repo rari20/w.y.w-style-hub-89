@@ -458,7 +458,7 @@ export default function Account() {
                       <div key={item.productId} className="border border-border overflow-hidden">
                         {product && <img src={product.image} alt={item.name} className="w-full h-48 object-cover" />}
                         <div className="p-4">
-                          <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.brand}</p>
+                          <p className="text-[0.625rem] text-muted-foreground uppercase tracking-[0.15em] font-body">{item.collection}</p>
                           <p className="font-body text-[0.9rem] font-medium text-foreground">{item.name}</p>
                           <p className="font-body text-[0.85rem] text-foreground mt-1">£{item.price.toFixed(2)}</p>
                           {showNudge && (
